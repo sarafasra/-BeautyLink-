@@ -16,4 +16,19 @@ class Reservation extends Model
         'time',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }
