@@ -16,5 +16,10 @@ class ProfileController extends Controller
             'name' => $request->name ?? $user->name,
             'email' => $request->email ?? $user->email,
         ]);
+
+        return response()->json([
+            'message' => 'Profile modifier avec succes',
+            'user' =>$user
+        ]);
     }
 }
