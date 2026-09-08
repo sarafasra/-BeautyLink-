@@ -237,7 +237,7 @@ function Dashboard() {
 
                                 <p className="text-[11px] text-gray-400 mt-1">
                                      16 Mai 2024 • 11:00
-                                </p>
+                                </p>    
                             </div>
 
                             <span className="text-[10px] font-semibold bg-green-100 text-green-600 px-3 py-1 rounded-full">
