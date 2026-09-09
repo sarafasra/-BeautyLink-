@@ -250,7 +250,6 @@ function Profile() {
 
         </div>
 
-        {/* À propos Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mt-6 lg:w-2/3">
           <h2 className="font-bold text-gray-900 text-base mb-2">À propos</h2>
           <p className="text-xs text-gray-400 leading-relaxed">
