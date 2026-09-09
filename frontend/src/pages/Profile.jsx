@@ -4,7 +4,8 @@ import api from "../services/api";
 function Profile() {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
-
+  const [name, setName] = useState("");
+  const [email,setEmail] = useState("");
   useEffect(() => {
     api
       .get("/profile")
