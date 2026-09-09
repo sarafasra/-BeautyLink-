@@ -6,11 +6,10 @@ function Profile() {
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email,setEmail] = useState("");
-  useEffect(() => {
-    api
-      .get("/profile")
-      .then((response) => {
+  useEffect(() => {api.get("/profile").then((response) => {
         setUser(response.data);
+        setName(response.data.name);
+        setEmail(response.data.email);
       })
       .catch((error) => {
         console.log(error);
