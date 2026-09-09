@@ -3,6 +3,7 @@ import api from "../services/api";
 
 function Profile() {
   const [user, setUser] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     api
@@ -89,6 +90,12 @@ function Profile() {
             <button className="bg-[#9E3B68] hover:bg-[#882F57] text-white font-medium px-8 py-2.5 rounded-xl text-sm shadow-sm transition-all self-stretch md:self-auto text-center">
               Contacter
             </button>
+            <button
+    onClick={() => setEditMode(true)}
+    className="bg-[#a63d75] text-white px-6 py-3 rounded-full"
+>
+    Modifier le profil
+</button>
           </div>
         </div>
 
