@@ -20,6 +20,24 @@ function Profile() {
     return <p className="p-10 text-center text-gray-500">Chargement...</p>;
   }
 
+  const handleUpdate = async (e) => {
+
+    e.preventDefault();
+    try {
+        const response = await api.put("/profile", {
+            name: name,
+            email: email,
+        });
+
+
+        setUser(response.data.user);
+        setEditMode(false);
+    }catch (error){
+
+        console.log(error);
+    }
+  };
+
   return (
     <div className="bg-[#faf8f9] min-h-screen p-6 font-sans text-gray-800">
       <div className="max-w-5xl mx-auto">
@@ -117,6 +135,15 @@ function Profile() {
 >
     Modifier le profil
 </button>
+
+{editMode && (
+    <button
+        onClick={handleUpdate}
+        className="bg-[#a63d75] text-white px-5 py-2 rounded-full"
+    >
+        Enregistrer
+    </button>
+)}
           </div>
         </div>
 
