@@ -84,7 +84,7 @@ function Profile() {
               <div className="mb-1">
                 <div className="flex items-center gap-1.5">
 {editMode ? (
-    <div className="space-y-3">
+    <div className="space-y-3 mt-4">
         <input
             type="text"
             value={name}
@@ -131,7 +131,7 @@ function Profile() {
             </button>
             <button
     onClick={() => setEditMode(true)}
-    className="bg-[#a63d75] text-white px-6 py-3 rounded-full"
+    className="bg-[#a63d75] text-white px-6 py-2 rounded-full whitespace-nowrap"
 >
     Modifier le profil
 </button>
@@ -139,7 +139,7 @@ function Profile() {
 {editMode && (
     <button
         onClick={handleUpdate}
-        className="bg-[#a63d75] text-white px-5 py-2 rounded-full"
+        className="bg-[#a63d75] text-white px-6 py-2 rounded-full"
     >
         Enregistrer
     </button>
