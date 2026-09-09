@@ -65,8 +65,29 @@ function Profile() {
               {/* Name & Details */}
               <div className="mb-1">
                 <div className="flex items-center gap-1.5">
-                  <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
-                  <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
+{editMode ? (
+    <div className="space-y-3">
+        <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+            placeholder="Nom"
+        />
+
+        <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+            placeholder="Email"
+        />
+    </div>
+) : (
+    <h1 className="text-2xl font-bold">
+        {user.name} ✓
+    </h1>
+)}                  <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                       <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                     </svg>
