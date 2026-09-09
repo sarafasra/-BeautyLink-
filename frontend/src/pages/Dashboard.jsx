@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -57,11 +58,12 @@ function Dashboard() {
                         <span className="ml-auto w-2 h-2 rounded-full bg-[#A33F70]"></span>
                     </button>
 
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Mon profil
-                    </button>
-
+                   <Link
+    to="/profile"
+    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+>
+    Mon profil
+</Link>
                 </nav>
 
                 {/* Bottom */}
