@@ -85,6 +85,7 @@ function Profile() {
               </div>
             </div>
 
+            {/* Contact Button */}
             <button className="bg-[#9E3B68] hover:bg-[#882F57] text-white font-medium px-8 py-2.5 rounded-xl text-sm shadow-sm transition-all self-stretch md:self-auto text-center">
               Contacter
             </button>
