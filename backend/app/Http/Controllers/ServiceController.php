@@ -81,8 +81,16 @@ class ServiceController extends Controller
 
         $service->delete();
         return response()->json([
-            'message' => 'Prestation supprimeé avec succès'
+            'message' => 'Prestation supprimée avec succès'
         ]);
+        }
+
+
+        public function index(){
+
+        $service = Service::with(['category', 'user'])->get();
+
+        return response()->json($service);
         }
 
     }
