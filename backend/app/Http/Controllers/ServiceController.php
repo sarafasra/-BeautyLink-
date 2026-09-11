@@ -14,5 +14,24 @@ class ServiceController extends Controller
             'price' => 'required|numeric',
             'duration' => 'required|integer',
         ]);
+
+        $service = Service::create([
+            'user_id' => $request->user()->id,
+             'categoryç_id' => $request->category_id,
+             'title' => $request->title,
+             'description' => $request->description,
+             'price' => $request->price,
+             'duration' => $request->duration,
+        ]);
+
+
+        return response()->json([
+
+            'message' =>'Prestation ajoutée avec succes',
+            'service' => $service
+
+
+        ],201);
     }
+
 }
