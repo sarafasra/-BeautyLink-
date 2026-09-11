@@ -39,6 +39,8 @@ class ServiceController extends Controller
     public function update(Request $request, $id){
 
         $service = Service::findOrFail($id);
+        
+   
               if ($service->user_id !== $request->user()->id) {
         return response()->json([
             'message' => 'Non autorisé'

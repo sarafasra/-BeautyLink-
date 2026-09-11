@@ -36,11 +36,12 @@ function Dashboard() {
                         Dashboard
                     </button>
 
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Mes prestations
-                    </button>
-
+                  <Link
+    to="/services"
+    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+>
+    Mes prestations
+</Link>
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
                         
                         Mes réservations
