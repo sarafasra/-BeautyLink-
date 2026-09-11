@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Service;
 class ServiceController extends Controller
 {
     public function store(Request $request){
         $request->validate([
-            'category_id' => 'reqyuired|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
@@ -17,7 +17,7 @@ class ServiceController extends Controller
 
         $service = Service::create([
             'user_id' => $request->user()->id,
-             'categoryç_id' => $request->category_id,
+             'category_id' => $request->category_id,
              'title' => $request->title,
              'description' => $request->description,
              'price' => $request->price,
