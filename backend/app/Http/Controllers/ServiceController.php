@@ -63,9 +63,26 @@ class ServiceController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Presation modifié avec succes',
+                'message' => 'Presation modifié avec succès',
                 'service' => $service
             ]);
+        }
+
+        public function destroy(Request $request, $id){
+                       
+        $service = Service::findOrFail($id);
+
+        if($service->user_id !==$request->user()->id){
+            return response()->json([
+
+            'message' => 'Non autorisé'
+            ],403);
+        }
+
+        $service->delete();
+        return response()->json([
+            'message' => 'Prestation supprimeé avec succès'
+        ]);
         }
 
     }
