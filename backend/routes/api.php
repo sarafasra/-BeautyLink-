@@ -28,5 +28,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/reservations', [ReservationController::class, 'store']);
 Route::post('/services', [ServiceController::class, 'store']);
     Route::put('/services/{id}', [ServiceController::class, 'update']);
-
+   Route::delete('/services/{id}', [ServiceController::class,  'destroy']);
 });
