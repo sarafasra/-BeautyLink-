@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
+        $reservations = Reservation::where('user_id', $request->user()->id)
+            ->with('service')
+            ->get();
 
-    $reservations = Reservation::where('user_id', $request->user()->id)
-    ->with('service')->get();
-
-    return response()->json($reservations);
+        return response()->json($reservations);
     }
-        public function store(Request $request)
+
+    public function store(Request $request)
     {
         $request->validate([
             'service_id' => 'required|exists:services,id',
