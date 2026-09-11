@@ -32,6 +32,42 @@ class ServiceController extends Controller
 
 
         ],201);
+
+
     }
 
-}
+    public function update(Request $request, $id){
+
+        $service = Service::findOrFail($id);
+              if ($service->user_id !== $request->user()->id) {
+        return response()->json([
+            'message' => 'Non autorisé'
+        ], 403);
+    }
+
+            $request->validate([
+
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'duration' => 'required|integer',
+            ]);
+
+            $service->update([
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price,
+                'duration' => $request->duration,
+            ]);
+
+            return response()->json([
+                'message' => 'Presation modifié avec succes',
+                'service' => $service
+            ]);
+        }
+
+    }
+
+
