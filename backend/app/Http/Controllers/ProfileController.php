@@ -9,7 +9,8 @@ class ProfileController extends Controller
     public function show(Request $request){
         return response()->json($request->user());
     }
-public function update(Request $request)
+
+    public function update(Request $request)
 {
     $user = $request->user();
 
@@ -28,4 +29,5 @@ public function update(Request $request)
         'user' => $user
     ]);
 }
+
 }
