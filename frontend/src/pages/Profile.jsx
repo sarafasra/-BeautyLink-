@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MapPin, Star, Clock, CheckCircle, Heart } from "lucide-react";
 import api from "../services/api";
 
 function Profile() {
@@ -149,13 +150,10 @@ function Profile() {
     </div>
 ) : (
     <h1 className="text-2xl font-bold">
-        {user.name} ✓
+        {user.name}  
     </h1>
 )}                 <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
-                    </svg>
-                  </span>
+                      <CheckCircle size={16} /></span>
                 </div>
                 <p     
 
@@ -163,12 +161,16 @@ function Profile() {
 </p>
                 <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
                   <span className="text-amber-500 font-bold flex items-center gap-0.5">
-                    ★ 4.9
+                    <Star size={15} fill="currentColor" />
+
+                     4.9
                   </span>
                   <span className="text-gray-400">(120 avis)</span>
                   <span className="text-gray-300">•</span>
                   <span className="flex items-center gap-1 text-gray-500">
-                    📍  {user.city || "Ville non renseignée"}
+                      {user.city || "Ville non renseignée"}
+                    <MapPin size={14} />
+
                   </span>
                 </div>
               </div>
@@ -223,8 +225,8 @@ function Profile() {
                   <h3 className="font-bold text-gray-800 text-sm">Coupe Femme</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Coupe + Brushing</p>
                   <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>🕒 45 min</span>
-                    <span>🏷️ 150 DH</span>
+                    <span>       <Clock size={13} /> 45 min</span>
+                    <span> 150 DH</span>
                   </p>
                 </div>
               </div>
@@ -245,8 +247,9 @@ function Profile() {
                   <h3 className="font-bold text-gray-800 text-sm">Brushing</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Brushing + Soin profond</p>
                   <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>🕒 30 min</span>
-                    <span>🏷️ 100 DH</span>
+                    <span>    <Clock size={13} />
+30 min</span>
+                    <span>100 DH</span>
                   </p>
                 </div>
               </div>
@@ -269,8 +272,8 @@ function Profile() {
                     Coloration complète (sans ammoniaque)
                   </p>
                   <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>🕒 90 min</span>
-                    <span>🏷️ 300 DH</span>
+                    <span>    <Clock size={13} /> 90 min</span>
+                    <span> 300 DH</span>
                   </p>
                 </div>
               </div>
@@ -291,8 +294,8 @@ function Profile() {
                   <h3 className="font-bold text-gray-800 text-sm">Lissage Brésilien</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Lissage + Soin Kératine</p>
                   <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>🕒 120 min</span>
-                    <span>🏷️ 500 DH</span>
+                    <span> <Clock size={13} />120 min</span>
+                    <span> 500 DH</span>
                   </p>
                 </div>
               </div>
@@ -312,7 +315,7 @@ function Profile() {
               {/* Address */}
               <div className="flex items-start gap-3 mb-5">
                 <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
-                  📍
+                  <MapPin size={14} />
                 </span>
                 <div>
                  <h4 className="text-xs font-bold text-gray-800">Ville</h4>
@@ -329,7 +332,7 @@ function Profile() {
               {/* Working Hours */}
               <div className="flex items-start gap-3">
                 <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
-                  🕒
+                  <Clock size={13} />
                 </span>
                 <div className="w-full">
                   <h4 className="text-xs font-bold text-gray-800">Horaires d'ouverture</h4>
