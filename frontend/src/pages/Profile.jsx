@@ -6,10 +6,18 @@ function Profile() {
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email,setEmail] = useState("");
+  const[phone,setPhone] = useState("");
+  const[city,setCity] = useState("");
+  const[profession,setProfession] = useState("");
+  const[bio, setBio] = useState("");
   useEffect(() => {api.get("/profile").then((response) => {
         setUser(response.data);
         setName(response.data.name);
         setEmail(response.data.email);
+        setPhone(response.data.phone || "");
+        setCity(response.data.city || "");
+        setProfession(response.data.profession || "");
+        setBio(response.data.bio || "");
       })
       .catch((error) => {
         console.log(error);
@@ -27,6 +35,10 @@ function Profile() {
         const response = await api.put("/profile", {
             name: name,
             email: email,
+            phone: phone,
+            city: city,
+            profession: profession,
+            bio: bio,
         });
 
 
