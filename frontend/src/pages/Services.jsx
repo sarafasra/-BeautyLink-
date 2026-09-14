@@ -3,11 +3,41 @@ import api from "../services/api";
 
 function Services() {
   const [services, setServices] = useState([]);
-const [editingService, setEditingService] = useState(null);
+  const [editingService, setEditingService] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+
+  const [newService, setNewService] = useState({
+    category_id: 1,
+    title: "",
+    description: "",
+    price: "",
+    duration: "",
+  });
   useEffect(() => {
     getServices();
   }, []);
+const addService = async (e) => {
+  e.preventDefault();
 
+  try {
+    const response = await api.post("/services", newService);
+
+    setServices([...services, response.data.service]);
+
+    setNewService({
+      category_id: 1,
+      title: "",
+      description: "",
+      price: "",
+      duration: "",
+    });
+
+    setShowAddForm(false);
+
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
   const getServices = async () => {
     try {
       const response = await api.get("/services");
@@ -42,6 +72,7 @@ setServices(response.data);
         console.log("EDITING SERVICE:", editingService);
   return (
     <div className="min-h-screen bg-pink-50/40 p-8">
+     
       <h1 className="text-2xl font-bold text-gray-900 mb-6">
         Modifier la prestation
       </h1>
@@ -125,13 +156,94 @@ setServices(response.data);
   return (
     <div className="min-h-screen bg-pink-50/40 p-8">
       {/* Header section */}
+       {showAddForm && (
+  <form
+    onSubmit={addService}
+    className="bg-white p-6 rounded-2xl shadow-sm max-w-xl mb-6"
+  >
+    <h2 className="text-xl font-bold mb-4">
+      Ajouter une prestation
+    </h2>
+
+    <input
+      type="text"
+      value={newService.title}
+      onChange={(e) =>
+        setNewService({
+          ...newService,
+          title: e.target.value,
+        })
+      }
+      className="w-full border rounded-lg p-3 mb-4"
+      placeholder="Titre"
+    />
+
+    <textarea
+      value={newService.description}
+      onChange={(e) =>
+        setNewService({
+          ...newService,
+          description: e.target.value,
+        })
+      }
+      className="w-full border rounded-lg p-3 mb-4"
+      placeholder="Description"
+    />
+
+    <input
+      type="number"
+      value={newService.price}
+      onChange={(e) =>
+        setNewService({
+          ...newService,
+          price: e.target.value,
+        })
+      }
+      className="w-full border rounded-lg p-3 mb-4"
+      placeholder="Prix"
+    />
+
+    <input
+      type="number"
+      value={newService.duration}
+      onChange={(e) =>
+        setNewService({
+          ...newService,
+          duration: e.target.value,
+        })
+      }
+      className="w-full border rounded-lg p-3 mb-4"
+      placeholder="Durée en minutes"
+    />
+
+    <div className="flex gap-3">
+      <button
+        type="submit"
+        className="bg-[#9A3B68] text-white px-5 py-2 rounded-lg"
+      >
+        Ajouter
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setShowAddForm(false)}
+        className="bg-gray-200 px-5 py-2 rounded-lg"
+      >
+        Annuler
+      </button>
+    </div>
+  </form>
+)}
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Mes prestations</h1>
           <p className="text-sm text-gray-500">Gérez vos services, durées et tarifs.</p>
         </div>
-        <button
-                  onClick={() => setShowAddForm(!showAddForm)}
+      <button
+  onClick={() => {
+    console.log("AJOUTER CLIQUE");
+    setShowAddForm(true);
+  }}
   
         className="bg-[#9A3B68] text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#832e57]">
           + Ajouter une prestation

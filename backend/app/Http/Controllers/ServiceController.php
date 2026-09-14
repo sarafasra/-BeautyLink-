@@ -40,7 +40,7 @@ class ServiceController extends Controller
 
         $service = Service::findOrFail($id);
         
-   
+  
               if ($service->user_id !== $request->user()->id) {
         return response()->json([
             'message' => 'Non autorisé'
