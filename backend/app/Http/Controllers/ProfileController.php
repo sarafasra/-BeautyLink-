@@ -21,7 +21,7 @@ class ProfileController extends Controller
         'city' => 'required|string|max:20',
         'profession' => 'nullable|string|max:100',
         'bio' => 'nullable|string',
-    ]);
+    ]);   
      
 
     $user->update([
