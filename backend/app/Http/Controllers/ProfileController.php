@@ -23,7 +23,7 @@ class ProfileController extends Controller
         'bio' => 'nullable|string',
     ]);   
      
-
+   
     $user->update([
         'name' => $request->name,
         'email' => $request->email,
