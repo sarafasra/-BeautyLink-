@@ -22,6 +22,7 @@ function App() {
                 />
 <Route path="/profile" element={<Profile />} />
    <Route path="/services"  element={<Services/>}/>
+   <Route path="/services/ajouter" element={<Services />} />
             
             </Routes>
 
