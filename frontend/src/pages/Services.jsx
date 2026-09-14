@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Pencil, Trash2 , Clock } from "lucide-react";
 import api from "../services/api";
 
 function Services() {
@@ -18,6 +19,7 @@ function Services() {
     description: "",
     price: "",
     duration: "",
+    image: "",
   });
   useEffect(() => {
     getServices();
@@ -36,6 +38,7 @@ const addService = async (e) => {
       description: "",
       price: "",
       duration: "",
+      image: "",
     });
 
     setMessage("Prestation ajoutée avec succès");
@@ -97,7 +100,7 @@ setServices(response.data);
       </h1>
       {message && (
   <div className="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-4 max-w-xl">
-    ✅ {message}
+     {message}
   </div>
 )}
 
@@ -128,6 +131,18 @@ setServices(response.data);
           }
           className="w-full border rounded-lg p-3 mb-4"
         />
+        <input
+  type="url"
+  placeholder="URL de l'image"
+  value={newService.image}
+  onChange={(e) =>
+    setNewService({
+      ...newService,
+      image: e.target.value,
+    })
+  }
+  className="w-full border rounded-lg p-3 mb-4"
+/>
         <select
   value={newService.category_id}
   onChange={(e) =>
@@ -230,6 +245,18 @@ setServices(response.data);
           className="w-full border rounded-lg p-3 mb-4"
           placeholder="Description"
         />
+        <input
+  type="url"
+  value={editingService.image || ""}
+  onChange={(e) =>
+    setEditingService({
+      ...editingService,
+      image: e.target.value,
+    })
+  }
+  className="w-full border rounded-lg p-3 mb-4"
+  placeholder="URL de l'image"
+/>
         <select
   value={editingService.category_id}
   onChange={(e) =>
@@ -392,10 +419,9 @@ const filteredServices = selectedCategory === "Toutes"
       </div>
   {message && (
       <div className="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-6">
-        ✅ {message}
+         {message}
       </div>
     )}
-      {/* Filter Tabs */}
 <div className="flex gap-2 mb-8">
 
   <button
@@ -444,7 +470,6 @@ Maquillage  </button>
 </div>
   
 
-      {/* Services Grid */}
       {filteredServices.length === 0 ? (
         <p className="text-gray-500">Aucune prestation disponible.</p>
       ) : (
@@ -455,19 +480,19 @@ Maquillage  </button>
               className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between"
             >
               <div>
-                {/* Image & Duration Badge */}
                 <div className="relative h-44 bg-gray-100">
                   <img
-                    src={service.image || "https://via.placeholder.com/300"}
+src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-700 text-xs px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
-                    ⏱ <span>{service.duration} min</span>
+                      <Clock size={14} />
+
+                     <span>{service.duration} min</span>
                   </div>
                 </div>
 
-                {/* Body Content */}
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-2">
                     <h2 className="text-lg font-bold text-gray-900 leading-tight">
@@ -487,25 +512,27 @@ Maquillage  </button>
                 </div>
               </div>
 
-              {/* Action Buttons */}
+
               <div className="p-4 pt-0 flex items-center gap-2">
                <button
   onClick={() => setEditingService(service)}
   className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-2 rounded-lg flex items-center justify-center gap-1"
 >
-  ✏️ Modifier
+   Modifier
+           <Pencil size={18} />
+
 </button>
                 <button
  onClick={() => deleteService(service.id)}
   className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-gray-50"
 >
-  🗑️
+          <Trash2 size={18} />
+
 </button>
               </div>
             </div>
           ))}
 
-          {/* Card Nouvelle Prestation (Dashed) */}
           <div  
                       onClick={() => navigate("/services/ajouter")}
  

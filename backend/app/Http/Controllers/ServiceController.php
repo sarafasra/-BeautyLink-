@@ -13,6 +13,7 @@ class ServiceController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'duration' => 'required|integer',
+            'image' => 'nullable|url',
         ]);
 
         $service = Service::create([
@@ -22,6 +23,7 @@ class ServiceController extends Controller
              'description' => $request->description,
              'price' => $request->price,
              'duration' => $request->duration,
+             'image' => $request->image,
         ]);
 
 
@@ -54,6 +56,7 @@ class ServiceController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'duration' => 'required|integer',
+            'image' => 'nullable|url',
             ]);
 
             $service->update([
@@ -62,6 +65,8 @@ class ServiceController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'duration' => $request->duration,
+                'image' => $request->image,
+
             ]);
 
             return response()->json([
