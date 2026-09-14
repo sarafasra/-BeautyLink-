@@ -97,6 +97,7 @@ function Profile() {
                 <div className="flex items-center gap-1.5">
 {editMode ? (
     <div className="space-y-3 mt-4">
+
         <input
             type="text"
             value={name}
@@ -112,18 +113,54 @@ function Profile() {
             className="w-full border rounded-lg px-3 py-2"
             placeholder="Email"
         />
+
+        <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+            placeholder="Téléphone"
+        />
+
+        <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+            placeholder="Ville"
+        />
+
+        <input
+            type="text"
+            value={profession}
+            onChange={(e) => setProfession(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+            placeholder="Profession"
+        />
+
+        <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2"
+            placeholder="À propos de vous"
+            rows="4"
+        />
+
     </div>
 ) : (
     <h1 className="text-2xl font-bold">
         {user.name} ✓
     </h1>
-)}                  <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
+)}                 <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                       <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                     </svg>
                   </span>
                 </div>
-                <p className="text-gray-500 text-sm mt-0.5">Coiffeuse Professionnelle</p>
+                <p     
+
+                className="text-gray-500 text-sm mt-0.5">{user.profession || "Professionnel de beauté"}
+</p>
                 <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
                   <span className="text-amber-500 font-bold flex items-center gap-0.5">
                     ★ 4.9
@@ -131,7 +168,7 @@ function Profile() {
                   <span className="text-gray-400">(120 avis)</span>
                   <span className="text-gray-300">•</span>
                   <span className="flex items-center gap-1 text-gray-500">
-                    📍 Marrakech
+                    📍  {user.city || "Ville non renseignée"}
                   </span>
                 </div>
               </div>
@@ -278,12 +315,14 @@ function Profile() {
                   📍
                 </span>
                 <div>
-                  <h4 className="text-xs font-bold text-gray-800">Adresse</h4>
-                  <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-                    Gueliz, Rue de la Liberté
-                    <br />
-                    Marrakech, Maroc
-                  </p>
+                 <h4 className="text-xs font-bold text-gray-800">Ville</h4>
+<p className="text-xs text-gray-400 mt-1">
+    {user.city || "Ville non renseignée"}
+</p>
+<h4 className="text-xs font-bold text-gray-800 mt-3">Téléphone</h4>
+<p className="text-xs text-gray-400 mt-1">
+    {user.phone || "Téléphone non renseigné"}
+</p>
                 </div>
               </div>
 
@@ -318,8 +357,8 @@ function Profile() {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mt-6 lg:w-2/3">
           <h2 className="font-bold text-gray-900 text-base mb-2">À propos</h2>
           <p className="text-xs text-gray-400 leading-relaxed">
-            Coiffeuse professionnelle avec plus de 8 ans d'expérience dans les salons de prestige. 
-            Passionnée par mon métier, je vous accompagne pour révéler votre beauté naturelle.
+              {user.bio || "Aucune description pour le moment."}
+
           </p>
         </div>
 

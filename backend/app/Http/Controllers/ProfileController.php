@@ -18,7 +18,7 @@ class ProfileController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $user->id,
         'phone' => 'required|string|max:20',
-        'city' => 'required|string|max:20',
+        'city' => 'required|string|max:100',
         'profession' => 'nullable|string|max:100',
         'bio' => 'nullable|string',
     ]);   
