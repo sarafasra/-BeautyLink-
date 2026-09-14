@@ -506,7 +506,11 @@ Maquillage  </button>
           ))}
 
           {/* Card Nouvelle Prestation (Dashed) */}
-          <div className="border-2 border-dashed border-pink-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-pink-50/20 min-h-[320px] cursor-pointer hover:bg-pink-50/40">
+          <div  
+                      onClick={() => navigate("/services/ajouter")}
+ 
+          className="border-2 border-dashed border-pink-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-pink-50/20 min-h-[320px] cursor-pointer hover:bg-pink-50/40">
+
             <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xl font-bold mb-3">
               +
             </div>
