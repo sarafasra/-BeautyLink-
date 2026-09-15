@@ -1,13 +1,25 @@
-import {
-    Search,
-    CalendarDays,
-    Clock,
-    CheckCircle,
-    Pencil,
-    X,
-} from "lucide-react";
+import {Search,CalendarDays,Clock,CheckCircle,Pencil,X,} from "lucide-react";
+import { useEffect, useState } from "react";
+import api from "../services/api";
 
 function Reservations() {
+    const [reservations, setReservation] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        api.get("/professional/reservations")
+        .then((response) => {
+            serReservation(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+            
+        }) 
+        .finally(() => {
+            setLoading(false);
+        });
+    }, []
+);
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
