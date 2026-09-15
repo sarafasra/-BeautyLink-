@@ -25,4 +25,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index']);
     Route::get('/professional/reservations', [ReservationController::class, 'professionalReservations']);
 Route::post('/reservations', [ReservationController::class, 'store']);
+Route::put('/reservations/{id}/status', [ReservationController::class, 'updateStatus']);
 });

@@ -39,6 +39,17 @@ function Reservations() {
          return matchesSearch && matchesStatus;
     
     });
+    const confirmReservation = (id) => {
+        api/put(`/reservations/${id}/status`)
+        .then(() => {
+            setReservation((prev) => prev.map((reservation)=> reservation.id === id ? {...reservation,status: "confirmed"}
+             :reservation
+        ));
+        }).catch((error) => {
+            console.log(error);
+            
+        });
+    };
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
@@ -141,7 +152,7 @@ function Reservations() {
     Tous
 </button>
 
-                      <button
+ <button
     onClick={() => setStatusFilter("confirmed")}
     className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]"
 >
@@ -173,7 +184,7 @@ function Reservations() {
                 </p>
 
                 <p className="text-[9px] text-gray-500">
-                    ✂ {reservation.service?.title}
+                     {reservation.service?.title}
                 </p>
             </div>
         </div>
@@ -193,7 +204,14 @@ function Reservations() {
             <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-[8px] font-semibold">
                 {reservation.status}
             </span>
-
+{reservation.status === "pending" && (
+    <button
+        onClick={() => confirmReservation(reservation.id)}
+        className="px-3 py-1 rounded-md bg-[#d76ca1] text-white text-[9px]"
+    >
+        Accepter
+    </button>
+)}
             <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50">
                 <X size={13} />
             </button>
@@ -202,7 +220,6 @@ function Reservations() {
     </div>
 ))}
 
-                {/* Voir plus */}
                 <div className="py-4 text-center">
                     <button className="text-[10px] font-semibold text-[#A33F70]">
                         Voir plus de réservations
