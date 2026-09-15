@@ -61,6 +61,18 @@ class ReservationController extends Controller
             'reservation' => $reservation
         ]);
     }
+    public function cancel(Request $request, $id){
+        $reservation = Reservation::findOrFail($id);
+
+        $reservation->update([
+            'status' => 'cancelled',
+        ]);
+
+        return response()->json([
+            'message' => 'Réservation annulé avec succès',
+            'reservation' => $reservation
+        ]);
+    }
 
 
 }

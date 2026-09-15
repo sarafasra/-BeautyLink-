@@ -5,6 +5,7 @@ import api from "../services/api";
 function Reservations() {
     const [reservations, setReservation] = useState([]);
     const [search, setSearch] = useState("");
+    const [statusFilter, setStatusFilter] = useState("all");
 
     useEffect(() => {
         api.get("/professional/reservations")
@@ -29,27 +30,70 @@ function Reservations() {
             (reservation) => reservation.status === "pending"
          );
 
-         const filteredReservations = reservations.filter((reservation) => {
-         const matchesSearch = reservation.user?.name
-        ?.toLowerCase()
-        .includes(search.toLowerCase());
-         const matchesStatus = statusFilter === "all" || 
-         reservation.status === statusFilter;
+const filteredReservations = reservations.filter((reservation) => {
+    const searchName = reservation.user?.name?.toLowerCase();
+    const searchValue = search.toLowerCase();
 
-         return matchesSearch && matchesStatus;
-    
-    });
-    const confirmReservation = (id) => {
-        api/put(`/reservations/${id}/status`)
-        .then(() => {
-            setReservation((prev) => prev.map((reservation)=> reservation.id === id ? {...reservation,status: "confirmed"}
-             :reservation
-        ));
-        }).catch((error) => {
-            console.log(error);
-            
+    if (search !== "" && !searchName?.includes(searchValue)) {
+        return false;
+    }
+
+    if (statusFilter !== "all" && reservation.status !== statusFilter) {
+        return false;
+    }
+
+    return true;
+});
+  const confirmReservation = (id) => {
+    api.put(`/reservations/${id}/status`)
+    .then(() => {
+        const updatedReservations = reservations.map((reservation) => {
+            if (reservation.id === id){
+                return {
+                    ...reservation,
+                    status: "confirmed",
+                };
+            }
+            return reservation;
         });
-    };
+        setReservation(updatedReservations);
+    })
+    .catch((error) => {
+        console.log(error);
+        
+    });
+  };
+const cancelReservation = (id) => {
+    api.put(`/reservations/${id}/cancel`)
+        .then(() => {
+            const updatedReservations = reservations.map((reservation) => {
+                if (reservation.id === id) {
+                    return {
+                        ...reservation,
+                        status: "cancelled",
+                    };
+                }
+
+                return reservation;
+            });
+
+            setReservation(updatedReservations);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+
+const weekReservations = reservations.filter((reservation) => {
+    const date = new Date(reservation.date);
+    const today = new Date();
+
+    const diff = today - date;
+    const days = diff / (1000 * 60 * 60 * 24 );
+
+    return days >= 0 && days <= 7;
+});
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
@@ -94,7 +138,7 @@ function Reservations() {
                             </p>
 
                             <p className="text-sm font-bold text-[#252525]">
-                                5 Rendez-vous
+    {todayReservations.length} Rendez-vous
                             </p>
                         </div>
                     </div>
@@ -112,8 +156,7 @@ function Reservations() {
                             </p>
 
                             <p className="text-sm font-bold text-[#252525]">
-                                3 Demandes
-                            </p>
+{pendingReservations.length} Demandes                            </p>
                         </div>
                     </div>
                 </div>
@@ -130,8 +173,7 @@ function Reservations() {
                             </p>
 
                             <p className="text-sm font-bold text-[#252525]">
-                                24 Confirmés
-                            </p>
+{weekReservations.length} Réservations                            </p>
                         </div>
                     </div>
                 </div>
@@ -147,29 +189,37 @@ function Reservations() {
                     <div className="flex gap-2">
                     <button
     onClick={() => setStatusFilter("all")}
-    className="px-4 py-1 rounded-full bg-[#d76ca1] text-white text-[10px]"
->
+className={`px-4 py-1 rounded-full text-[10px] ${
+    statusFilter === "all"
+        ? "bg-[#d76ca1] text-white"
+        : "bg-gray-50 text-gray-600"
+}`}>
     Tous
 </button>
 
  <button
     onClick={() => setStatusFilter("confirmed")}
-    className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]"
->
+className={`px-4 py-1 rounded-full text-[10px] ${
+    statusFilter === "all"
+        ? "bg-[#d76ca1] text-white"
+        : "bg-gray-50 text-gray-600"
+}`}>
     Confirmés
 </button>
 
                       <button
     onClick={() => setStatusFilter("pending")}
-    className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]"
->
+className={`px-4 py-1 rounded-full text-[10px] ${
+    statusFilter === "all"
+        ? "bg-[#d76ca1] text-white"
+        : "bg-gray-50 text-gray-600"
+}`}>
     En attente
 </button>
                     </div>
                 </div>
 
-              {reservations.map((reservation) => (
-    <div
+{filteredReservations.map((reservation) => (    <div
         key={reservation.id}
         className="px-5 py-4 border-b border-gray-100 flex items-center justify-between"
     >
@@ -212,9 +262,13 @@ function Reservations() {
         Accepter
     </button>
 )}
-            <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50">
-                <X size={13} />
-            </button>
+           <button
+    onClick={() => cancelReservation(reservation.id)}
+    className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50"
+    title="Annuler"
+>
+    <X size={13} />
+</button>
 
         </div>
     </div>
