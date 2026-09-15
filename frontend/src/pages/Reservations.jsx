@@ -4,6 +4,7 @@ import api from "../services/api";
 
 function Reservations() {
     const [reservations, setReservation] = useState([]);
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         api.get("/professional/reservations")
@@ -27,6 +28,9 @@ function Reservations() {
          const pendingReservations = reservations.filter(
             (reservation) => reservation.status === "pending"
          );
+
+         const filteredReservations = reservation.filter((reservation) => 
+        reservation.user?.name?.toLowerCase().includes(search.toLocaleLowerCase()));
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
@@ -52,6 +56,8 @@ function Reservations() {
                     <input
                         type="text"
                         placeholder="Rechercher un client..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                         className="w-48 h-8 pl-9 pr-3 text-xs border border-gray-200 rounded-md outline-none focus:border-[#A33F70]"
                     />
                 </div>
