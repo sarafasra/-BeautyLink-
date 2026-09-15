@@ -40,7 +40,7 @@ class ReservationController extends Controller
 
     public function professionalReservations(Request $request){
         $reservations = Reservation::whereHas('service' , function ($query) use ($request){
-            $query->where('user_id', $request->yser()->id);
+            $query->where('user_id', $request->user()->id);
         })
         ->with(['service' , 'user'])
         ->get();

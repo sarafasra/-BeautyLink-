@@ -4,20 +4,17 @@ import api from "../services/api";
 
 function Reservations() {
     const [reservations, setReservation] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         api.get("/professional/reservations")
         .then((response) => {
-            serReservation(response.data);
+            setReservation(response.data);
         })
         .catch((error) => {
             console.log(error);
             
         }) 
-        .finally(() => {
-            setLoading(false);
-        });
+       
     }, []
 );
     return (
@@ -135,140 +132,50 @@ function Reservations() {
                     </div>
                 </div>
 
-                {/* Reservation 1 */}
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+              {reservations.map((reservation) => (
+    <div
+        key={reservation.id}
+        className="px-5 py-4 border-b border-gray-100 flex items-center justify-between"
+    >
+        <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-[#eadfd7] flex items-center justify-center text-xs font-semibold">
+                {reservation.user?.name?.charAt(0)}
+            </div>
 
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-[#eadfd7] flex items-center justify-center text-xs font-semibold">
-                            SL
-                        </div>
+            <div>
+                <p className="text-xs font-bold">
+                    {reservation.user?.name}
+                </p>
 
-                        <div>
-                            <p className="text-xs font-bold">
-                                Sophie Laurent
-                            </p>
+                <p className="text-[9px] text-gray-500">
+                    ✂ {reservation.service?.title}
+                </p>
+            </div>
+        </div>
 
-                            <p className="text-[9px] text-gray-500">
-                                ✂ Soin Visage Hydratant Profond
-                            </p>
-                        </div>
-                    </div>
+        <div className="flex items-center gap-3">
 
-                    <div className="flex items-center gap-3">
+            <div className="text-right">
+                <p className="text-[10px] font-semibold">
+                    {reservation.date}
+                </p>
 
-                        <div className="text-right">
-                            <p className="text-[10px] font-semibold">
-                                14 Oct. 2026
-                            </p>
+                <p className="text-[9px] text-[#A33F70]">
+                    {reservation.time}
+                </p>
+            </div>
 
-                            <p className="text-[9px] text-[#A33F70]">
-                                10:00 - 11:30
-                            </p>
-                        </div>
+            <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-[8px] font-semibold">
+                {reservation.status}
+            </span>
 
-                        <span className="px-2 py-1 rounded-full bg-[#f8dce9] text-[#A33F70] text-[8px] font-semibold">
-                            CONFIRMÉ
-                        </span>
+            <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50">
+                <X size={13} />
+            </button>
 
-                        <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">
-                            <Pencil size={13} />
-                        </button>
-
-                        <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50">
-                            <X size={13} />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Reservation 2 */}
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-500">
-                            CD
-                        </div>
-
-                        <div>
-                            <p className="text-xs font-bold">
-                                Claire Dubois
-                            </p>
-
-                            <p className="text-[9px] text-gray-500">
-                                ✂ Coupe & Brushing
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-
-                        <div className="text-right">
-                            <p className="text-[10px] font-semibold">
-                                14 Oct. 2026
-                            </p>
-
-                            <p className="text-[9px] text-[#A33F70]">
-                                14:00 - 15:00
-                            </p>
-                        </div>
-
-                        <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-[8px] font-semibold">
-                            EN ATTENTE
-                        </span>
-
-                        <button className="px-3 py-1.5 rounded-full bg-[#A33F70] text-white text-[9px]">
-                            ✓ Accepter
-                        </button>
-
-                        <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50">
-                            <X size={13} />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Reservation 3 */}
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-[#eadfd7] flex items-center justify-center text-xs font-semibold">
-                            ML
-                        </div>
-
-                        <div>
-                            <p className="text-xs font-bold">
-                                Marie Lemaire
-                            </p>
-
-                            <p className="text-[9px] text-gray-500">
-                                ✂ Maquillage Soirée
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-
-                        <div className="text-right">
-                            <p className="text-[10px] font-semibold">
-                                15 Oct. 2026
-                            </p>
-
-                            <p className="text-[9px] text-[#A33F70]">
-                                18:00 - 18:30
-                            </p>
-                        </div>
-
-                        <span className="px-2 py-1 rounded-full bg-[#f8dce9] text-[#A33F70] text-[8px] font-semibold">
-                            CONFIRMÉ
-                        </span>
-
-                        <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50">
-                            <Pencil size={13} />
-                        </button>
-
-                        <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50">
-                            <X size={13} />
-                        </button>
-                    </div>
-                </div>
+        </div>
+    </div>
+))}
 
                 {/* Voir plus */}
                 <div className="py-4 text-center">
