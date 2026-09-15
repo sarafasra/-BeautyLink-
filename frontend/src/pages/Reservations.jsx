@@ -17,6 +17,16 @@ function Reservations() {
        
     }, []
 );
+
+
+         const today = new Date().toISOString().split("T")[0];
+         const todayReservations = reservations.filter(
+            (reservation) => reservation.date === today
+         );
+
+         const pendingReservations = reservations.filter(
+            (reservation) => reservation.status === "pending"
+         );
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
