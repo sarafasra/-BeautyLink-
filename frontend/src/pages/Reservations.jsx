@@ -29,12 +29,19 @@ function Reservations() {
             (reservation) => reservation.status === "pending"
          );
 
-         const filteredReservations = reservation.filter((reservation) => 
-        reservation.user?.name?.toLowerCase().includes(search.toLocaleLowerCase()));
+         const filteredReservations = reservations.filter((reservation) => {
+         const matchesSearch = reservation.user?.name
+        ?.toLowerCase()
+        .includes(search.toLowerCase());
+         const matchesStatus = statusFilter === "all" || 
+         reservation.status === statusFilter;
+
+         return matchesSearch && matchesStatus;
+    
+    });
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
-            {/* Header */}
             <div className="flex justify-between items-start mb-7">
                 <div>
                     <h1 className="text-2xl font-bold text-[#A33F70]">
@@ -46,7 +53,6 @@ function Reservations() {
                     </p>
                 </div>
 
-                {/* Recherche */}
                 <div className="relative">
                     <Search
                         size={15}
@@ -63,10 +69,8 @@ function Reservations() {
                 </div>
             </div>
 
-            {/* Statistiques */}
             <div className="grid grid-cols-3 gap-5 mb-7">
 
-                {/* Aujourd'hui */}
                 <div className="bg-white rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#df72a8] flex items-center justify-center text-white">
@@ -85,7 +89,6 @@ function Reservations() {
                     </div>
                 </div>
 
-                {/* En attente */}
                 <div className="bg-white rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#f6d3e2] flex items-center justify-center text-[#A33F70]">
@@ -104,7 +107,6 @@ function Reservations() {
                     </div>
                 </div>
 
-                {/* Cette semaine */}
                 <div className="bg-white rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#b46be8] flex items-center justify-center text-white">
@@ -124,27 +126,34 @@ function Reservations() {
                 </div>
             </div>
 
-            {/* Réservations */}
             <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
 
-                {/* Header */}
                 <div className="px-5 py-4 border-b border-gray-100 flex justify-between items-center">
                     <h2 className="text-sm font-bold text-[#252525]">
                         Prochains Rendez-vous
                     </h2>
 
                     <div className="flex gap-2">
-                        <button className="px-4 py-1 rounded-full bg-[#d76ca1] text-white text-[10px]">
-                            Tous
-                        </button>
+                    <button
+    onClick={() => setStatusFilter("all")}
+    className="px-4 py-1 rounded-full bg-[#d76ca1] text-white text-[10px]"
+>
+    Tous
+</button>
 
-                        <button className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]">
-                            Confirmés
-                        </button>
+                      <button
+    onClick={() => setStatusFilter("confirmed")}
+    className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]"
+>
+    Confirmés
+</button>
 
-                        <button className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]">
-                            En attente
-                        </button>
+                      <button
+    onClick={() => setStatusFilter("pending")}
+    className="px-4 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px]"
+>
+    En attente
+</button>
                     </div>
                 </div>
 
