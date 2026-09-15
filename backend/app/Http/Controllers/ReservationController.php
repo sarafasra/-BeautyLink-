@@ -45,7 +45,22 @@ class ReservationController extends Controller
         ->with(['service' , 'user'])
         ->get();
 
+
         return response()->json($reservations);
     }
+
+    public function updateStatus(Request $request, $id){
+        $reservation = Reservation::findOrFail($id);
+
+        $reservation->update([
+            'status' => 'confirmed',
+        ]);
+
+        return response()->json([
+            'message' => 'Reservation confirmée avec succès',
+            'reservation' => $reservation
+        ]);
+    }
+
 
 }
