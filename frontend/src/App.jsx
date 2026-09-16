@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
-import Services from "./pages/Services";
+import Reservations from "./pages/Reservations";
 function App() {
     return (
         <BrowserRouter>
@@ -21,9 +21,7 @@ function App() {
                     
                 />
 <Route path="/profile" element={<Profile />} />
-   <Route path="/services"  element={<Services/>}/>
-   <Route path="/services/ajouter" element={<Services />} />
-            
+<Route  path="reservations" element={<Reservations/>}/>
             </Routes>
 
          

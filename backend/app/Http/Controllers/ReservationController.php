@@ -37,4 +37,42 @@ class ReservationController extends Controller
             'reservation' => $reservation
         ], 201);
     }
+
+    public function professionalReservations(Request $request){
+        $reservations = Reservation::whereHas('service' , function ($query) use ($request){
+            $query->where('user_id', $request->user()->id);
+        })
+        ->with(['service' , 'user'])
+        ->get();
+
+
+        return response()->json($reservations);
+    }
+
+    public function updateStatus(Request $request, $id){
+        $reservation = Reservation::findOrFail($id);
+
+        $reservation->update([
+            'status' => 'confirmed',
+        ]);
+
+        return response()->json([
+            'message' => 'Reservation confirmée avec succès',
+            'reservation' => $reservation
+        ]);
+    }
+    public function cancel(Request $request, $id){
+        $reservation = Reservation::findOrFail($id);
+
+        $reservation->update([
+            'status' => 'cancelled',
+        ]);
+
+        return response()->json([
+            'message' => 'Réservation annulé avec succès',
+            'reservation' => $reservation
+        ]);
+    }
+
+
 }

@@ -25,8 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update']);
 
     Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::get('/professional/reservations', [ReservationController::class, 'professionalReservations']);
 Route::post('/reservations', [ReservationController::class, 'store']);
-Route::post('/services', [ServiceController::class, 'store']);
-    Route::put('/services/{id}', [ServiceController::class, 'update']);
-   Route::delete('/services/{id}', [ServiceController::class,  'destroy']);
-});Route::get('/services', [ServiceController::class, 'index']);
+Route::put('/reservations/{id}/status', [ReservationController::class, 'updateStatus']);
+Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
+});
