@@ -192,30 +192,22 @@ const weekReservations = reservations.filter((reservation) => {
 className={`px-4 py-1 rounded-full text-[10px] ${
     statusFilter === "all"
         ? "bg-[#d76ca1] text-white"
-        : "bg-gray-50 text-gray-600"
-}`}>
-    Tous
-</button>
+        : "bg-gray-50 text-gray-600"}`}>
+                           Tous
+                     </button>
 
- <button
-    onClick={() => setStatusFilter("confirmed")}
-className={`px-4 py-1 rounded-full text-[10px] ${
-    statusFilter === "all"
-        ? "bg-[#d76ca1] text-white"
-        : "bg-gray-50 text-gray-600"
-}`}>
-    Confirmés
-</button>
+                               <button
+                                onClick={() => setStatusFilter("confirmed")}
+                                className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "all"? "bg-[#d76ca1] text-white" : "bg-gray-50 text-gray-600"}`}>
+                               Confirmés
+                           </button>
 
                       <button
-    onClick={() => setStatusFilter("pending")}
-className={`px-4 py-1 rounded-full text-[10px] ${
-    statusFilter === "all"
-        ? "bg-[#d76ca1] text-white"
-        : "bg-gray-50 text-gray-600"
-}`}>
-    En attente
-</button>
+                     onClick={() => setStatusFilter("pending")}
+                    className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "all" ? "bg-[#d76ca1] text-white"
+                     : "bg-gray-50 text-gray-600"}`}>
+                           En attente
+                      </button>
                     </div>
                 </div>
 
