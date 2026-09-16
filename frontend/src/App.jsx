@@ -4,6 +4,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Reservations from "./pages/Reservations";
+import Services from "./pages/Services";
+import CreateReservation from "./pages/CreateReservation";
+
 function App() {
     return (
         <BrowserRouter>
@@ -15,13 +18,25 @@ function App() {
 
                 <Route path="/register" element={<Register />} />
 
-                   <Route
+                <Route
                     path="/dashboard"
                     element={<Dashboard />}
-                    
                 />
-<Route path="/profile" element={<Profile />} />
-<Route  path="reservations" element={<Reservations/>}/>
+
+                <Route path="/profile" element={<Profile />} />
+
+                <Route path="/services" element={<Services />} />
+
+                <Route
+                    path="/reservations"
+                    element={<Reservations />}
+                />
+
+                <Route
+                    path="/reservations/create/:serviceId"
+                    element={<CreateReservation />}
+                />
+
             </Routes>
         </BrowserRouter>
     );
