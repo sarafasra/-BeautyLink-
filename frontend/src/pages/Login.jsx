@@ -21,8 +21,13 @@ function Login() {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setMessage("Connexion réussie !");
-
+            if(response.data.user.role === "client"){
+                navigate("/client.dashboard");
+            }else{
             navigate("/dashboard");
+
+            }
+
         } catch (error) {
             console.log(error);
 
