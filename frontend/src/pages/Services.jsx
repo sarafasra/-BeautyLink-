@@ -5,6 +5,8 @@ import api from "../services/api";
 
 function Services() {
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+const isClient = user?.role === "client";
   const isAddPage = window.location.pathname === "/services/ajouter";
 
   const [services, setServices] = useState([]);
@@ -407,15 +409,34 @@ const filteredServices = selectedCategory === "Toutes"
 )}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Mes prestations</h1>
-          <p className="text-sm text-gray-500">Gérez vos services, durées et tarifs.</p>
+          {isClient ? (
+  <>
+    <h1 className="text-2xl font-bold text-gray-900">
+      Prestations disponibles
+    </h1>
+    <p className="text-sm text-gray-500">
+      Découvrez les prestations proposées par nos professionnels.
+    </p>
+  </>
+) : (
+  <>
+    <h1 className="text-2xl font-bold text-gray-900">
+      Mes prestations
+    </h1>
+    <p className="text-sm text-gray-500">
+      Gérez vos services, durées et tarifs.
+    </p>
+  </>
+)}
         </div>
-     <button
-  onClick={() => navigate("/services/ajouter")}
-  className="bg-[#9A3B68] text-white px-5 py-3 rounded-xl"
->
-  + Ajouter une prestation
-</button>
+   {!isClient && (
+  <button
+    onClick={() => navigate("/services/ajouter")}
+    className="bg-[#9A3B68] text-white px-5 py-3 rounded-xl"
+  >
+    + Ajouter une prestation
+  </button>
+)}
       </div>
   {message && (
       <div className="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-6">
@@ -513,44 +534,54 @@ src={service.image}
               </div>
 
 
-              <div className="p-4 pt-0 flex items-center gap-2">
-               <button
-  onClick={() => setEditingService(service)}
-  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-2 rounded-lg flex items-center justify-center gap-1"
->
-   Modifier
-           <Pencil size={18} />
+            {!isClient && (
+  <div className="p-4 pt-0 flex items-center gap-2">
+    <button
+      onClick={() => setEditingService(service)}
+      className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-2 rounded-lg flex items-center justify-center gap-1"
+    >
+      Modifier
+      <Pencil size={18} />
+    </button>
 
-</button>
-                <button
- onClick={() => deleteService(service.id)}
-  className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-gray-50"
->
-          <Trash2 size={18} />
+    <button
+      onClick={() => deleteService(service.id)}
+      className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-gray-50"
+    >
+      <Trash2 size={18} />
+    </button>
+  </div>
+)}
+{isClient && (
+  <div className="px-4 pb-4">
+    <button
+      onClick={() => navigate(`/reservations/create/${service.id}`)}
+      className="w-full bg-[#9A3B68] hover:bg-[#7f3056] text-white text-sm font-medium py-2 rounded-lg"
+    >
+      Réserver
+    </button>
+  </div>
+)}
 
-</button>
-              </div>
+
             </div>
           ))}
 
-          <div  
-                      onClick={() => navigate("/services/ajouter")}
- 
-          className="border-2 border-dashed border-pink-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-pink-50/20 min-h-[320px] cursor-pointer hover:bg-pink-50/40">
+        {!isClient && (
+  <div
+    onClick={() => navigate("/services/ajouter")}
+    className="border-2 border-dashed border-pink-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-pink-50/20 min-h-[320px] cursor-pointer hover:bg-pink-50/40"
+  >
+    ...
+  </div>
+)}
 
-            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xl font-bold mb-3">
-              +
-            </div>
-            <h3 className="font-bold text-gray-900 text-base mb-1">
-              Nouvelle Prestation
-            </h3>
-            <p className="text-xs text-gray-400 max-w-[180px]">
-              Cliquez pour ajouter un nouveau service à votre catalogue.
-            </p>
-          </div>
+
         </div>
       )}
+  
     </div>
+    
   );
 }
 
