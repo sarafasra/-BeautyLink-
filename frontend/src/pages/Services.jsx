@@ -567,12 +567,20 @@ src={service.image}
             </div>
           ))}
 
-        {!isClient && (
+       {!isClient && (
   <div
     onClick={() => navigate("/services/ajouter")}
     className="border-2 border-dashed border-pink-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-pink-50/20 min-h-[320px] cursor-pointer hover:bg-pink-50/40"
   >
-    ...
+    <div className="text-4xl text-[#9A3B68] mb-3">+</div>
+
+    <h3 className="font-semibold text-gray-800">
+      Ajouter une prestation
+    </h3>
+
+    <p className="text-sm text-gray-500 mt-1">
+      Créez une nouvelle prestation
+    </p>
   </div>
 )}
 
