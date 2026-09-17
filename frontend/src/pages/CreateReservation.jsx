@@ -60,8 +60,7 @@ function CreateReservation() {
             setMessage("Réservation créée avec succès !");
 
             setTimeout(() => {
-                navigate("/reservations");
-            }, 1000);
+navigate("/client/reservations");            }, 1000);
         } catch (error) {
             console.error(error);
             setMessage("Erreur lors de la réservation.");
@@ -89,7 +88,6 @@ function CreateReservation() {
 
             <div className="w-full max-w-md bg-white rounded-2xl shadow-md overflow-hidden">
 
-                {/* Header */}
                 <div className="flex items-center justify-center border-b px-4 py-4">
                     <h1 className="text-sm font-medium text-gray-700">
                         Réservation
@@ -98,7 +96,6 @@ function CreateReservation() {
 
                 <div className="p-4">
 
-                    {/* Service */}
                     <div className="flex gap-3 bg-[#faf8f8] border border-gray-100 rounded-xl p-3 mb-6">
 
                         {service.image ? (
@@ -109,7 +106,7 @@ function CreateReservation() {
                             />
                         ) : (
                             <div className="w-16 h-16 rounded-lg bg-pink-100 flex items-center justify-center text-[#9A3B68]">
-                                ✨
+                                
                             </div>
                         )}
 
@@ -131,7 +128,6 @@ function CreateReservation() {
 
                     <form onSubmit={handleReservation}>
 
-                        {/* Date */}
                         <div className="mb-6">
 
                             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -149,7 +145,6 @@ function CreateReservation() {
 
                         </div>
 
-                        {/* Heure */}
                         <div className="mb-6">
 
                             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -177,14 +172,12 @@ function CreateReservation() {
 
                         </div>
 
-                        {/* Message */}
                         {message && (
                             <p className="text-center text-sm text-gray-600 mb-4">
                                 {message}
                             </p>
                         )}
 
-                        {/* Confirm */}
                         <button
                             type="submit"
                             className="w-full bg-[#9A3B68] hover:bg-[#7f3056] text-white font-medium py-3 rounded-full"

@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Services from "./pages/Services";
 import CreateReservation from "./pages/CreateReservation";
+import ClientReservations from "./pages/ClientReservations";
 function App() {
     return (
         <BrowserRouter>
@@ -28,6 +29,11 @@ function App() {
             <Route
     path="/reservations/create/:serviceId"
     element={<CreateReservation />}
+/>
+
+<Route
+    path="/client/reservations"
+    element={<ClientReservations />}
 />
             </Routes>
 

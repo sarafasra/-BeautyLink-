@@ -6,10 +6,8 @@ function Dashboard() {
     return (
         <div className="min-h-screen bg-[#faf9f9] flex">
 
-            {/* Sidebar */}
             <aside className="w-56 bg-[#292929] text-white flex flex-col min-h-screen">
 
-                {/* Logo */}
                 <div className="p-5">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-[#8E3A62] flex items-center justify-center">
@@ -28,7 +26,6 @@ function Dashboard() {
                     </div>
                 </div>
 
-                {/* Navigation */}
                 <nav className="px-3 space-y-2">
 
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#A33F70] text-white text-sm font-medium">
@@ -42,10 +39,12 @@ function Dashboard() {
 >
     Mes prestations
 </Link>
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Mes réservations
-                    </button>
+                  <Link
+    to="/client/reservations"
+    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+>
+    Mes réservations
+</Link>
 
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
                         
@@ -67,12 +66,8 @@ function Dashboard() {
 </Link>
                 </nav>
 
-                {/* Bottom */}
                 <div className="mt-auto p-4 space-y-8">
 
-                    <button className="w-full py-2.5 rounded-full bg-[#A33F70] hover:bg-[#8E3A62] text-white text-xs font-semibold">
-                         Ajouter une réservation
-                    </button>
 
                     <button className="w-full flex items-center gap-3 px-3 text-gray-300 text-sm hover:text-white">
                         
@@ -84,10 +79,8 @@ function Dashboard() {
             </aside>
 
 
-            {/* Main Content */}
             <main className="flex-1 p-8 overflow-y-auto">
 
-                {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-[#252525]">
                         Bonjour {user?.name || "Amina"} 
@@ -99,7 +92,6 @@ function Dashboard() {
                 </div>
 
 
-                {/* Statistics */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-9">
 
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -149,10 +141,8 @@ function Dashboard() {
                 </div>
 
 
-                {/* Bottom Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
 
-                    {/* Reservations */}
                     <section className="lg:col-span-2">
 
                         <div className="flex justify-between items-center mb-4">
@@ -166,7 +156,6 @@ function Dashboard() {
                         </div>
 
 
-                        {/* Reservation 1 */}
                         <div className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm">
 
                             <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
@@ -194,7 +183,6 @@ function Dashboard() {
                         </div>
 
 
-                        {/* Reservation 2 */}
                         <div className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm">
 
                             <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
@@ -222,7 +210,6 @@ function Dashboard() {
                         </div>
 
 
-                        {/* Reservation 3 */}
                         <div className="bg-white rounded-2xl p-4 flex items-center gap-4 shadow-sm">
 
                             <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
@@ -252,7 +239,6 @@ function Dashboard() {
                     </section>
 
 
-                    {/* Inspirations */}
                     <section>
 
                         <h2 className="text-lg font-bold text-[#252525] mb-4">
