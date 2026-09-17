@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
 
@@ -6,16 +6,49 @@ function CreateReservation() {
     const { serviceId } = useParams();
     const navigate = useNavigate();
 
+    const [service, setService] = useState(null);
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [message, setMessage] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    const handleSubmit = async (e) => {
+    const times = [
+        "09:00",
+        "10:00",
+        "11:00",
+        "14:00",
+        "15:00",
+        "16:00",
+    ];
+
+    useEffect(() => {
+        const getService = async () => {
+            try {
+                const response = await api.get("/services");
+
+                const foundService = response.data.find(
+                    (item) => item.id === Number(serviceId)
+                );
+
+                setService(foundService);
+            } catch (error) {
+                console.error(error);
+                setMessage("Impossible de charger la prestation.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getService();
+    }, [serviceId]);
+
+    const handleReservation = async (e) => {
         e.preventDefault();
 
-        setLoading(true);
-        setMessage("");
+        if (!date || !time) {
+            setMessage("Veuillez choisir une date et une heure.");
+            return;
+        }
 
         try {
             await api.post("/reservations", {
@@ -28,85 +61,141 @@ function CreateReservation() {
 
             setTimeout(() => {
                 navigate("/reservations");
-            }, 1500);
-
+            }, 1000);
         } catch (error) {
-            console.log(error.response?.data);
-            setMessage("Une erreur est survenue.");
-        } finally {
-            setLoading(false);
+            console.error(error);
+            setMessage("Erreur lors de la réservation.");
         }
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p>Chargement...</p>
+            </div>
+        );
+    }
+
+    if (!service) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p>Prestation introuvable.</p>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen bg-pink-50/40 p-8">
+        <div className="min-h-screen bg-[#f8f6f6] flex justify-center p-4">
 
-            <div className="max-w-xl mx-auto">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-md overflow-hidden">
 
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                    Réserver une prestation
-                </h1>
+                {/* Header */}
+                <div className="flex items-center justify-center border-b px-4 py-4">
+                    <h1 className="text-sm font-medium text-gray-700">
+                        Réservation
+                    </h1>
+                </div>
 
-                <p className="text-sm text-gray-500 mb-6">
-                    Choisissez la date et l'heure de votre rendez-vous.
-                </p>
+                <div className="p-4">
 
-                {message && (
-                    <div className="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-5">
-                        {message}
+                    {/* Service */}
+                    <div className="flex gap-3 bg-[#faf8f8] border border-gray-100 rounded-xl p-3 mb-6">
+
+                        {service.image ? (
+                            <img
+                                src={service.image}
+                                alt={service.title}
+                                className="w-16 h-16 rounded-lg object-cover"
+                            />
+                        ) : (
+                            <div className="w-16 h-16 rounded-lg bg-pink-100 flex items-center justify-center text-[#9A3B68]">
+                                ✨
+                            </div>
+                        )}
+
+                        <div>
+                            <h2 className="font-medium text-gray-800">
+                                {service.title}
+                            </h2>
+
+                            <p className="text-sm text-gray-500">
+                                {service.user?.name}
+                            </p>
+
+                            <p className="text-sm text-[#9A3B68] mt-1">
+                                {service.price} DH
+                            </p>
+                        </div>
+
                     </div>
-                )}
 
-                <form
-                    onSubmit={handleSubmit}
-                    className="bg-white p-6 rounded-2xl shadow-sm"
-                >
+                    <form onSubmit={handleReservation}>
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Date
-                    </label>
+                        {/* Date */}
+                        <div className="mb-6">
 
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="w-full border rounded-lg p-3 mb-5"
-                        required
-                    />
+                            <label className="block text-sm font-medium text-gray-700 mb-3">
+                                Choisir une date
+                            </label>
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Heure
-                    </label>
+                            <input
+                                type="date"
+                                value={date}
+                                min={new Date().toISOString().split("T")[0]}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="w-full border border-pink-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-pink-200"
+                                required
+                            />
 
-                    <input
-                        type="time"
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
-                        className="w-full border rounded-lg p-3 mb-6"
-                        required
-                    />
+                        </div>
 
-                    <div className="flex gap-3">
+                        {/* Heure */}
+                        <div className="mb-6">
 
+                            <label className="block text-sm font-medium text-gray-700 mb-3">
+                                Choisir une heure
+                            </label>
+
+                            <div className="grid grid-cols-3 gap-3">
+
+                                {times.map((item) => (
+                                    <button
+                                        key={item}
+                                        type="button"
+                                        onClick={() => setTime(item)}
+                                        className={`py-2 rounded-full text-sm border transition ${
+                                            time === item
+                                                ? "bg-[#9A3B68] text-white border-[#9A3B68]"
+                                                : "bg-white text-gray-700 border-pink-200 hover:bg-pink-50"
+                                        }`}
+                                    >
+                                        {item}
+                                    </button>
+                                ))}
+
+                            </div>
+
+                        </div>
+
+                        {/* Message */}
+                        {message && (
+                            <p className="text-center text-sm text-gray-600 mb-4">
+                                {message}
+                            </p>
+                        )}
+
+                        {/* Confirm */}
                         <button
                             type="submit"
-                            disabled={loading}
-                            className="bg-[#9A3B68] text-white px-5 py-3 rounded-lg"
+                            className="w-full bg-[#9A3B68] hover:bg-[#7f3056] text-white font-medium py-3 rounded-full"
                         >
-                            {loading ? "Confirmation..." : "Confirmer la réservation"}
+                            Confirmer la réservation
                         </button>
 
-                        <button
-                            type="button"
-                            onClick={() => navigate("/services")}
-                            className="bg-gray-200 px-5 py-3 rounded-lg"
-                        >
-                            Annuler
-                        </button>
+                    </form>
 
-                    </div>
+                </div>
 
-                </form>
             </div>
         </div>
     );
