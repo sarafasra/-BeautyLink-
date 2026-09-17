@@ -21,8 +21,13 @@ function Login() {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setMessage("Connexion réussie !");
-
+            if(response.data.user.role === "client"){
+                navigate("/client.dashboard");
+            }else{
             navigate("/dashboard");
+
+            }
+
         } catch (error) {
             console.log(error);
 
@@ -69,7 +74,6 @@ function Login() {
 
                     <form onSubmit={handleLogin} className="space-y-4">
                         
-                        {/* Email Input */}
                         <div>
                             <label className="block text-xs font-semibold text-gray-700 mb-1">Adresse e-mail</label>
                             <input
@@ -82,7 +86,6 @@ function Login() {
                             />
                         </div>
 
-                        {/* Password Input */}
                         <div>
                             <div className="flex justify-between items-center mb-1">
                                 <label className="text-xs font-semibold text-gray-700">Mot de passe</label>
@@ -107,7 +110,6 @@ function Login() {
                             </div>
                         </div>
 
-                        {/* Submit Button */}
                         <button
                             type="submit"
                             className="w-full py-3 bg-[#8E3A62] hover:bg-[#783052] text-white text-xs sm:text-sm font-semibold rounded-xl shadow-md transition duration-200 mt-2"
@@ -116,14 +118,12 @@ function Login() {
                         </button>
                     </form>
 
-                    {/* Message Feedback */}
                     {message && (
                         <p className={`mt-3 text-xs text-center font-medium ${message.includes("réussie") ? "text-green-600" : "text-red-500"}`}>
                             {message}
                         </p>
                     )}
 
-                    {/* Divider */}
                     <div className="relative my-6 text-center">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-gray-200"></div>
@@ -131,7 +131,6 @@ function Login() {
                         <span className="relative bg-[#faf9f9] px-3 text-[11px] text-gray-400 uppercase font-medium">Ou continuer avec</span>
                     </div>
 
-                    {/* Social Buttons */}
                     <div className="grid grid-cols-2 gap-3">
                         <button type="button" className="flex items-center justify-center gap-2 py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-medium text-gray-700 hover:bg-gray-50 transition shadow-sm">
                             Google

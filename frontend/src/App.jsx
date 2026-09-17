@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import Reservations from "./pages/Reservations";
 import Services from "./pages/Services";
 import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
@@ -37,7 +38,11 @@ function App() {
 />
             </Routes>
 
-         
+                <Route path="/services" element={<Services />} />
+
+                <Route path="/services/ajouter" element={<Services />} />
+
+            </Routes>
         </BrowserRouter>
     );
 }
