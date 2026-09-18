@@ -55,7 +55,6 @@ function Profile() {
     <div className="bg-[#faf8f9] min-h-screen p-6 font-sans text-gray-800">
       <div className="max-w-5xl mx-auto">
         
-        {/* Breadcrumb Navigation */}
         <div className="text-xs text-gray-400 mb-4 flex items-center gap-1">
           <span>Accueil</span>
           <span>›</span>
@@ -64,16 +63,13 @@ function Profile() {
           <span className="text-gray-700 font-medium">{user.name || "Amina Beauty"}</span>
         </div>
 
-        {/* Header / Cover Section */}
         <div className="bg-white rounded-3xl shadow-sm overflow-hidden mb-6">
-          {/* Cover Image */}
           <div className="h-64 relative bg-pink-100">
             <img
               src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
               alt="Cover"
               className="w-full h-full object-cover"
             />
-            {/* Heart Button */}
             <button className="absolute top-4 right-4 bg-white/80 hover:bg-white p-2.5 rounded-full shadow-sm text-gray-600 transition-all">
               <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -81,10 +77,8 @@ function Profile() {
             </button>
           </div>
 
-          {/* Profile Info Row */}
           <div className="px-8 pb-6 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
             <div className="flex items-end gap-5">
-              {/* Profile Avatar */}
               <div className="w-28 h-28 rounded-full border-4 border-white shadow-md overflow-hidden -mt-12 bg-white relative z-10">
                 <img
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
@@ -93,7 +87,6 @@ function Profile() {
                 />
               </div>
 
-              {/* Name & Details */}
               <div className="mb-1">
                 <div className="flex items-center gap-1.5">
 {editMode ? (
@@ -176,7 +169,6 @@ function Profile() {
               </div>
             </div>
 
-            {/* Contact Button */}
             
             <button
     onClick={() => setEditMode(true)}
@@ -196,7 +188,6 @@ function Profile() {
           </div>
         </div>
 
-        {/* Navigation Tabs */}
         <div className="flex gap-8 border-b border-gray-200/60 mb-6 text-sm font-medium text-gray-500 px-2">
           <button className="pb-3 hover:text-gray-700">À propos</button>
           <button className="pb-3 border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold">
@@ -206,14 +197,11 @@ function Profile() {
           <button className="pb-3 hover:text-gray-700">Photos</button>
         </div>
 
-        {/* Content Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          {/* Left Side: Prestations List */}
           <div className="lg:col-span-2 space-y-3">
             <h2 className="font-bold text-gray-900 text-base mb-2">Prestations</h2>
 
-            {/* Service Item 1 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <img
@@ -230,12 +218,9 @@ function Profile() {
                   </p>
                 </div>
               </div>
-              <button className="bg-[#FDF2F7] text-[#9E3B68] font-medium px-5 py-2 rounded-xl text-xs hover:bg-[#FCE5F0] transition-colors">
-                Réserver
-              </button>
+              
             </div>
 
-            {/* Service Item 2 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <img
@@ -253,12 +238,9 @@ function Profile() {
                   </p>
                 </div>
               </div>
-              <button className="bg-[#FDF2F7] text-[#9E3B68] font-medium px-5 py-2 rounded-xl text-xs hover:bg-[#FCE5F0] transition-colors">
-                Réserver
-              </button>
+             
             </div>
 
-            {/* Service Item 3 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <img
@@ -277,12 +259,9 @@ function Profile() {
                   </p>
                 </div>
               </div>
-              <button className="bg-[#FDF2F7] text-[#9E3B68] font-medium px-5 py-2 rounded-xl text-xs hover:bg-[#FCE5F0] transition-colors">
-                Réserver
-              </button>
+             
             </div>
 
-            {/* Service Item 4 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <img
@@ -299,20 +278,16 @@ function Profile() {
                   </p>
                 </div>
               </div>
-              <button className="bg-[#FDF2F7] text-[#9E3B68] font-medium px-5 py-2 rounded-xl text-xs hover:bg-[#FCE5F0] transition-colors">
-                Réserver
-              </button>
+            
             </div>
           </div>
 
-          {/* Right Side: Informations Pratiques */}
           <div>
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <h2 className="font-bold text-gray-900 text-base mb-4">
                 Informations pratiques
               </h2>
 
-              {/* Address */}
               <div className="flex items-start gap-3 mb-5">
                 <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
                   <MapPin size={14} />
@@ -329,7 +304,6 @@ function Profile() {
                 </div>
               </div>
 
-              {/* Working Hours */}
               <div className="flex items-start gap-3">
                 <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
                   <Clock size={13} />
