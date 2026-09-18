@@ -23,6 +23,8 @@ function App() {
 <Route path="/profile" element={<Profile />} />
 <Route  path="reservations" element={<Reservations/>}/>
             </Routes>
+
+         
         </BrowserRouter>
     );
 }
