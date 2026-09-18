@@ -44,33 +44,38 @@ const filteredReservations = reservations.filter((reservation) => {
 
     return true;
 });
-  const confirmReservation = (id) => {
-    api.put(`/reservations/${id}/status`)
+ const confirmReservation = (id) => {
+    api.put(`/reservations/${id}/status`, {
+        status: "accepted",
+    })
     .then(() => {
         const updatedReservations = reservations.map((reservation) => {
-            if (reservation.id === id){
+            if (reservation.id === id) {
                 return {
                     ...reservation,
-                    status: "confirmed",
+                    status: "accepted",
                 };
             }
+
             return reservation;
         });
+
         setReservation(updatedReservations);
     })
     .catch((error) => {
         console.log(error);
-        
     });
-  };
-const cancelReservation = (id) => {
-    api.put(`/reservations/${id}/cancel`)
+};
+const refuseReservation = (id) => {
+    api.put(`/reservations/${id}/status`, {
+        status: "refused",
+    })
         .then(() => {
             const updatedReservations = reservations.map((reservation) => {
                 if (reservation.id === id) {
                     return {
                         ...reservation,
-                        status: "cancelled",
+                        status: "refused",
                     };
                 }
 
@@ -253,14 +258,23 @@ className={`px-4 py-1 rounded-full text-[10px] ${
     >
         Accepter
     </button>
+)}{reservation.status === "pending" && (
+    <>
+        <button
+            onClick={() => confirmReservation(reservation.id)}
+            className="px-3 py-1 rounded-md bg-[#d76ca1] text-white text-[9px]"
+        >
+            Accepter
+        </button>
+
+        <button
+            onClick={() => refuseReservation(reservation.id)}
+            className="px-3 py-1 rounded-md border border-red-200 text-red-500 text-[9px] hover:bg-red-50"
+        >
+            Refuser
+        </button>
+    </>
 )}
-           <button
-    onClick={() => cancelReservation(reservation.id)}
-    className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-red-50"
-    title="Annuler"
->
-    <X size={13} />
-</button>
 
         </div>
     </div>
