@@ -44,12 +44,6 @@ function Dashboard() {
 >
     Mes réservations
 </Link>
-                  <Link
-    to="/client/reservations"
-    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
->
-    Mes réservations
-</Link>
 
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
                         
