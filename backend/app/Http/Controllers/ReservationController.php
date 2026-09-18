@@ -53,7 +53,7 @@ class ReservationController extends Controller
         $reservation = Reservation::findOrFail($id);
 
         $reservation->update([
-            'status' => 'confirmed',
+            'status' => 'accepted',
         ]);
 
         return response()->json([

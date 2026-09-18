@@ -51,7 +51,7 @@ const filteredReservations = reservations.filter((reservation) => {
             if (reservation.id === id){
                 return {
                     ...reservation,
-                    status: "confirmed",
+                    status: "accepted",
                 };
             }
             return reservation;
@@ -197,7 +197,7 @@ className={`px-4 py-1 rounded-full text-[10px] ${
                      </button>
 
                                <button
-                                onClick={() => setStatusFilter("confirmed")}
+                                onClick={() => setStatusFilter("accepted")}
                                 className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "all"? "bg-[#d76ca1] text-white" : "bg-gray-50 text-gray-600"}`}>
                                Confirmés
                            </button>
