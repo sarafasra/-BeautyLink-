@@ -191,29 +191,42 @@ const weekReservations = reservations.filter((reservation) => {
                         Prochains Rendez-vous
                     </h2>
 
-                    <div className="flex gap-2">
-                    <button
-    onClick={() => setStatusFilter("all")}
-className={`px-4 py-1 rounded-full text-[10px] ${
-    statusFilter === "all"
-        ? "bg-[#d76ca1] text-white"
-        : "bg-gray-50 text-gray-600"}`}>
-                           Tous
-                     </button>
+                  <div className="flex gap-2">
 
-                               <button
-                                onClick={() => setStatusFilter("confirmed")}
-                                className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "all"? "bg-[#d76ca1] text-white" : "bg-gray-50 text-gray-600"}`}>
-                               Confirmés
-                           </button>
+    <button
+        onClick={() => setStatusFilter("all")}
+        className={`px-4 py-1 rounded-full text-[10px] ${
+            statusFilter === "all"
+                ? "bg-[#d76ca1] text-white"
+                : "bg-gray-50 text-gray-600"
+        }`}
+    >
+        Tous
+    </button>
 
-                      <button
-                     onClick={() => setStatusFilter("pending")}
-                    className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "all" ? "bg-[#d76ca1] text-white"
-                     : "bg-gray-50 text-gray-600"}`}>
-                           En attente
-                      </button>
-                    </div>
+    <button
+        onClick={() => setStatusFilter("accepted")}
+        className={`px-4 py-1 rounded-full text-[10px] ${
+            statusFilter === "accepted"
+                ? "bg-[#d76ca1] text-white"
+                : "bg-gray-50 text-gray-600"
+        }`}
+    >
+        Confirmés
+    </button>
+
+    <button
+        onClick={() => setStatusFilter("pending")}
+        className={`px-4 py-1 rounded-full text-[10px] ${
+            statusFilter === "pending"
+                ? "bg-[#d76ca1] text-white"
+                : "bg-gray-50 text-gray-600"
+        }`}
+    >
+        En attente
+    </button>
+
+</div>
                 </div>
 
 {filteredReservations.map((reservation) => (    <div
@@ -252,13 +265,6 @@ className={`px-4 py-1 rounded-full text-[10px] ${
                 {reservation.status}
             </span>
 {reservation.status === "pending" && (
-    <button
-        onClick={() => confirmReservation(reservation.id)}
-        className="px-3 py-1 rounded-md bg-[#d76ca1] text-white text-[9px]"
-    >
-        Accepter
-    </button>
-)}{reservation.status === "pending" && (
     <>
         <button
             onClick={() => confirmReservation(reservation.id)}
