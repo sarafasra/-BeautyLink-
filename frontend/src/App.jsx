@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Reservations from "./pages/Reservations";
 import Services from "./pages/Services";
+import CreateReservation from "./pages/CreateReservation";
+import ClientReservations from "./pages/ClientReservations";
 
 function App() {
     return (
@@ -21,9 +23,27 @@ function App() {
 
                 <Route path="/profile" element={<Profile />} />
 
+                <Route path="/services" element={<Services />} />
+
+                <Route path="/services/ajouter" element={<Services />} />
+
                 <Route path="/reservations" element={<Reservations />} />
 
-                <Route path="/services" element={<Services />} />
+                <Route
+                    path="/reservations/create/:serviceId"
+                    element={<CreateReservation />}
+                />
+
+                <Route
+                    path="/client/reservations"
+                    element={<ClientReservations />}
+                />
+
+                {/* Ancienne URL du dashboard client */}
+                <Route
+                    path="/client.dashboard"
+                    element={<Dashboard />}
+                />
 
             </Routes>
         </BrowserRouter>

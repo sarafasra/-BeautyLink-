@@ -9,29 +9,35 @@ function Login() {
     const [message, setMessage] = useState("");
      const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+const handleLogin = async (e) => {
+    e.preventDefault();
 
-        try {
-            const response = await api.post("/login", {
-                email,
-                password,
-            });
+    try {
+        const response = await api.post("/login", {
+            email,
+            password,
+        });
 
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user", JSON.stringify(response.data.user));
-            setMessage("Connexion réussie !");
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
+        setMessage("Connexion réussie !");
+
+        if (response.data.user.role === "client") {
             navigate("/dashboard");
-        } catch (error) {
-            console.log(error);
-
-            setMessage(
-                error.response?.data?.message ||
-                "Erreur de connexion avec le serveur"
-            );
+        } else {
+            navigate("/dashboard");
         }
-    };
+
+    } catch (error) {
+        console.log(error);
+
+        setMessage(
+            error.response?.data?.message ||
+            "Erreur de connexion avec le serveur"
+        );
+    }
+};
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
