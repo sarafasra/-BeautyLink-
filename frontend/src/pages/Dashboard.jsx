@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
-
+const isClient = user?.role === "client";
     return (
         <div className="min-h-screen bg-[#faf9f9] flex">
 
@@ -39,7 +39,7 @@ function Dashboard() {
 >
     Mes prestations
 </Link><Link
-    to="/reservations"
+    to={user?.role === "client" ? "/client/reservations" : "/reservations"}
     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
 >
     Mes réservations

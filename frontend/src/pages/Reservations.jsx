@@ -31,18 +31,9 @@ function Reservations() {
          );
 
 const filteredReservations = reservations.filter((reservation) => {
-    const searchName = reservation.user?.name?.toLowerCase();
-    const searchValue = search.toLowerCase();
+    const name = reservation.user?.name || "";
 
-    if (search !== "" && !searchName?.includes(searchValue)) {
-        return false;
-    }
-
-    if (statusFilter !== "all" && reservation.status !== statusFilter) {
-        return false;
-    }
-
-    return true;
+    return name.toLowerCase().includes(search.toLowerCase());
 });
  const confirmReservation = (id) => {
     api.put(`/reservations/${id}/status`, {
@@ -119,13 +110,13 @@ const weekReservations = reservations.filter((reservation) => {
                         className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                     />
 
-                    <input
-                        type="text"
-                        placeholder="Rechercher un client..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="w-48 h-8 pl-9 pr-3 text-xs border border-gray-200 rounded-md outline-none focus:border-[#A33F70]"
-                    />
+                 <input
+    type="text"
+    placeholder="Rechercher un client..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="w-48 h-8 pl-9 pr-3 text-xs border border-gray-200 rounded-md outline-none focus:border-[#A33F70]"
+/>
                 </div>
             </div>
 
