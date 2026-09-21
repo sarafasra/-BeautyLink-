@@ -20,6 +20,7 @@ protected $fillable = [
     'profession',
     'bio',
     'profile_photo',
+
 ];
 
     protected $hidden = [
@@ -49,4 +50,5 @@ protected $fillable = [
     {
         return $this->hasMany(Review::class);
     }
+    
 }

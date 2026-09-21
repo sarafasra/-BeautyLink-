@@ -28,30 +28,42 @@ class ProfileController extends Controller
             'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
 
     ]);   
-    if ($request->hasFile('profile_photo')) {
+     if ($request->hasFile('profile_photo')) {
+    $path = $request->file('profile_photo')->store('profile_photos', 'public');
 
-    if ($user->profile_photo) {
-        Storage::disk('public')->delete($user->profile_photo);
-    }
-
-    $profilePhoto = $request->file('profile_photo')->store('profile_photos', 'public');
-
-    $user->profile_photo = $profilePhoto;
+    $user->profile_photo = $path;
 }
-     
    
-$user->update([
-    'name' => $request->name,
-    'email' => $request->email,
-    'phone' => $request->phone,
-    'city' => $request->city,
-    'profession' => $request->profession,
-    'bio' => $request->bio,
-    'profile_photo' => $user->profile_photo,
-]);
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'city' => $request->city,
+        'profession' => $request->profession,
+        'bio' => $request->bio,
+
+    ]);
 
     return response()->json([
         'message' => 'Profile modifié avec succès',
+        'user' => $user
+    ]);
+}
+public function updatePhoto(Request $request)
+{
+    $user = $request->user();
+
+    $request->validate([
+        'profile_photo' => 'required|image|max:2048',
+    ]);
+
+    $path = $request->file('profile_photo')->store('profile_photos', 'public');
+
+    $user->update([
+        'profile_photo' => $path,
+    ]);
+
+    return response()->json([
         'user' => $user
     ]);
 }

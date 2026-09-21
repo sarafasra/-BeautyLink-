@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Bell } from "lucide-react";
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
 const isClient = user?.role === "client";
@@ -42,22 +42,25 @@ const isClient = user?.role === "client";
     </Link>
 )}
 
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Mes réservations
-                    </button>
+                    <Link
+    to="/reservations"
+    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+>
+    Mes réservations
+</Link>
 
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
                         
                         Mes avis
                     </button>
 
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Messages
-
-                        <span className="ml-auto w-2 h-2 rounded-full bg-[#A33F70]"></span>
-                    </button>
+                   <Link
+    to="/notifications"
+    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+>
+    <Bell size={18} />
+    Notifications
+</Link>
 
                    <Link
     to="/profile"

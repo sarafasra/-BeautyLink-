@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapPin, Star, Clock, CheckCircle, Heart } from "lucide-react";
 import api from "../services/api";
+import ClientProfile from "./ClientProfile";
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -30,8 +31,11 @@ function Profile() {
   if (!user) {
     return <p className="p-10 text-center text-gray-500">Chargement...</p>;
   }
+if (user.role === "client") {
+    return <ClientProfile user={user} />;
+}
+  const handleUpdate = async (e) => {
 
-const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
@@ -174,16 +178,29 @@ const handleUpdate = async (e) => {
       </div>
 
     </div>
-  ) : (
-    <>
-      <div className="flex items-center gap-1.5">
-        <h1 className="text-2xl font-bold">
-          {user.name}
-        </h1>
+) : (
+    <h1 className="text-2xl font-bold">
+        {user.name}  
+    </h1>
+)}                 <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
+                      <CheckCircle size={16} /></span>
+                </div>
+     {user.role === "client" && (
+    <p className="text-gray-500 text-sm mt-0.5">
+        Client BeautyLink
+    </p>
+)}
+                <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
+                  <span className="text-amber-500 font-bold flex items-center gap-0.5">
+                    <Star size={15} fill="currentColor" />
 
-        <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
-        </span>
-      </div>
+                     4.9
+                  </span>
+                  <span className="text-gray-400">(120 avis)</span>
+                  <span className="text-gray-300">•</span>
+                  <span className="flex items-center gap-1 text-gray-500">
+                      {user.city || "Ville non renseignée"}
+                    <MapPin size={14} />
 
       <p className="text-gray-500 text-sm mt-0.5">
         {user.profession || "Professionnel de beauté"}
