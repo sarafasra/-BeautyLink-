@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\MessageController;
 
 
 Route::post('/register',[AuthController::class,"register"]);
@@ -31,6 +32,10 @@ Route::put('/reservations/{id}/status', [ReservationController::class, 'updateSt
 Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/profile/photo', [ProfileController::class, 'updatePhoto']);
+
+    Route::get('/messages', [MessageController::class, 'index']);
+
+    Route::post('/messages', [MessageController::class, 'store']);
 Route::post('/services', [ServiceController::class, 'store']);
 Route::put('/services/{id}', [ServiceController::class, 'update']);
 Route::delete('/services/{id}', [ServiceController::class, 'destroy']);
