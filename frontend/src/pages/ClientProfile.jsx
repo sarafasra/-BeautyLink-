@@ -11,35 +11,45 @@ function ClientProfile({ user }) {
     const [phone, setPhone] = useState(user.phone || "");
     const [city, setCity] = useState(user.city || "");
     const [bio, setBio] = useState(user.bio || "");
+    const [profilePhoto, setProfilePhoto] = useState(null);
+const handleUpdate = async (e) => {
+    e.preventDefault();
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
+    try {
+        const response = await api.put("/profile", {
+            name,
+            email,
+            phone,
+            city,
+            bio,
+        });
 
-        try {
-            const response = await api.put("/profile", {
-                name,
-                email,
-                phone,
-                city,
-                bio,
-            });
+        let updatedUser = response.data.user;
 
-            setCurrentUser(response.data.user);
-            setEditMode(false);
+        if (profilePhoto) {
+            const formData = new FormData();
+            formData.append("profile_photo", profilePhoto);
 
-        } catch (error) {
-            console.log(error);
+            const photoResponse = await api.post("/profile/photo", formData);
+
+            updatedUser = photoResponse.data.user;
         }
-    };
+
+        setCurrentUser(updatedUser);
+        setProfilePhoto(null);
+        setEditMode(false);
+
+    } catch (error) {
+        console.log(error.response?.data || error);
+    }
+};
+
 
     return (
         <div className="min-h-screen bg-[#faf9f9] p-6">
 
             <div className="max-w-5xl mx-auto">
 
-                <p className="text-sm text-gray-500 mb-6">
-                    Accueil &gt; Profil
-                </p>
 
                 <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
 
@@ -51,9 +61,16 @@ function ClientProfile({ user }) {
 
                             <div className="flex items-end gap-5 -mt-14">
 
-                                <div className="w-28 h-28 rounded-full bg-[#f4dce7] border-4 border-white flex items-center justify-center">
-                                    <User size={50} className="text-[#9A3B68]" />
-                                </div>
+                               <div className="w-28 h-28 rounded-full bg-[#f4dce7] border-4 border-white flex items-center justify-center overflow-hidden">
+    {currentUser.profile_photo ? (
+        <img
+src={`http://127.0.0.1:8002/storage/${currentUser.profile_photo}`}            alt="Photo de profil"
+            className="w-full h-full object-cover"
+        />
+    ) : (
+        <User size={50} className="text-[#9A3B68]" />
+    )}
+</div>
 
                                 <div className="pb-2">
 
@@ -115,6 +132,18 @@ function ClientProfile({ user }) {
                             <form onSubmit={handleUpdate} className="space-y-5">
 
                                 <div>
+                                    <div>
+    <label className="block text-sm text-gray-600 mb-2">
+        Photo de profil
+    </label>
+
+    <input
+        type="file"
+        accept="image/*"
+onChange={(e) => setProfilePhoto(e.target.files[0])}      className="w-full border border-gray-200 rounded-xl px-4 py-3"
+    />
+    
+</div>
                                     <label className="block text-sm text-gray-600 mb-2">
                                         Nom
                                     </label>

@@ -19,6 +19,8 @@ protected $fillable = [
     'city',
     'profession',
     'bio',
+    'profile_photo',
+
 ];
 
     protected $hidden = [

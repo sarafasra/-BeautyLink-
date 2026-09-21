@@ -22,7 +22,11 @@ class ProfileController extends Controller
         'profession' => 'nullable|string|max:100',
         'bio' => 'nullable|string',
     ]);   
-     
+     if ($request->hasFile('profile_photo')) {
+    $path = $request->file('profile_photo')->store('profile_photos', 'public');
+
+    $user->profile_photo = $path;
+}
    
     $user->update([
         'name' => $request->name,
@@ -31,10 +35,29 @@ class ProfileController extends Controller
         'city' => $request->city,
         'profession' => $request->profession,
         'bio' => $request->bio,
+
     ]);
 
     return response()->json([
         'message' => 'Profile modifié avec succès',
+        'user' => $user
+    ]);
+}
+public function updatePhoto(Request $request)
+{
+    $user = $request->user();
+
+    $request->validate([
+        'profile_photo' => 'required|image|max:2048',
+    ]);
+
+    $path = $request->file('profile_photo')->store('profile_photos', 'public');
+
+    $user->update([
+        'profile_photo' => $path,
+    ]);
+
+    return response()->json([
         'user' => $user
     ]);
 }
