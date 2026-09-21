@@ -182,7 +182,6 @@ const handleUpdate = async (e) => {
         </h1>
 
         <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
-          <CheckCircle size={16} />
         </span>
       </div>
 
