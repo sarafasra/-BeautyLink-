@@ -12,6 +12,8 @@ function Profile() {
   const[city,setCity] = useState("");
   const[profession,setProfession] = useState("");
   const[bio, setBio] = useState("");
+  const [activeTab, setActiveTab] = useState("Prestations");
+  const [profilePhoto, setProfilePhoto] = useState(null);
   useEffect(() => {api.get("/profile").then((response) => {
         setUser(response.data);
         setName(response.data.name);
@@ -35,24 +37,31 @@ if (user.role === "client") {
   const handleUpdate = async (e) => {
 
     e.preventDefault();
-    try {
-        const response = await api.put("/profile", {
-            name: name,
-            email: email,
-            phone: phone,
-            city: city,
-            profession: profession,
-            bio: bio,
-        });
 
+    try {
+        const formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("city", city);
+        formData.append("profession", profession);
+        formData.append("bio", bio);
+
+        if (profilePhoto) {
+            formData.append("profile_photo", profilePhoto);
+        }
+
+        const response = await api.post("/profile", formData);
 
         setUser(response.data.user);
+        setProfilePhoto(null);
         setEditMode(false);
-    }catch (error){
 
+    } catch (error) {
         console.log(error);
     }
-  };
+};
 
   return (
     <div className="bg-[#faf8f9] min-h-screen p-6 font-sans text-gray-800">
@@ -83,65 +92,90 @@ if (user.role === "client") {
           <div className="px-8 pb-6 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
             <div className="flex items-end gap-5">
               <div className="w-28 h-28 rounded-full border-4 border-white shadow-md overflow-hidden -mt-12 bg-white relative z-10">
-                <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
-                  alt={user.name}
-                  className="w-full h-full object-cover"
-                />
+               <img
+  src={
+    user.profile_photo
+      ? `http://127.0.0.1:8002/storage/${user.profile_photo}`
+      : "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
+  }
+  alt={user.name}
+  className="w-full h-full object-cover"
+/>
               </div>
+<div className="mb-1">
+  {editMode ? (
+    <div className="space-y-3 w-full min-w-[280px]">
 
-              <div className="mb-1">
-                <div className="flex items-center gap-1.5">
-{editMode ? (
-    <div className="space-y-3 mt-4">
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Nom"
+      />
+      <input
+  type="file"
+  accept="image/*"
+  onChange={(e) => setProfilePhoto(e.target.files[0])}
+  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+/>
 
-        <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Nom"
-        />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Email"
+      />
 
-        <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Email"
-        />
+      <input
+        type="text"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Téléphone"
+      />
 
-        <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Téléphone"
-        />
+      <input
+        type="text"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Ville"
+      />
 
-        <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Ville"
-        />
+      <input
+        type="text"
+        value={profession}
+        onChange={(e) => setProfession(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Profession"
+      />
 
-        <input
-            type="text"
-            value={profession}
-            onChange={(e) => setProfession(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Profession"
-        />
+      <textarea
+        value={bio}
+        onChange={(e) => setBio(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="À propos de vous"
+        rows="4"
+      />
 
-        <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="À propos de vous"
-            rows="4"
-        />
+      <div className="flex gap-2 pt-1">
+        <button
+          onClick={handleUpdate}
+          className="bg-[#a63d75] text-white px-5 py-2 rounded-full text-sm"
+        >
+          Enregistrer
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setEditMode(false)}
+          className="bg-gray-100 text-gray-600 px-5 py-2 rounded-full text-sm"
+        >
+          Annuler
+        </button>
+      </div>
 
     </div>
 ) : (
@@ -168,180 +202,214 @@ if (user.role === "client") {
                       {user.city || "Ville non renseignée"}
                     <MapPin size={14} />
 
-                  </span>
-                </div>
-              </div>
+      <p className="text-gray-500 text-sm mt-0.5">
+        {user.profession || "Professionnel de beauté"}
+      </p>
+
+      <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
+        <span className="text-amber-500 font-bold flex items-center gap-0.5">
+          <Star size={15} fill="currentColor" />
+          4.9
+        </span>
+
+        <span className="text-gray-400">(120 avis)</span>
+
+        <span className="text-gray-300">•</span>
+
+        <span className="flex items-center gap-1 text-gray-500">
+          {user.city || "Ville non renseignée"}
+          <MapPin size={14} />
+        </span>
+      </div>
+    </>
+  )}
+</div>
             </div>
 
             
-            <button
+       {!editMode && (
+  <button
     onClick={() => setEditMode(true)}
     className="bg-[#a63d75] text-white px-6 py-2 rounded-full whitespace-nowrap"
->
+  >
     Modifier le profil
-</button>
-
-{editMode && (
-    <button
-        onClick={handleUpdate}
-        className="bg-[#a63d75] text-white px-6 py-2 rounded-full"
-    >
-        Enregistrer
-    </button>
+  </button>
 )}
           </div>
         </div>
 
-        <div className="flex gap-8 border-b border-gray-200/60 mb-6 text-sm font-medium text-gray-500 px-2">
-          <button className="pb-3 hover:text-gray-700">À propos</button>
-          <button className="pb-3 border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold">
-            Prestations
-          </button>
-          <button className="pb-3 hover:text-gray-700">Avis (120)</button>
-          <button className="pb-3 hover:text-gray-700">Photos</button>
-        </div>
+       <div className="flex gap-8 border-b border-gray-200/60 mb-6 text-sm font-medium text-gray-500 px-2">
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          <div className="lg:col-span-2 space-y-3">
-            <h2 className="font-bold text-gray-900 text-base mb-2">Prestations</h2>
+  <button
+    onClick={() => setActiveTab("À propos")}
+    className={`pb-3 ${
+      activeTab === "À propos"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    À propos
+  </button>
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=150&q=80"
-                  alt="Coupe Femme"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Coupe Femme</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Coupe + Brushing</p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>       <Clock size={13} /> 45 min</span>
-                    <span> 150 DH</span>
-                  </p>
-                </div>
+  <button
+    onClick={() => setActiveTab("Prestations")}
+    className={`pb-3 ${
+      activeTab === "Prestations"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    Prestations
+  </button>
+
+  <button
+    onClick={() => setActiveTab("Avis")}
+    className={`pb-3 ${
+      activeTab === "Avis"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    Avis (120)
+  </button>
+
+
+
+</div>
+{activeTab === "Prestations" && (
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <div className="lg:col-span-2 space-y-3">
+      <h2 className="font-bold text-gray-900 text-base mb-2">
+        Prestations
+      </h2>
+
+      {user.services && user.services.length > 0 ? (
+        user.services.map((service) => (
+          <div
+            key={service.id}
+            className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-3">
+
+              <img
+                src={
+                  service.image
+                    ? service.image
+                    : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
+                }
+                alt={service.title}
+                className="w-14 h-14 rounded-xl object-cover"
+              />
+
+              <div>
+                <h3 className="font-bold text-gray-800 text-sm">
+                  {service.title}
+                </h3>
+
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {service.description}
+                </p>
+
+                <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
+                  <span className="flex items-center gap-1">
+                    <Clock size={13} />
+                    {service.duration} min
+                  </span>
+
+                  <span>
+                    {service.price} DH
+                  </span>
+                </p>
               </div>
-              
-            </div>
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=150&q=80"
-                  alt="Brushing"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Brushing</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Brushing + Soin profond</p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>    <Clock size={13} />
-30 min</span>
-                    <span>100 DH</span>
-                  </p>
-                </div>
-              </div>
-             
-            </div>
-
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
-                  alt="Coloration"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Coloration</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">
-                    Coloration complète (sans ammoniaque)
-                  </p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>    <Clock size={13} /> 90 min</span>
-                    <span> 300 DH</span>
-                  </p>
-                </div>
-              </div>
-             
-            </div>
-
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=150&q=80"
-                  alt="Lissage Brésilien"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Lissage Brésilien</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Lissage + Soin Kératine</p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span> <Clock size={13} />120 min</span>
-                    <span> 500 DH</span>
-                  </p>
-                </div>
-              </div>
-            
             </div>
           </div>
+        ))
+      ) : (
+        <div className="bg-white rounded-2xl p-6 text-center text-sm text-gray-400 border border-gray-100">
+          Aucune prestation disponible pour le moment.
+        </div>
+      )}
+    </div>
+
+    <div>
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <h2 className="font-bold text-gray-900 text-base mb-4">
+          Informations pratiques
+        </h2>
+
+        <div className="flex items-start gap-3 mb-5">
+          <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
+            <MapPin size={14} />
+          </span>
 
           <div>
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <h2 className="font-bold text-gray-900 text-base mb-4">
-                Informations pratiques
-              </h2>
+            <h4 className="text-xs font-bold text-gray-800">
+              Ville
+            </h4>
 
-              <div className="flex items-start gap-3 mb-5">
-                <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
-                  <MapPin size={14} />
-                </span>
-                <div>
-                 <h4 className="text-xs font-bold text-gray-800">Ville</h4>
-<p className="text-xs text-gray-400 mt-1">
-    {user.city || "Ville non renseignée"}
-</p>
-<h4 className="text-xs font-bold text-gray-800 mt-3">Téléphone</h4>
-<p className="text-xs text-gray-400 mt-1">
-    {user.phone || "Téléphone non renseigné"}
-</p>
-                </div>
+            <p className="text-xs text-gray-400 mt-1">
+              {user.city || "Ville non renseignée"}
+            </p>
+
+            <h4 className="text-xs font-bold text-gray-800 mt-3">
+              Téléphone
+            </h4>
+
+            <p className="text-xs text-gray-400 mt-1">
+              {user.phone || "Téléphone non renseigné"}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-3">
+          <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
+            <Clock size={13} />
+          </span>
+
+          <div className="w-full">
+            <h4 className="text-xs font-bold text-gray-800">
+              Horaires d'ouverture
+            </h4>
+
+            <div className="text-xs text-gray-400 mt-2 space-y-1.5">
+
+              <div className="flex justify-between">
+                <span>Lun - Ven</span>
+                <span>09h00 - 19h00</span>
               </div>
 
-              <div className="flex items-start gap-3">
-                <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
-                  <Clock size={13} />
-                </span>
-                <div className="w-full">
-                  <h4 className="text-xs font-bold text-gray-800">Horaires d'ouverture</h4>
-                  <div className="text-xs text-gray-400 mt-2 space-y-1.5">
-                    <div className="flex justify-between">
-                      <span>Lun - Ven</span>
-                      <span>09h00 - 19h00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Samedi</span>
-                      <span>10h00 - 18h00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Dimanche</span>
-                      <span className="text-pink-400">Fermé</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex justify-between">
+                <span>Samedi</span>
+                <span>10h00 - 18h00</span>
               </div>
+
+              <div className="flex justify-between">
+                <span>Dimanche</span>
+                <span className="text-pink-400">Fermé</span>
+              </div>
+
             </div>
           </div>
-
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mt-6 lg:w-2/3">
-          <h2 className="font-bold text-gray-900 text-base mb-2">À propos</h2>
-          <p className="text-xs text-gray-400 leading-relaxed">
-              {user.bio || "Aucune description pour le moment."}
+      </div>
+    </div>
 
-          </p>
-        </div>
+  </div>
+)}
+       {activeTab === "À propos" && (
+  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+    <h2 className="font-bold text-gray-900 text-base mb-2">
+      À propos
+    </h2>
+
+    <p className="text-sm text-gray-500 leading-relaxed">
+      {user.bio || "Aucune description pour le moment."}
+    </p>
+  </div>
+)}
 
       </div>
     </div>
