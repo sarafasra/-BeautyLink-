@@ -33,17 +33,19 @@ const isClient = user?.role === "client";
                         Dashboard
                     </button>
 
-                  <Link
-    to="/services"
-    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
->
-    Mes prestations
-</Link><Link
-    to={user?.role === "client" ? "/client/reservations" : "/reservations"}
-    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
->
-    Mes réservations
-</Link>
+                    {user?.role === "professionnel" && (
+    <Link
+        to="/services"
+        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+    >
+        Mes prestations
+    </Link>
+)}
+
+                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
+                        
+                        Mes réservations
+                    </button>
 
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
                         
