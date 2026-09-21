@@ -8,7 +8,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServiceController;
 
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register',[AuthController::class,"register"]);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
