@@ -12,6 +12,7 @@ function Profile() {
   const[profession,setProfession] = useState("");
   const[bio, setBio] = useState("");
   const [activeTab, setActiveTab] = useState("Prestations");
+  const [profilePhoto, setProfilePhoto] = useState(null);
   useEffect(() => {api.get("/profile").then((response) => {
         setUser(response.data);
         setName(response.data.name);
@@ -30,27 +31,33 @@ function Profile() {
     return <p className="p-10 text-center text-gray-500">Chargement...</p>;
   }
 
-  const handleUpdate = async (e) => {
-
+const handleUpdate = async (e) => {
     e.preventDefault();
-    try {
-        const response = await api.put("/profile", {
-            name: name,
-            email: email,
-            phone: phone,
-            city: city,
-            profession: profession,
-            bio: bio,
-        });
 
+    try {
+        const formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("city", city);
+        formData.append("profession", profession);
+        formData.append("bio", bio);
+
+        if (profilePhoto) {
+            formData.append("profile_photo", profilePhoto);
+        }
+
+        const response = await api.post("/profile", formData);
 
         setUser(response.data.user);
+        setProfilePhoto(null);
         setEditMode(false);
-    }catch (error){
 
+    } catch (error) {
         console.log(error);
     }
-  };
+};
 
   return (
     <div className="bg-[#faf8f9] min-h-screen p-6 font-sans text-gray-800">
@@ -81,11 +88,15 @@ function Profile() {
           <div className="px-8 pb-6 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
             <div className="flex items-end gap-5">
               <div className="w-28 h-28 rounded-full border-4 border-white shadow-md overflow-hidden -mt-12 bg-white relative z-10">
-                <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
-                  alt={user.name}
-                  className="w-full h-full object-cover"
-                />
+               <img
+  src={
+    user.profile_photo
+      ? `http://127.0.0.1:8002/storage/${user.profile_photo}`
+      : "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
+  }
+  alt={user.name}
+  className="w-full h-full object-cover"
+/>
               </div>
 <div className="mb-1">
   {editMode ? (
@@ -98,6 +109,12 @@ function Profile() {
         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
         placeholder="Nom"
       />
+      <input
+  type="file"
+  accept="image/*"
+  onChange={(e) => setProfilePhoto(e.target.files[0])}
+  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+/>
 
       <input
         type="email"
