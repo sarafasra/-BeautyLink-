@@ -7,7 +7,7 @@ import Reservations from "./pages/Reservations";
 import Services from "./pages/Services";
 import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
-
+import Notifications from "./pages/Notifications";
 function App() {
     return (
         <BrowserRouter>
@@ -43,7 +43,6 @@ function App() {
                     element={<ClientReservations />}
                 />
 
-                {/* Ancienne URL du dashboard client */}
                 <Route
                     path="/client.dashboard"
                     element={<Dashboard />}
@@ -63,12 +62,14 @@ function App() {
                     element={<ClientReservations />}
                 />
 
-                {/* Ancienne URL du dashboard client */}
                 <Route
                     path="/client.dashboard"
                     element={<Dashboard />}
                 />
-
+<Route
+    path="/notifications"
+    element={<Notifications />}
+/>
             </Routes>
         </BrowserRouter>
     );
