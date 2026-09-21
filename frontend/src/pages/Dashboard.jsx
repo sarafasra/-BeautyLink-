@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
-
+const isClient = user?.role === "client";
     return (
         <div className="min-h-screen bg-[#faf9f9] flex">
 

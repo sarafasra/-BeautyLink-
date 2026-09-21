@@ -29,6 +29,10 @@ function App() {
 
                 <Route path="/reservations" element={<Reservations />} />
 
+                <Route path="/dashboard" element={<Dashboard />} />
+
+                <Route path="/profile" element={<Profile />} />
+
                 <Route
                     path="/reservations/create/:serviceId"
                     element={<CreateReservation />}
@@ -37,6 +41,32 @@ function App() {
                 <Route
                     path="/client/reservations"
                     element={<ClientReservations />}
+                />
+
+                {/* Ancienne URL du dashboard client */}
+                <Route
+                    path="/client.dashboard"
+                    element={<Dashboard />}
+                />
+
+                <Route path="/services/ajouter" element={<Services />} />
+
+                <Route path="/reservations" element={<Reservations />} />
+
+                <Route
+                    path="/reservations/create/:serviceId"
+                    element={<CreateReservation />}
+                />
+
+                <Route
+                    path="/client/reservations"
+                    element={<ClientReservations />}
+                />
+
+                {/* Ancienne URL du dashboard client */}
+                <Route
+                    path="/client.dashboard"
+                    element={<Dashboard />}
                 />
 
             </Routes>
