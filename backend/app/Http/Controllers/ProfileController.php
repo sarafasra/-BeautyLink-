@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Storage;
   
 class ProfileController extends Controller
 {
-    public function show(Request $request){
-        return response()->json($request->user());
-    }
+   public function show(Request $request)
+{
+    $user = $request->user()->load('services');
+
+    return response()->json($user);
+}
 
     public function update(Request $request)
 {

@@ -257,152 +257,131 @@ const handleUpdate = async (e) => {
     Avis (120)
   </button>
 
-  <button
-    onClick={() => setActiveTab("Photos")}
-    className={`pb-3 ${
-      activeTab === "Photos"
-        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
-        : "hover:text-gray-700"
-    }`}
-  >
-    Photos
-  </button>
+
 
 </div>
 {activeTab === "Prestations" && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          <div className="lg:col-span-2 space-y-3">
-            <h2 className="font-bold text-gray-900 text-base mb-2">Prestations</h2>
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=150&q=80"
-                  alt="Coupe Femme"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Coupe Femme</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Coupe + Brushing</p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>       <Clock size={13} /> 45 min</span>
-                    <span> 150 DH</span>
-                  </p>
-                </div>
-              </div>
-              
-            </div>
+    <div className="lg:col-span-2 space-y-3">
+      <h2 className="font-bold text-gray-900 text-base mb-2">
+        Prestations
+      </h2>
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=150&q=80"
-                  alt="Brushing"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Brushing</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Brushing + Soin profond</p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>    <Clock size={13} />
-30 min</span>
-                    <span>100 DH</span>
-                  </p>
-                </div>
-              </div>
-             
-            </div>
+      {user.services && user.services.length > 0 ? (
+        user.services.map((service) => (
+          <div
+            key={service.id}
+            className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-3">
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
-                  alt="Coloration"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Coloration</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">
-                    Coloration complète (sans ammoniaque)
-                  </p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span>    <Clock size={13} /> 90 min</span>
-                    <span> 300 DH</span>
-                  </p>
-                </div>
-              </div>
-             
-            </div>
+              <img
+                src={
+                  service.image
+                    ? service.image
+                    : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
+                }
+                alt={service.title}
+                className="w-14 h-14 rounded-xl object-cover"
+              />
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=150&q=80"
-                  alt="Lissage Brésilien"
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <h3 className="font-bold text-gray-800 text-sm">Lissage Brésilien</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Lissage + Soin Kératine</p>
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
-                    <span> <Clock size={13} />120 min</span>
-                    <span> 500 DH</span>
-                  </p>
-                </div>
+              <div>
+                <h3 className="font-bold text-gray-800 text-sm">
+                  {service.title}
+                </h3>
+
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {service.description}
+                </p>
+
+                <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-3">
+                  <span className="flex items-center gap-1">
+                    <Clock size={13} />
+                    {service.duration} min
+                  </span>
+
+                  <span>
+                    {service.price} DH
+                  </span>
+                </p>
               </div>
-            
+
             </div>
           </div>
+        ))
+      ) : (
+        <div className="bg-white rounded-2xl p-6 text-center text-sm text-gray-400 border border-gray-100">
+          Aucune prestation disponible pour le moment.
+        </div>
+      )}
+    </div>
+
+    <div>
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <h2 className="font-bold text-gray-900 text-base mb-4">
+          Informations pratiques
+        </h2>
+
+        <div className="flex items-start gap-3 mb-5">
+          <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
+            <MapPin size={14} />
+          </span>
 
           <div>
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <h2 className="font-bold text-gray-900 text-base mb-4">
-                Informations pratiques
-              </h2>
+            <h4 className="text-xs font-bold text-gray-800">
+              Ville
+            </h4>
 
-              <div className="flex items-start gap-3 mb-5">
-                <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
-                  <MapPin size={14} />
-                </span>
-                <div>
-                 <h4 className="text-xs font-bold text-gray-800">Ville</h4>
-<p className="text-xs text-gray-400 mt-1">
-    {user.city || "Ville non renseignée"}
-</p>
-<h4 className="text-xs font-bold text-gray-800 mt-3">Téléphone</h4>
-<p className="text-xs text-gray-400 mt-1">
-    {user.phone || "Téléphone non renseigné"}
-</p>
-                </div>
+            <p className="text-xs text-gray-400 mt-1">
+              {user.city || "Ville non renseignée"}
+            </p>
+
+            <h4 className="text-xs font-bold text-gray-800 mt-3">
+              Téléphone
+            </h4>
+
+            <p className="text-xs text-gray-400 mt-1">
+              {user.phone || "Téléphone non renseigné"}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-3">
+          <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
+            <Clock size={13} />
+          </span>
+
+          <div className="w-full">
+            <h4 className="text-xs font-bold text-gray-800">
+              Horaires d'ouverture
+            </h4>
+
+            <div className="text-xs text-gray-400 mt-2 space-y-1.5">
+
+              <div className="flex justify-between">
+                <span>Lun - Ven</span>
+                <span>09h00 - 19h00</span>
               </div>
 
-              <div className="flex items-start gap-3">
-                <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
-                  <Clock size={13} />
-                </span>
-                <div className="w-full">
-                  <h4 className="text-xs font-bold text-gray-800">Horaires d'ouverture</h4>
-                  <div className="text-xs text-gray-400 mt-2 space-y-1.5">
-                    <div className="flex justify-between">
-                      <span>Lun - Ven</span>
-                      <span>09h00 - 19h00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Samedi</span>
-                      <span>10h00 - 18h00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Dimanche</span>
-                      <span className="text-pink-400">Fermé</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex justify-between">
+                <span>Samedi</span>
+                <span>10h00 - 18h00</span>
               </div>
+
+              <div className="flex justify-between">
+                <span>Dimanche</span>
+                <span className="text-pink-400">Fermé</span>
+              </div>
+
             </div>
           </div>
-
         </div>
+
+      </div>
+    </div>
+
+  </div>
 )}
        {activeTab === "À propos" && (
   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
