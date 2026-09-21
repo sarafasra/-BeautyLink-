@@ -11,6 +11,7 @@ function Profile() {
   const[city,setCity] = useState("");
   const[profession,setProfession] = useState("");
   const[bio, setBio] = useState("");
+  const [activeTab, setActiveTab] = useState("Prestations");
   useEffect(() => {api.get("/profile").then((response) => {
         setUser(response.data);
         setName(response.data.name);
@@ -86,117 +87,172 @@ function Profile() {
                   className="w-full h-full object-cover"
                 />
               </div>
+<div className="mb-1">
+  {editMode ? (
+    <div className="space-y-3 w-full min-w-[280px]">
 
-              <div className="mb-1">
-                <div className="flex items-center gap-1.5">
-{editMode ? (
-    <div className="space-y-3 mt-4">
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Nom"
+      />
 
-        <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Nom"
-        />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Email"
+      />
 
-        <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Email"
-        />
+      <input
+        type="text"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Téléphone"
+      />
 
-        <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Téléphone"
-        />
+      <input
+        type="text"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Ville"
+      />
 
-        <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Ville"
-        />
+      <input
+        type="text"
+        value={profession}
+        onChange={(e) => setProfession(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="Profession"
+      />
 
-        <input
-            type="text"
-            value={profession}
-            onChange={(e) => setProfession(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="Profession"
-        />
+      <textarea
+        value={bio}
+        onChange={(e) => setBio(e.target.value)}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#9E3B68]"
+        placeholder="À propos de vous"
+        rows="4"
+      />
 
-        <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
-            placeholder="À propos de vous"
-            rows="4"
-        />
+      <div className="flex gap-2 pt-1">
+        <button
+          onClick={handleUpdate}
+          className="bg-[#a63d75] text-white px-5 py-2 rounded-full text-sm"
+        >
+          Enregistrer
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setEditMode(false)}
+          className="bg-gray-100 text-gray-600 px-5 py-2 rounded-full text-sm"
+        >
+          Annuler
+        </button>
+      </div>
 
     </div>
-) : (
-    <h1 className="text-2xl font-bold">
-        {user.name}  
-    </h1>
-)}                 <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
-                      <CheckCircle size={16} /></span>
-                </div>
-                <p     
+  ) : (
+    <>
+      <div className="flex items-center gap-1.5">
+        <h1 className="text-2xl font-bold">
+          {user.name}
+        </h1>
 
-                className="text-gray-500 text-sm mt-0.5">{user.profession || "Professionnel de beauté"}
-</p>
-                <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
-                  <span className="text-amber-500 font-bold flex items-center gap-0.5">
-                    <Star size={15} fill="currentColor" />
+        <span className="bg-pink-100 text-[#9E3B68] rounded-full p-0.5 text-xs">
+          <CheckCircle size={16} />
+        </span>
+      </div>
 
-                     4.9
-                  </span>
-                  <span className="text-gray-400">(120 avis)</span>
-                  <span className="text-gray-300">•</span>
-                  <span className="flex items-center gap-1 text-gray-500">
-                      {user.city || "Ville non renseignée"}
-                    <MapPin size={14} />
+      <p className="text-gray-500 text-sm mt-0.5">
+        {user.profession || "Professionnel de beauté"}
+      </p>
 
-                  </span>
-                </div>
-              </div>
+      <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
+        <span className="text-amber-500 font-bold flex items-center gap-0.5">
+          <Star size={15} fill="currentColor" />
+          4.9
+        </span>
+
+        <span className="text-gray-400">(120 avis)</span>
+
+        <span className="text-gray-300">•</span>
+
+        <span className="flex items-center gap-1 text-gray-500">
+          {user.city || "Ville non renseignée"}
+          <MapPin size={14} />
+        </span>
+      </div>
+    </>
+  )}
+</div>
             </div>
 
             
-            <button
+       {!editMode && (
+  <button
     onClick={() => setEditMode(true)}
     className="bg-[#a63d75] text-white px-6 py-2 rounded-full whitespace-nowrap"
->
+  >
     Modifier le profil
-</button>
-
-{editMode && (
-    <button
-        onClick={handleUpdate}
-        className="bg-[#a63d75] text-white px-6 py-2 rounded-full"
-    >
-        Enregistrer
-    </button>
+  </button>
 )}
           </div>
         </div>
 
-        <div className="flex gap-8 border-b border-gray-200/60 mb-6 text-sm font-medium text-gray-500 px-2">
-          <button className="pb-3 hover:text-gray-700">À propos</button>
-          <button className="pb-3 border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold">
-            Prestations
-          </button>
-          <button className="pb-3 hover:text-gray-700">Avis (120)</button>
-          <button className="pb-3 hover:text-gray-700">Photos</button>
-        </div>
+       <div className="flex gap-8 border-b border-gray-200/60 mb-6 text-sm font-medium text-gray-500 px-2">
 
+  <button
+    onClick={() => setActiveTab("À propos")}
+    className={`pb-3 ${
+      activeTab === "À propos"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    À propos
+  </button>
+
+  <button
+    onClick={() => setActiveTab("Prestations")}
+    className={`pb-3 ${
+      activeTab === "Prestations"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    Prestations
+  </button>
+
+  <button
+    onClick={() => setActiveTab("Avis")}
+    className={`pb-3 ${
+      activeTab === "Avis"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    Avis (120)
+  </button>
+
+  <button
+    onClick={() => setActiveTab("Photos")}
+    className={`pb-3 ${
+      activeTab === "Photos"
+        ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+        : "hover:text-gray-700"
+    }`}
+  >
+    Photos
+  </button>
+
+</div>
+{activeTab === "Prestations" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           <div className="lg:col-span-2 space-y-3">
@@ -330,14 +386,18 @@ function Profile() {
           </div>
 
         </div>
+)}
+       {activeTab === "À propos" && (
+  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+    <h2 className="font-bold text-gray-900 text-base mb-2">
+      À propos
+    </h2>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mt-6 lg:w-2/3">
-          <h2 className="font-bold text-gray-900 text-base mb-2">À propos</h2>
-          <p className="text-xs text-gray-400 leading-relaxed">
-              {user.bio || "Aucune description pour le moment."}
-
-          </p>
-        </div>
+    <p className="text-sm text-gray-500 leading-relaxed">
+      {user.bio || "Aucune description pour le moment."}
+    </p>
+  </div>
+)}
 
       </div>
     </div>
