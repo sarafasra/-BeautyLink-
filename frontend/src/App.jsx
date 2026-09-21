@@ -36,13 +36,14 @@ function App() {
     path="/client/reservations"
     element={<ClientReservations />}
 />
-            </Routes>
-
-                <Route path="/services" element={<Services />} />
+  <Route path="/services" element={<Services />} />
 
                 <Route path="/services/ajouter" element={<Services />} />
-
             </Routes>
+
+              
+
+            
         </BrowserRouter>
     );
 }

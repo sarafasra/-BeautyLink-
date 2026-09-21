@@ -36,7 +36,6 @@ function ClientReservations() {
 
             <div className="max-w-5xl mx-auto">
 
-                {/* Header */}
                 <div className="mb-6">
                     <h1 className="text-2xl font-semibold text-gray-800">
                         Mes réservations
@@ -92,25 +91,29 @@ function ClientReservations() {
             </p>
         </div>
 
-        <span
-            className={`h-fit px-3 py-1 rounded-full text-xs font-medium ${
-                reservation.status === "pending"
-                    ? "bg-yellow-100 text-yellow-700"
-                    : reservation.status === "confirmed"
-                    ? "bg-green-100 text-green-700"
-                    : reservation.status === "cancelled"
-                    ? "bg-red-100 text-red-700"
-                    : "bg-gray-100 text-gray-600"
-            }`}
-        >
-            {reservation.status === "pending"
-                ? "En attente"
-                : reservation.status === "confirmed"
-                ? "Confirmée"
-                : reservation.status === "cancelled"
-                ? "Annulée"
-                : reservation.status}
-        </span>
+      <span 
+    className={`h-fit px-3 py-1 rounded-full text-xs font-medium ${
+        reservation.status === "pending"
+            ? "bg-yellow-100 text-yellow-700"
+            : reservation.status === "accepted"
+            ? "bg-green-100 text-green-700"
+            : reservation.status === "refused"
+            ? "bg-red-100 text-red-700"
+            : reservation.status === "cancelled"
+            ? "bg-gray-100 text-gray-600"
+            : "bg-gray-100 text-gray-600"
+    }`}
+>
+    {reservation.status === "pending"
+        ? "En attente"
+        : reservation.status === "accepted"
+        ? "Confirmée"
+        : reservation.status === "refused"
+        ? "Refusée"
+        : reservation.status === "cancelled"
+        ? "Annulée"
+        : reservation.status}
+</span>
 
     </div>
 
