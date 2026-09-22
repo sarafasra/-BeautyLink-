@@ -23,6 +23,7 @@ function App() {
                     element={<Dashboard />}
                     
                 />
+                <Route path="/client/dashboard" element={<Dashboard />} />
 <Route path="/profile" element={<Profile />} />
    <Route path="/services"  element={<Services/>}/>
    <Route path="/services/ajouter" element={<Services />} />

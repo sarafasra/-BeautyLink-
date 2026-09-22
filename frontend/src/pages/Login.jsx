@@ -22,7 +22,7 @@ function Login() {
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setMessage("Connexion réussie !");
             if(response.data.user.role === "client"){
-                navigate("/client.dashboard");
+                navigate("/client/dashboard");
             }else{
             navigate("/dashboard");
 
