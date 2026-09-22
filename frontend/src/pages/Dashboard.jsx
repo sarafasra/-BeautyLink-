@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Bell } from "lucide-react";
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
 const isClient = user?.role === "client";
@@ -43,7 +42,7 @@ const isClient = user?.role === "client";
 )}
 
                     <Link
-    to="/reservations"
+  to="/client/reservations"
     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
 >
     Mes réservations
@@ -54,13 +53,6 @@ const isClient = user?.role === "client";
                         Mes avis
                     </button>
 
-                   <Link
-    to="/notifications"
-    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
->
-    <Bell size={18} />
-    Notifications
-</Link>
 
                    <Link
     to="/profile"
