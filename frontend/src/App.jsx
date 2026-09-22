@@ -77,7 +77,6 @@ function App() {
                     element={<ClientReservations />}
                 />
 
-                {/* Ancienne URL du dashboard client */}
                 <Route
                     path="/client.dashboard"
                     element={<Dashboard />}

@@ -6,7 +6,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\NotificationController;
 
 
 Route::post('/register',[AuthController::class,"register"]);
@@ -23,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/profile', [ProfileController::class, 'show']);
-Route::post('/profile', [ProfileController::class, 'update']);
+Route::put('/profile', [ProfileController::class, 'update']);
     Route::get('/reservations', [ReservationController::class, 'index']);
     Route::get('/professional/reservations', [ReservationController::class, 'professionalReservations']);
 Route::post('/reservations', [ReservationController::class, 'store']);
@@ -33,8 +32,6 @@ Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/profile/photo', [ProfileController::class, 'updatePhoto']);
 
    
-    Route::get('/notifications', [NotificationController::class, 'index']);
-    Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 Route::post('/services', [ServiceController::class, 'store']);
 Route::put('/services/{id}', [ServiceController::class, 'update']);
 Route::delete('/services/{id}', [ServiceController::class, 'destroy']);
