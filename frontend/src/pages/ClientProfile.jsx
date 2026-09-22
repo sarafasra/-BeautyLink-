@@ -6,7 +6,8 @@ import {
     User,
     CalendarDays,
     Clock,
-} from "lucide-react";import api from "../services/api";
+} from "lucide-react";
+import api from "../services/api";
 
 function ClientProfile({ user }) {
     const [editMode, setEditMode] = useState(false);
@@ -35,7 +36,7 @@ const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
-        const response = await api.put("/profile", {
+        const response = await api.put("/profile",  {
             name,
             email,
             phone,
