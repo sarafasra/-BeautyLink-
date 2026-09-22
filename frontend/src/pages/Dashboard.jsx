@@ -31,23 +31,18 @@ const isClient = user?.role === "client";
                         
                         Dashboard
                     </button>
-
-                    {user?.role === "professionnel" && (
-    <Link
-        to="/services"
-        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
-    >
-        Mes prestations
-    </Link>
-)}
-
-                    <Link
-  to="/client/reservations"
+<Link
+    to="/services"
+    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+>
+    Prestations
+</Link>
+<Link
+    to={isClient ? "/client/reservations" : "/reservations"}
     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
 >
     Mes réservations
 </Link>
-
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
                         
                         Mes avis
@@ -65,10 +60,15 @@ const isClient = user?.role === "client";
                 <div className="mt-auto p-4 space-y-8">
 
 
-                    <button className="w-full flex items-center gap-3 px-3 text-gray-300 text-sm hover:text-white">
-                        
-                        Déconnexion
-                    </button>
+                 <button
+    onClick={() => {
+        localStorage.clear();
+        window.location.href = "/login";
+    }}
+    className="w-full flex items-center gap-3 px-3 text-gray-300 text-sm hover:text-white"
+>
+    Déconnexion
+</button>
 
                 </div>
 

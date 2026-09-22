@@ -45,17 +45,16 @@ public function store(Request $request)
         'reservation' => $reservation
     ], 201);
 }
+public function professionalReservations(Request $request)
+{
+    $reservations = Reservation::whereHas('service', function ($query) use ($request) {
+        $query->where('user_id', $request->user()->id);
+    })
+    ->with(['service', 'user'])
+    ->get();
 
-    public function professionalReservations(Request $request){
-        $reservations = Reservation::whereHas('service' , function ($query) use ($request){
-            $query->where('user_id', $request->user()->id);
-        })
-        ->with(['service' , 'user'])
-        ->get();
-
-
-        return response()->json($reservations);
-    }
+    return response()->json($reservations);
+}
 
 public function updateStatus(Request $request, $id)
 {

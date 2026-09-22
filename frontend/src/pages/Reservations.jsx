@@ -32,11 +32,13 @@ useEffect(() => {
          const pendingReservations = reservations.filter(
             (reservation) => reservation.status === "pending"
          );
-
 const filteredReservations = reservations.filter((reservation) => {
     const name = reservation.user?.name || "";
 
-    return name.toLowerCase().includes(search.toLowerCase());
+    return (
+        name.toLowerCase().includes(search.toLowerCase()) &&
+        (statusFilter === "all" || reservation.status === statusFilter)
+    );
 });
  const confirmReservation = (id) => {
     api.put(`/reservations/${id}/status`, {
@@ -279,12 +281,6 @@ const weekReservations = reservations.filter((reservation) => {
         </div>
     </div>
 ))}
-
-                <div className="py-4 text-center">
-                    <button className="text-[10px] font-semibold text-[#A33F70]">
-                        Voir plus de réservations
-                    </button>
-                </div>
 
             </div>
         </div>
