@@ -52,7 +52,7 @@ function CreateReservation() {
 
         try {
             await api.post("/reservations", {
-                service_id: serviceId,
+                service_id:Number (serviceId),
                 date: date,
                 time: time,
             });

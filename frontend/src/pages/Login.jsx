@@ -26,17 +26,26 @@ function Login() {
             }else{
             navigate("/dashboard");
 
-            }
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
-        } catch (error) {
-            console.log(error);
+        setMessage("Connexion réussie !");
 
-            setMessage(
-                error.response?.data?.message ||
-                "Erreur de connexion avec le serveur"
-            );
+        if (response.data.user.role === "client") {
+            navigate("/dashboard");
+        } else {
+            navigate("/dashboard");
         }
-    };
+
+    } catch (error) {
+        console.log(error);
+
+        setMessage(
+            error.response?.data?.message ||
+            "Erreur de connexion avec le serveur"
+        );
+    }
+};
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
