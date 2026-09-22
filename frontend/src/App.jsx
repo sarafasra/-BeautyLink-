@@ -47,6 +47,21 @@ function App() {
                     path="/client.dashboard"
                     element={<Dashboard />}
                 />
+                <Route path="/client/dashboard" element={<Dashboard />} />
+<Route path="/profile" element={<Profile />} />
+   <Route path="/services"  element={<Services/>}/>
+   <Route path="/services/ajouter" element={<Services />} />
+   
+            <Route
+    path="/reservations/create/:serviceId"
+    element={<CreateReservation />}
+/>
+
+<Route
+    path="/client/reservations"
+    element={<ClientReservations />}
+/>
+  <Route path="/services" element={<Services />} />
 
                 <Route path="/services/ajouter" element={<Services />} />
 

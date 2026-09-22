@@ -9,14 +9,22 @@ function Login() {
     const [message, setMessage] = useState("");
      const navigate = useNavigate();
 
-const handleLogin = async (e) => {
-    e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await api.post("/login", {
-            email,
-            password,
-        });
+        try {
+            const response = await api.post("/login", {
+                email,
+                password,
+            });
+
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            setMessage("Connexion réussie !");
+            if(response.data.user.role === "client"){
+                navigate("/client/dashboard");
+            }else{
+            navigate("/dashboard");
 
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
