@@ -12,58 +12,47 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await api.post("/login", {
-                email,
-                password,
-            });
+       try {
+    const response = await api.post("/login", {
+        email,
+        password,
+    });
 
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user", JSON.stringify(response.data.user));
-            setMessage("Connexion réussie !");
-            if (response.data.user.role === "client") {
-                navigate("/client/dashboard");
-            } else {
-                navigate("/dashboard");
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
 
-                localStorage.setItem("token", response.data.token);
-                localStorage.setItem("user", JSON.stringify(response.data.user));
+    setMessage("Connexion réussie !");
 
-                setMessage("Connexion réussie !");
+    if (response.data.user.role === "client") {
+        navigate("/client/dashboard");
+    } else {
+        navigate("/dashboard");
+    }
 
-                if (response.data.user.role === "client") {
-                    navigate("/dashboard");
-                } else {
-                    navigate("/dashboard");
-                }
+} catch (error) {
+    console.log(error);
 
-            }
-        } catch (error) {
-            console.log(error);
-
-            setMessage(
-                error.response?.data?.message ||
-                "Erreur de connexion avec le serveur"
-            );
-        };
-
-        return (
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-                <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row min-h-[580px]">
-
-                    <div
-                        className="relative md:w-1/2 bg-cover bg-center min-h-[250px] md:min-h-full flex flex-col justify-end p-8 text-white"
-                        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1000&auto=format&fit=crop')` }}
-                    >
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                        <div className="relative z-10 space-y-2">
-                            <h1 className="text-2xl sm:text-3xl font-bold leading-tight">
-                                Révélez votre<br />beauté idéale
-                            </h1>
-                            <p className="text-xs sm:text-sm text-gray-200 font-light max-w-sm">
-                                Rejoignez la communauté de professionnels et passionnés de la beauté.
-                            </p>
-                        </div>
+    setMessage(
+        error.response?.data?.message ||
+        "Erreur de connexion avec le serveur"
+    );
+}
+    return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row min-h-[580px]">
+                
+                <div 
+                    className="relative md:w-1/2 bg-cover bg-center min-h-[250px] md:min-h-full flex flex-col justify-end p-8 text-white"
+                    style={{ backgroundImage: `url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1000&auto=format&fit=crop')` }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                    <div className="relative z-10 space-y-2">
+                        <h1 className="text-2xl sm:text-3xl font-bold leading-tight">
+                            Révélez votre<br />beauté idéale
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-200 font-light max-w-sm">
+                            Rejoignez la communauté de professionnels et passionnés de la beauté.
+                        </p>
                     </div>
 
                     <div className="md:w-1/2 p-8 sm:p-10 flex flex-col justify-center bg-[#faf9f9]">
@@ -163,5 +152,5 @@ function Login() {
         );
     }
 }
-
+}
 export default Login;
