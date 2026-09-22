@@ -12,41 +12,31 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await api.post("/login", {
-                email,
-                password,
-            });
+       try {
+    const response = await api.post("/login", {
+        email,
+        password,
+    });
 
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user", JSON.stringify(response.data.user));
-            setMessage("Connexion réussie !");
-            if(response.data.user.role === "client"){
-                navigate("/client/dashboard");
-            }else{
-            navigate("/dashboard");
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
 
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+    setMessage("Connexion réussie !");
 
-        setMessage("Connexion réussie !");
-
-        if (response.data.user.role === "client") {
-            navigate("/dashboard");
-        } else {
-            navigate("/dashboard");
-        }
-
-    } catch (error) {
-        console.log(error);
-
-        setMessage(
-            error.response?.data?.message ||
-            "Erreur de connexion avec le serveur"
-        );
+    if (response.data.user.role === "client") {
+        navigate("/client/dashboard");
+    } else {
+        navigate("/dashboard");
     }
-};
 
+} catch (error) {
+    console.log(error);
+
+    setMessage(
+        error.response?.data?.message ||
+        "Erreur de connexion avec le serveur"
+    );
+}
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row min-h-[580px]">
@@ -162,5 +152,5 @@ function Login() {
         </div>
     );
 }
-
+}
 export default Login;
