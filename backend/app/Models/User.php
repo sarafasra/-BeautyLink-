@@ -10,13 +10,18 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'role',
+    'phone',
+    'city',
+    'profession',
+    'bio',
+    'profile_photo',
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-    ];
+];
 
     protected $hidden = [
         'password',
@@ -45,4 +50,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+    
 }

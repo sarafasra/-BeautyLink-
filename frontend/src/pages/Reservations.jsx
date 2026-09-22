@@ -7,19 +7,22 @@ function Reservations() {
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
 
-    useEffect(() => {
-        api.get("/professional/reservations")
+  const user = JSON.parse(localStorage.getItem("user"));
+const isClient = user?.role === "client";
+
+useEffect(() => {
+    const endpoint = isClient
+        ? "/reservations"
+        : "/professional/reservations";
+
+    api.get(endpoint)
         .then((response) => {
             setReservation(response.data);
         })
         .catch((error) => {
             console.log(error);
-            
-        }) 
-       
-    }, []
-);
-
+        });
+}, []);
 
          const today = new Date().toISOString().split("T")[0];
          const todayReservations = reservations.filter(

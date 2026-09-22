@@ -14,6 +14,7 @@ class ServiceController extends Controller
             'price' => 'required|numeric',
             'duration' => 'required|integer',
             'image' => 'nullable|url',
+
         ]);
 
         $service = Service::create([
@@ -30,7 +31,7 @@ class ServiceController extends Controller
         return response()->json([
 
             'message' =>'Prestation ajoutée avec succes',
-            'service' => $service
+    'service' => $service->load('category')
 
 
         ],201);
@@ -71,7 +72,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'message' => 'Presation modifié avec succès',
-                'service' => $service
+    'service' => $service->load('category')
             ]);
         }
 

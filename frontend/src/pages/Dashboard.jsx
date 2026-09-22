@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -6,10 +5,8 @@ const isClient = user?.role === "client";
     return (
         <div className="min-h-screen bg-[#faf9f9] flex">
 
-            {/* Sidebar */}
             <aside className="w-56 bg-[#292929] text-white flex flex-col min-h-screen">
 
-                {/* Logo */}
                 <div className="p-5">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-[#8E3A62] flex items-center justify-center">
@@ -28,7 +25,6 @@ const isClient = user?.role === "client";
                     </div>
                 </div>
 
-                {/* Navigation */}
                 <nav className="px-3 space-y-2">
 
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#A33F70] text-white text-sm font-medium">
@@ -36,13 +32,17 @@ const isClient = user?.role === "client";
                         Dashboard
                     </button>
 
-                  <Link
-    to="/services"
-    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
->
-    Mes prestations
-</Link><Link
-    to={user?.role === "client" ? "/client/reservations" : "/reservations"}
+                    {user?.role === "professionnel" && (
+    <Link
+        to="/services"
+        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
+    >
+        Mes prestations
+    </Link>
+)}
+
+                    <Link
+  to="/client/reservations"
     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm"
 >
     Mes réservations
@@ -53,12 +53,6 @@ const isClient = user?.role === "client";
                         Mes avis
                     </button>
 
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Messages
-
-                        <span className="ml-auto w-2 h-2 rounded-full bg-[#A33F70]"></span>
-                    </button>
 
                    <Link
     to="/profile"
@@ -68,12 +62,8 @@ const isClient = user?.role === "client";
 </Link>
                 </nav>
 
-                {/* Bottom */}
                 <div className="mt-auto p-4 space-y-8">
 
-                    <button className="w-full py-2.5 rounded-full bg-[#A33F70] hover:bg-[#8E3A62] text-white text-xs font-semibold">
-                         Ajouter une réservation
-                    </button>
 
                     <button className="w-full flex items-center gap-3 px-3 text-gray-300 text-sm hover:text-white">
                         
@@ -85,10 +75,8 @@ const isClient = user?.role === "client";
             </aside>
 
 
-            {/* Main Content */}
             <main className="flex-1 p-8 overflow-y-auto">
 
-                {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-[#252525]">
                         Bonjour {user?.name || "Amina"} 
@@ -100,7 +88,6 @@ const isClient = user?.role === "client";
                 </div>
 
 
-                {/* Statistics */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-9">
 
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -150,10 +137,8 @@ const isClient = user?.role === "client";
                 </div>
 
 
-                {/* Bottom Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
 
-                    {/* Reservations */}
                     <section className="lg:col-span-2">
 
                         <div className="flex justify-between items-center mb-4">
@@ -167,7 +152,6 @@ const isClient = user?.role === "client";
                         </div>
 
 
-                        {/* Reservation 1 */}
                         <div className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm">
 
                             <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
@@ -195,7 +179,6 @@ const isClient = user?.role === "client";
                         </div>
 
 
-                        {/* Reservation 2 */}
                         <div className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm">
 
                             <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
@@ -223,7 +206,6 @@ const isClient = user?.role === "client";
                         </div>
 
 
-                        {/* Reservation 3 */}
                         <div className="bg-white rounded-2xl p-4 flex items-center gap-4 shadow-sm">
 
                             <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
@@ -253,7 +235,6 @@ const isClient = user?.role === "client";
                     </section>
 
 
-                    {/* Inspirations */}
                     <section>
 
                         <h2 className="text-lg font-bold text-[#252525] mb-4">
