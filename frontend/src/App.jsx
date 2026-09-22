@@ -7,14 +7,13 @@ import Reservations from "./pages/Reservations";
 import Services from "./pages/Services";
 import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
-
+import Home from "./pages/Home";
 function App() {
     return (
         <BrowserRouter>
             <Routes>
 
-                <Route path="/" element={<Navigate to="/login" />} />
-
+<Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
