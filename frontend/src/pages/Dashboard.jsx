@@ -43,10 +43,7 @@ const isClient = user?.role === "client";
 >
     Mes réservations
 </Link>
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 text-sm">
-                        
-                        Mes avis
-                    </button>
+                  
 
 
                    <Link
@@ -114,9 +111,6 @@ const isClient = user?.role === "client";
                             Nouveaux
                         </p>
 
-                        <p className="text-xs font-semibold text-gray-600">
-                            avis
-                        </p>
                     </div>
 
 
