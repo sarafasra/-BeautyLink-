@@ -8,7 +8,6 @@ import Services from "./pages/Services";
 import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
 import Home from "./pages/Home";
-import CategoryServices from "./pages/CategoryServices";
 import ProfessionalProfile from "./pages/ProfessionalProfile";
 function App() {
     return (
@@ -39,10 +38,6 @@ function App() {
                     element={<CreateReservation />}
                 />
                 <Route
-    path="/services/category/:categoryId"
-    element={<CategoryServices />}
-/>
-<Route
     path="/professional/:id"
     element={<ProfessionalProfile />}
 />

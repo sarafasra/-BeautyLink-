@@ -8,19 +8,25 @@ function ProfessionalProfile() {
 
     const [professional, setProfessional] = useState(null);
     const [loading, setLoading] = useState(true);
+useEffect(() => {
+    const getProfessional = async () => {
+        try {
+            const response = await api.get(`/profile/${id}`);
 
-    useEffect(() => {
-        api.get(`/profile/${id}`)
-            .then((response) => {
-                setProfessional(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [id]);
+            console.log("Professional:", response.data);
+
+            setProfessional(response.data);
+        } catch (error) {
+            console.log("Erreur:", error);
+            console.log("Status:", error.response?.status);
+            console.log("Data:", error.response?.data);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    getProfessional();
+}, [id]);
 
     if (loading) {
         return (
