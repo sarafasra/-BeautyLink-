@@ -23,7 +23,6 @@ function Login() {
                 password,
             });
 
-            // Sauvegarder les informations de connexion
             localStorage.setItem("token", response.data.token);
             localStorage.setItem(
                 "user",
@@ -57,7 +56,6 @@ function Login() {
 
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row min-h-[580px]">
 
-                {/* Image */}
                 <div
                     className="relative md:w-1/2 bg-cover bg-center min-h-[280px] md:min-h-full flex flex-col justify-end p-8"
                     style={{
@@ -81,10 +79,8 @@ function Login() {
                     </div>
                 </div>
 
-                {/* Formulaire */}
                 <div className="md:w-1/2 p-8 sm:p-10 flex flex-col justify-center bg-[#faf9f9]">
 
-                    {/* Logo */}
                     <div className="text-center mb-7">
                         <h2 className="text-3xl font-bold text-[#8E3A62]">
                             BeautyLink
@@ -95,7 +91,6 @@ function Login() {
                         </p>
                     </div>
 
-                    {/* Navigation Login / Register */}
                     <div className="bg-gray-200/70 p-1 rounded-full flex mb-7">
 
                         <button
@@ -114,13 +109,11 @@ function Login() {
 
                     </div>
 
-                    {/* Formulaire */}
                     <form
                         onSubmit={handleLogin}
                         className="space-y-5"
                     >
 
-                        {/* Email */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
                                 Adresse e-mail
@@ -138,7 +131,6 @@ function Login() {
                             />
                         </div>
 
-                        {/* Password */}
                         <div>
 
                             <div className="flex justify-between items-center mb-2">
@@ -186,7 +178,6 @@ function Login() {
                             </div>
                         </div>
 
-                        {/* Bouton */}
                         <button
                             type="submit"
                             disabled={loading}
@@ -199,7 +190,6 @@ function Login() {
 
                     </form>
 
-                    {/* Message */}
                     {message && (
                         <p
                             className={`mt-4 text-sm text-center font-medium ${
@@ -212,7 +202,6 @@ function Login() {
                         </p>
                     )}
 
-                    {/* Register */}
                     <p className="mt-7 text-center text-sm text-gray-500">
                         Vous n'avez pas encore de compte ?{" "}
 

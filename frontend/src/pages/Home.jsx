@@ -50,7 +50,6 @@ function Home() {
     return (
         <div className="min-h-screen bg-white">
 
-            {/* Navbar */}
             <nav className="bg-white shadow-sm px-8 py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
 
@@ -88,7 +87,6 @@ function Home() {
                 </div>
             </nav>
 
-            {/* Hero */}
             <section className="bg-[#fff7f9] px-8 py-20">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 
@@ -184,7 +182,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Professionals */}
             <section className="bg-[#fff7f9] px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -264,7 +261,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Comment ça marche */}
             <section className="px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -324,26 +320,95 @@ function Home() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="bg-[#292929] text-white px-8 py-8">
+<footer className="bg-[#292929] text-white px-8 py-12">
 
-                <div className="max-w-7xl mx-auto text-center">
+    <div className="max-w-7xl mx-auto">
 
-                    <h3 className="text-2xl font-bold text-[#d87093]">
-                        BeautyLink
-                    </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-                    <p className="text-gray-400 mt-2">
-                        Votre beauté, votre choix, votre moment.
+            <div>
+                <h3 className="text-2xl font-bold text-[#d87093]">
+                    BeautyLink
+                </h3>
+
+                <p className="text-gray-400 mt-3 leading-relaxed">
+                    Votre beauté, votre choix, votre moment.
+                    Trouvez facilement des professionnels de
+                    coiffure, maquillage et onglerie.
+                </p>
+            </div>
+
+            <div>
+                <h3 className="text-lg font-bold mb-4">
+                    Contact
+                </h3>
+
+                <div className="space-y-3 text-sm text-gray-400">
+
+                    <p>
+                         contact@beautylink.ma
                     </p>
 
-                    <p className="text-gray-500 text-sm mt-6">
-                        © 2026 BeautyLink. Tous droits réservés.
+                    <p>
+                         +212 6 00 00 00 00
+                    </p>
+
+                    <p>
+                         Maroc
                     </p>
 
                 </div>
+            </div>
 
-            </footer>
+            <div>
+                <h3 className="text-lg font-bold mb-4">
+                    Liens rapides
+                </h3>
+
+                <div className="flex flex-col gap-3 text-sm">
+
+                    <Link
+                        to="/"
+                        className="text-gray-400 hover:text-[#d87093]"
+                    >
+                        Accueil
+                    </Link>
+
+                    <Link
+                        to="/services"
+                        className="text-gray-400 hover:text-[#d87093]"
+                    >
+                        Prestations
+                    </Link>
+
+                    <Link
+                        to="/login"
+                        className="text-gray-400 hover:text-[#d87093]"
+                    >
+                        Connexion
+                    </Link>
+
+                    <Link
+                        to="/register"
+                        className="text-gray-400 hover:text-[#d87093]"
+                    >
+                        Inscription
+                    </Link>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div className="border-t border-gray-700 mt-10 pt-6 text-center">
+            <p className="text-gray-500 text-sm">
+                © 2026 BeautyLink. Tous droits réservés.
+            </p>
+        </div>
+
+    </div>
+
+</footer>
 
         </div>
     );

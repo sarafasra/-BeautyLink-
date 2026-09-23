@@ -12,33 +12,64 @@ import ClientReservations from "./pages/ClientReservations";
 import Home from "./pages/Home";
 import ProfessionalProfile from "./pages/ProfessionalProfile";
 import ClientFavorites from "./pages/ClientFavorites";
+import ProfessionalLayout from "./components/ProfessionalLayout";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
 
+                {/* Public */}
                 <Route path="/" element={<Home />} />
 
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/client/dashboard" element={<Dashboard />} />
-
-                <Route path="/profile" element={<Profile />} />
-
-                <Route path="/services" element={<Services />} />
-
-                {/* Categories */}
                 <Route
                     path="/services/category/:categoryId"
                     element={<CategoryServices />}
                 />
 
-                <Route path="/services/ajouter" element={<Services />} />
+                <Route
+                    path="/professional/:id"
+                    element={<ProfessionalProfile />}
+                />
 
-                <Route path="/reservations" element={<Reservations />} />
+                {/* Professionnel */}
+                <Route element={<ProfessionalLayout />}>
+
+                    <Route
+                        path="/dashboard"
+                        element={<Dashboard />}
+                    />
+
+                    <Route
+                        path="/profile"
+                        element={<Profile />}
+                    />
+
+                    <Route
+                        path="/services"
+                        element={<Services />}
+                    />
+
+                    <Route
+                        path="/services/ajouter"
+                        element={<Services />}
+                    />
+
+                    <Route
+                        path="/reservations"
+                        element={<Reservations />}
+                    />
+
+                </Route>
+
+                {/* Client */}
+                <Route
+                    path="/client/dashboard"
+                    element={<Dashboard />}
+                />
 
                 <Route
                     path="/client/reservations"
@@ -53,11 +84,6 @@ function App() {
                 <Route
                     path="/client/favorites"
                     element={<ClientFavorites />}
-                />
-
-                <Route
-                    path="/professional/:id"
-                    element={<ProfessionalProfile />}
                 />
 
             </Routes>
