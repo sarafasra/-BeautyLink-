@@ -34,4 +34,8 @@ class Service extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+    public function favorites()
+{
+    return $this->hasMany(Favorite::class);
+}
 }
