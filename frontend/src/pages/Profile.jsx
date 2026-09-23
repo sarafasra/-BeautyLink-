@@ -115,6 +115,7 @@ const handleUpdate = async (e) => {
               className="w-full h-full object-cover"
             />
 
+        
           </div>
 
           <div className="px-8 pb-6 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
