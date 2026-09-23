@@ -67,5 +67,11 @@ public function updatePhoto(Request $request)
         'user' => $user
     ]);
 }
+public function professionalProfile($id)
+{
+    $user = \App\Models\User::with('services')->findOrFail($id);
+
+    return response()->json($user);
+}
 
 }

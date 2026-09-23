@@ -31,7 +31,7 @@ Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/profile/photo', [ProfileController::class, 'updatePhoto']);
 
-   
+   Route::get('/profile/{id}', [ProfileController::class, 'professionalProfile']);
 Route::post('/services', [ServiceController::class, 'store']);
 Route::put('/services/{id}', [ServiceController::class, 'update']);
 Route::delete('/services/{id}', [ServiceController::class, 'destroy']);

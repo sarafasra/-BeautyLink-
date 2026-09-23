@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     Scissors,
@@ -6,6 +7,7 @@ import {
     Star,
     Heart,
 } from "lucide-react";
+import api from "../services/api";
 
 function Home() {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -13,9 +15,48 @@ function Home() {
     const isLoggedIn = !!user;
     const isClient = user?.role === "client";
 
+    const [professionals, setProfessionals] = useState([]);
+
+    useEffect(() => {
+        const getProfessionals = async () => {
+            try {
+                const response = await api.get("/services");
+
+                const services = response.data;
+                const uniqueProfessionals = [];
+
+                services.forEach((service) => {
+                    if (
+                        service.user &&
+                        service.user.role === "professionnel" &&
+                        !uniqueProfessionals.some(
+                            (professional) =>
+                                professional.id === service.user.id
+                        )
+                    ) {
+                        uniqueProfessionals.push({
+                            ...service.user,
+                            service: service,
+                        });
+                    }
+                });
+
+                setProfessionals(uniqueProfessionals.slice(0, 3));
+            } catch (error) {
+                console.log(
+                    "Erreur lors du chargement des professionnels :",
+                    error
+                );
+            }
+        };
+
+        getProfessionals();
+    }, []);
+
     return (
         <div className="min-h-screen bg-white">
 
+            {/* Navbar */}
             <nav className="bg-white shadow-sm px-8 py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
 
@@ -23,10 +64,11 @@ function Home() {
                         to={isClient ? "/client/dashboard" : "/dashboard"}
                         className="text-2xl font-bold text-[#d87093]"
                     >
-                        BeautyLink 
+                        BeautyLink
                     </Link>
 
                     <div className="flex items-center gap-6">
+
                         <Link to="/services">
                             Prestations
                         </Link>
@@ -73,6 +115,7 @@ function Home() {
                                 Déconnexion
                             </button>
                         )}
+
                     </div>
                 </div>
             </nav>
@@ -116,51 +159,65 @@ function Home() {
                 </div>
             </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-    {[
-        {
-            title: "Coiffure",
-            count: "120 professionnels",
-            icon: Scissors,
-        },
-        {
-            title: "Maquillage",
-            count: "98 professionnels",
-            icon: Sparkles,
-        },
-        {
-            title: "Onglerie",
-            count: "76 professionnels",
-            icon: Hand,
-        },
-    ].map((cat, idx) => {
-        const Icon = cat.icon;
+            {/* Catégories */}
+            <section className="px-8 py-12">
+                <div className="max-w-7xl mx-auto">
 
-        return (
-            <div
-                key={idx}
-                className="bg-white p-6 rounded-2xl text-center shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-center"
-            >
-                <div className="w-16 h-16 bg-[#fceef3] rounded-full flex items-center justify-center mb-4">
-                    <Icon
-                        size={30}
-                        strokeWidth={1.8}
-                        className="text-[#d87093]"
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+
+                        {[
+                            {
+                                title: "Coiffure",
+                                count: "120 professionnels",
+                                icon: Scissors,
+                                categoryId: 1,
+                            },
+                            {
+                                title: "Maquillage",
+                                count: "98 professionnels",
+                                icon: Sparkles,
+                                categoryId: 2,
+                            },
+                            {
+                                title: "Onglerie",
+                                count: "76 professionnels",
+                                icon: Hand,
+                                categoryId: 3,
+                            },
+                        ].map((cat, idx) => {
+                            const Icon = cat.icon;
+
+                            return (
+                                <Link
+                                    key={idx}
+                                    to={`/services/category/${cat.categoryId}`}
+                                    className="bg-white p-6 rounded-2xl text-center shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-center"
+                                >
+                                    <div className="w-16 h-16 bg-[#fceef3] rounded-full flex items-center justify-center mb-4">
+                                        <Icon
+                                            size={30}
+                                            strokeWidth={1.8}
+                                            className="text-[#d87093]"
+                                        />
+                                    </div>
+
+                                    <h3 className="font-bold text-gray-800 text-base">
+                                        {cat.title}
+                                    </h3>
+
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        {cat.count}
+                                    </p>
+                                </Link>
+                            );
+                        })}
+
+                    </div>
+
                 </div>
+            </section>
 
-                <h3 className="font-bold text-gray-800 text-base">
-                    {cat.title}
-                </h3>
-
-                <p className="text-sm text-gray-400 mt-1">
-                    {cat.count}
-                </p>
-            </div>
-        );
-    })}
-</div>
-
+            {/* Professionnels */}
             <section className="bg-[#fff7f9] px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -168,156 +225,88 @@ function Home() {
                         Nos professionnels
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                        <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                            <div className="relative">
-                                <img
-                                    src="https://images.unsplash.com/photo-1562322140-8baeececf3df"
-                                    className="w-full h-64 object-cover"
-                                />
-
-                                <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                                    <Heart
-                                        size={21}
-                                        className="text-[#d87093]"
-                                    />
-                                </button>
-                            </div>
-
-                            <div className="p-5">
-                                <h3 className="text-xl font-bold">
-                                    Sara Beauty
-                                </h3>
-
-                                <div className="flex items-center gap-1 mt-2">
-                                    <Star
-                                        size={17}
-                                        className="text-yellow-400 fill-yellow-400"
-                                    />
-                                    <span>4.8</span>
-                                    <span className="text-gray-400">
-                                        (24 avis)
-                                    </span>
-                                </div>
-
-                                <p className="text-gray-500 mt-3">
-                                    Beni Mellal • Coiffure
-                                </p>
-
-                                <p className="font-semibold mt-3">
-                                    À partir de 80 DH
-                                </p>
-
-                                <Link
-                                    to="/services"
-                                    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
-                                >
-                                    Voir le profil
-                                </Link>
-                            </div>
+                    {professionals.length === 0 ? (
+                        <div className="text-center text-gray-500">
+                            Aucun professionnel disponible pour le moment.
                         </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                        <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                            <div className="relative">
-                                <img
-                                    src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f"
-                                    className="w-full h-64 object-cover"
-                                />
-
-                                <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                                    <Heart
-                                        size={21}
-                                        className="text-[#d87093]"
-                                    />
-                                </button>
-                            </div>
-
-                            <div className="p-5">
-                                <h3 className="text-xl font-bold">
-                                    Lina Makeup
-                                </h3>
-
-                                <div className="flex items-center gap-1 mt-2">
-                                    <Star
-                                        size={17}
-                                        className="text-yellow-400 fill-yellow-400"
-                                    />
-                                    <span>4.9</span>
-                                    <span className="text-gray-400">
-                                        (31 avis)
-                                    </span>
-                                </div>
-
-                                <p className="text-gray-500 mt-3">
-                                    Marrakech • Maquillage
-                                </p>
-
-                                <p className="font-semibold mt-3">
-                                    À partir de 120 DH
-                                </p>
-
-                                <Link
-                                    to="/services"
-                                    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
+                            {professionals.map((professional) => (
+                                <div
+                                    key={professional.id}
+                                    className="bg-white rounded-2xl overflow-hidden shadow-md"
                                 >
-                                    Voir le profil
-                                </Link>
-                            </div>
-                        </div>
 
-                        <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                            <div className="relative">
-                                <img
-                                    src="https://images.unsplash.com/photo-1604654894610-df63bc536371"
-                                    className="w-full h-64 object-cover"
-                                />
+                                    <div className="relative">
 
-                                <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                                    <Heart
-                                        size={21}
-                                        className="text-[#d87093]"
-                                    />
-                                </button>
-                            </div>
+                                        <img
+                                            src={
+                                                professional.profile_photo
+                                                    ? `http://127.0.0.1:8002/storage/${professional.profile_photo}`
+                                                    : "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
+                                            }
+                                            alt={professional.name}
+                                            className="w-full h-64 object-cover"
+                                        />
 
-                            <div className="p-5">
-                                <h3 className="text-xl font-bold">
-                                    Nail Studio
-                                </h3>
+                                        <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                                            <Heart
+                                                size={21}
+                                                className="text-[#d87093]"
+                                            />
+                                        </button>
 
-                                <div className="flex items-center gap-1 mt-2">
-                                    <Star
-                                        size={17}
-                                        className="text-yellow-400 fill-yellow-400"
-                                    />
-                                    <span>4.7</span>
-                                    <span className="text-gray-400">
-                                        (18 avis)
-                                    </span>
+                                    </div>
+
+                                    <div className="p-5">
+
+                                        <h3 className="text-xl font-bold">
+                                            {professional.name}
+                                        </h3>
+
+                                        <div className="flex items-center gap-1 mt-2">
+                                            <Star
+                                                size={17}
+                                                className="text-yellow-400 fill-yellow-400"
+                                            />
+
+                                            <span>
+                                                Avis à venir
+                                            </span>
+                                        </div>
+
+                                        <p className="text-gray-500 mt-3">
+                                            {professional.city ||
+                                                "Ville non renseignée"}
+                                            {" • "}
+                                            {professional.service?.category?.name ||
+                                                "Beauté"}
+                                        </p>
+
+                                        <p className="font-semibold mt-3">
+                                            À partir de{" "}
+                                            {professional.service?.price || 0} DH
+                                        </p>
+
+                                        <Link
+                                            to={`/professional/${professional.id}`}
+                                            className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
+                                        >
+                                            Voir le profil
+                                        </Link>
+
+                                    </div>
                                 </div>
+                            ))}
 
-                                <p className="text-gray-500 mt-3">
-                                    Beni Mellal • Onglerie
-                                </p>
-
-                                <p className="font-semibold mt-3">
-                                    À partir de 70 DH
-                                </p>
-
-                                <Link
-                                    to="/services"
-                                    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
-                                >
-                                    Voir le profil
-                                </Link>
-                            </div>
                         </div>
+                    )}
 
-                    </div>
                 </div>
             </section>
 
+            {/* Comment ça marche */}
             <section className="px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -373,11 +362,15 @@ function Home() {
                         </div>
 
                     </div>
+
                 </div>
             </section>
 
+            {/* Footer */}
             <footer className="bg-[#292929] text-white px-8 py-8">
+
                 <div className="max-w-7xl mx-auto text-center">
+
                     <h3 className="text-2xl font-bold text-[#d87093]">
                         BeautyLink
                     </h3>
@@ -389,7 +382,9 @@ function Home() {
                     <p className="text-gray-500 text-sm mt-6">
                         © 2026 BeautyLink. Tous droits réservés.
                     </p>
+
                 </div>
+
             </footer>
 
         </div>
