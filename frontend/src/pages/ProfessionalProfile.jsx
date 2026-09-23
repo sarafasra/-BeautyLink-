@@ -6,13 +6,13 @@ import api from "../services/api";
 function ProfessionalProfile() {
     const { id } = useParams();
 
-    const [service, setService] = useState(null);
+    const [professional, setProfessional] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api.get(`/services/${id}`)
+        api.get(`/profile/${id}`)
             .then((response) => {
-                setService(response.data);
+                setProfessional(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -30,7 +30,7 @@ function ProfessionalProfile() {
         );
     }
 
-    if (!service) {
+    if (!professional) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <p className="text-gray-500">
@@ -39,8 +39,6 @@ function ProfessionalProfile() {
             </div>
         );
     }
-
-    const professional = service.user;
 
     return (
         <div className="min-h-screen bg-[#fff7f9]">
@@ -65,7 +63,6 @@ function ProfessionalProfile() {
                     </div>
 
                     <div className="px-8 pb-8">
-
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
 
                             <div className="flex items-end gap-5">
@@ -91,14 +88,16 @@ function ProfessionalProfile() {
                                     </h1>
 
                                     <p className="text-gray-500 mt-1">
-                                        {professional.profession || "Professionnel de beauté"}
+                                        {professional.profession ||
+                                            "Professionnel de beauté"}
                                     </p>
 
                                     <div className="flex items-center gap-4 mt-2 text-sm">
 
                                         <span className="flex items-center gap-1 text-gray-500">
                                             <MapPin size={15} />
-                                            {professional.city || "Ville non renseignée"}
+                                            {professional.city ||
+                                                "Ville non renseignée"}
                                         </span>
 
                                         <span className="flex items-center gap-1 text-yellow-500">
@@ -123,11 +122,10 @@ function ProfessionalProfile() {
                             </button>
 
                         </div>
-
                     </div>
                 </div>
 
-                {/* À propos */}
+                {/* À propos + Informations */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
 
                     <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm">
@@ -155,8 +153,10 @@ function ProfessionalProfile() {
                                 <p className="text-sm font-semibold">
                                     Ville
                                 </p>
+
                                 <p className="text-sm text-gray-500">
-                                    {professional.city || "Non renseignée"}
+                                    {professional.city ||
+                                        "Non renseignée"}
                                 </p>
                             </div>
 
@@ -164,8 +164,10 @@ function ProfessionalProfile() {
                                 <p className="text-sm font-semibold">
                                     Téléphone
                                 </p>
+
                                 <p className="text-sm text-gray-500">
-                                    {professional.phone || "Non renseigné"}
+                                    {professional.phone ||
+                                        "Non renseigné"}
                                 </p>
                             </div>
 
@@ -182,54 +184,65 @@ function ProfessionalProfile() {
                         Prestations
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {professional.services &&
+                    professional.services.length > 0 ? (
 
-                        {professional.services?.map((item) => (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                            <div
-                                key={item.id}
-                                className="border border-gray-100 rounded-xl p-4 flex gap-4"
-                            >
+                            {professional.services.map((item) => (
 
-                                <img
-                                    src={
-                                        item.image ||
-                                        "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"
-                                    }
-                                    alt={item.title}
-                                    className="w-20 h-20 rounded-xl object-cover"
-                                />
+                                <div
+                                    key={item.id}
+                                    className="border border-gray-100 rounded-xl p-4 flex gap-4"
+                                >
 
-                                <div>
+                                    <img
+                                        src={
+                                            item.image ||
+                                            "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"
+                                        }
+                                        alt={item.title}
+                                        className="w-20 h-20 rounded-xl object-cover"
+                                    />
 
-                                    <h3 className="font-bold text-gray-800">
-                                        {item.title}
-                                    </h3>
+                                    <div>
 
-                                    <p className="text-sm text-gray-500 mt-1">
-                                        {item.description}
-                                    </p>
+                                        <h3 className="font-bold text-gray-800">
+                                            {item.title}
+                                        </h3>
 
-                                    <div className="flex items-center gap-4 mt-2 text-sm">
+                                        <p className="text-sm text-gray-500 mt-1">
+                                            {item.description}
+                                        </p>
 
-                                        <span className="text-[#d87093] font-semibold">
-                                            {item.price} DH
-                                        </span>
+                                        <div className="flex items-center gap-4 mt-2 text-sm">
 
-                                        <span className="flex items-center gap-1 text-gray-400">
-                                            <Clock size={14} />
-                                            {item.duration} min
-                                        </span>
+                                            <span className="text-[#d87093] font-semibold">
+                                                {item.price} DH
+                                            </span>
+
+                                            <span className="flex items-center gap-1 text-gray-400">
+                                                <Clock size={14} />
+                                                {item.duration} min
+                                            </span>
+
+                                        </div>
 
                                     </div>
 
                                 </div>
 
-                            </div>
+                            ))}
 
-                        ))}
+                        </div>
 
-                    </div>
+                    ) : (
+
+                        <p className="text-gray-500">
+                            Aucune prestation disponible.
+                        </p>
+
+                    )}
 
                 </div>
 

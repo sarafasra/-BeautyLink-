@@ -43,7 +43,7 @@ function App() {
     element={<CategoryServices />}
 />
 <Route
-    path="/services/:id"
+    path="/professional/:id"
     element={<ProfessionalProfile />}
 />
 
