@@ -9,6 +9,7 @@ import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
 import Home from "./pages/Home";
 import CategoryServices from "./pages/CategoryServices";
+import ProfessionalProfile from "./pages/ProfessionalProfile";
 function App() {
     return (
         <BrowserRouter>
@@ -40,6 +41,10 @@ function App() {
                 <Route
     path="/services/category/:categoryId"
     element={<CategoryServices />}
+/>
+<Route
+    path="/services/:id"
+    element={<ProfessionalProfile />}
 />
 
             </Routes>
