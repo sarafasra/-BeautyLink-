@@ -48,38 +48,42 @@ function Profile() {
     return <ClientProfile user={user} />;
   }
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+const handleUpdate = async (e) => {
+  e.preventDefault();
 
-    try {
-      const formData = new FormData();
+  try {
+    const formData = new FormData();
 
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("phone", phone);
-      formData.append("city", city);
-      formData.append("profession", profession);
-      formData.append("bio", bio);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("city", city);
+    formData.append("profession", profession);
+    formData.append("bio", bio);
 
-      if (profilePhoto) {
-        formData.append("profile_photo", profilePhoto);
-      }
-
-      const response = await api.post("/profile", formData);
-
-      setUser(response.data.user);
-      setProfilePhoto(null);
-      setEditMode(false);
-    } catch (error) {
-      console.log(error);
+    if (profilePhoto) {
+      formData.append("profile_photo", profilePhoto);
     }
-  };
+
+    formData.append("_method", "PUT");
+
+    await api.post("/profile", formData);
+
+    const updatedUser = await api.get("/profile");
+    setUser(updatedUser.data);
+
+    setProfilePhoto(null);
+    setEditMode(false);
+
+  } catch (error) {
+    console.log(error.response?.data || error);
+  }
+};
 
   return (
     <div className="bg-[#faf8f9] min-h-screen p-6 font-sans text-gray-800">
       <div className="max-w-5xl mx-auto">
 
-        {/* Breadcrumb */}
         <div className="text-xs text-gray-400 mb-4 flex items-center gap-1">
           <span>Accueil</span>
           <span>›</span>
@@ -90,10 +94,8 @@ function Profile() {
           </span>
         </div>
 
-        {/* Profile Header */}
         <div className="bg-white rounded-3xl shadow-sm overflow-hidden mb-6">
 
-          {/* Cover */}
           <div className="h-64 relative bg-pink-100">
             <img
               src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
@@ -118,12 +120,10 @@ function Profile() {
             </button>
           </div>
 
-          {/* Profile Info */}
           <div className="px-8 pb-6 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
 
             <div className="flex items-end gap-5">
 
-              {/* Profile Photo */}
               <div className="w-28 h-28 rounded-full border-4 border-white shadow-md overflow-hidden -mt-12 bg-white relative z-10">
                 <img
                   src={
@@ -136,13 +136,11 @@ function Profile() {
                 />
               </div>
 
-              {/* Name + Edit */}
               <div className="mb-1">
 
                 {editMode ? (
                   <div className="space-y-3 w-full min-w-[280px]">
 
-                    {/* Nom */}
                     <input
                       type="text"
                       value={name}
@@ -151,7 +149,6 @@ function Profile() {
                       placeholder="Nom"
                     />
 
-                    {/* Photo */}
                     <input
                       type="file"
                       accept="image/*"
@@ -161,7 +158,6 @@ function Profile() {
                       className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
                     />
 
-                    {/* Email */}
                     <input
                       type="email"
                       value={email}
@@ -170,7 +166,6 @@ function Profile() {
                       placeholder="Email"
                     />
 
-                    {/* Téléphone */}
                     <input
                       type="text"
                       value={phone}
@@ -179,7 +174,6 @@ function Profile() {
                       placeholder="Téléphone"
                     />
 
-                    {/* Ville */}
                     <input
                       type="text"
                       value={city}
@@ -188,7 +182,6 @@ function Profile() {
                       placeholder="Ville"
                     />
 
-                    {/* Profession */}
                     <input
                       type="text"
                       value={profession}
@@ -199,7 +192,6 @@ function Profile() {
                       placeholder="Profession"
                     />
 
-                    {/* Bio */}
                     <textarea
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
@@ -208,7 +200,6 @@ function Profile() {
                       rows="4"
                     />
 
-                    {/* Buttons */}
                     <div className="flex gap-2 pt-1">
 
                       <button
@@ -230,7 +221,6 @@ function Profile() {
                   </div>
                 ) : (
                   <>
-                    {/* Name */}
                     <div className="flex items-center gap-1.5">
                       <h1 className="text-2xl font-bold">
                         {user.name}
@@ -241,12 +231,10 @@ function Profile() {
                       </span>
                     </div>
 
-                    {/* Profession */}
                     <p className="text-gray-500 text-sm mt-0.5">
                       {user.profession || "Professionnel de beauté"}
                     </p>
 
-                    {/* Rating + City */}
                     <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
 
                       <span className="text-amber-500 font-bold flex items-center gap-0.5">
@@ -274,7 +262,6 @@ function Profile() {
               </div>
             </div>
 
-            {/* Edit Button */}
             {!editMode && (
               <button
                 onClick={() => setEditMode(true)}
@@ -287,7 +274,6 @@ function Profile() {
           </div>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-8 border-b border-gray-200/60 mb-6 text-sm font-medium text-gray-500 px-2">
 
           <button
@@ -325,7 +311,6 @@ function Profile() {
 
         </div>
 
-        {/* Prestations */}
         {activeTab === "Prestations" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -393,7 +378,6 @@ function Profile() {
 
             </div>
 
-            {/* Informations pratiques */}
             <div>
 
               <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
@@ -402,7 +386,6 @@ function Profile() {
                   Informations pratiques
                 </h2>
 
-                {/* Ville + Téléphone */}
                 <div className="flex items-start gap-3 mb-5">
 
                   <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
@@ -430,7 +413,6 @@ function Profile() {
                   </div>
                 </div>
 
-                {/* Horaires */}
                 <div className="flex items-start gap-3">
 
                   <span className="p-2 rounded-full bg-pink-50 text-[#9E3B68] text-xs mt-0.5">
@@ -473,7 +455,6 @@ function Profile() {
           </div>
         )}
 
-        {/* À propos */}
         {activeTab === "À propos" && (
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
 
@@ -488,7 +469,6 @@ function Profile() {
           </div>
         )}
 
-        {/* Avis */}
         {activeTab === "Avis" && (
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
 
