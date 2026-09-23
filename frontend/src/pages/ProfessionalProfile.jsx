@@ -54,10 +54,9 @@ useEffect(() => {
                     to="/"
                     className="text-[#d87093] hover:underline"
                 >
-                    ← Retour
+                     Retour
                 </Link>
 
-                {/* Profil */}
                 <div className="bg-white rounded-3xl shadow-sm mt-6 overflow-hidden">
 
                     <div className="h-48 bg-pink-100">
@@ -131,7 +130,6 @@ useEffect(() => {
                     </div>
                 </div>
 
-                {/* À propos + Informations */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
 
                     <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm">
@@ -183,7 +181,6 @@ useEffect(() => {
 
                 </div>
 
-                {/* Prestations */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm mt-6">
 
                     <h2 className="text-xl font-bold text-gray-800 mb-5">
@@ -252,7 +249,6 @@ useEffect(() => {
 
                 </div>
 
-                {/* Avis */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm mt-6">
 
                     <h2 className="text-xl font-bold text-gray-800">

@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'show']);
 Route::put('/profile', [ProfileController::class, 'update']);
+Route::get('/profile/{id}', [ProfileController::class, 'professionalProfile']);
     Route::get('/reservations', [ReservationController::class, 'index']);
     Route::get('/professional/reservations', [ReservationController::class, 'professionalReservations']);
 Route::post('/reservations', [ReservationController::class, 'store']);
