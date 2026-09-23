@@ -43,7 +43,6 @@ navigate("/");            } else {
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row min-h-[580px]">
 
-                {/* Image */}
                 <div
                     className="relative md:w-1/2 bg-cover bg-center min-h-[250px] md:min-h-full flex flex-col justify-end p-8 text-white"
                     style={{
@@ -66,7 +65,6 @@ navigate("/");            } else {
                     </div>
                 </div>
 
-                {/* Formulaire */}
                 <div className="md:w-1/2 p-8 sm:p-10 flex flex-col justify-center bg-[#faf9f9]">
 
                     <div className="flex items-center justify-center gap-2 mb-6">
@@ -172,21 +170,7 @@ navigate("/");            } else {
                         </span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                        <button
-                            type="button"
-                            className="py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-medium"
-                        >
-                            Google
-                        </button>
-
-                        <button
-                            type="button"
-                            className="py-2.5 bg-white border border-gray-200 rounded-xl text-xs font-medium"
-                        >
-                            Apple
-                        </button>
-                    </div>
+                 
 
                     <p className="mt-6 text-center text-xs text-gray-500">
                         Vous n'avez pas encore de compte ?{" "}

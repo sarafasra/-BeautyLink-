@@ -38,6 +38,12 @@ class ServiceController extends Controller
 
 
     }
+    public function show($id)
+{
+    $service = Service::with(['category', 'user.services'])->findOrFail($id);
+
+    return response()->json($service);
+}
 
     public function update(Request $request, $id){
 

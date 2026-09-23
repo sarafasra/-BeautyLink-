@@ -30,6 +30,7 @@ Route::put('/reservations/{id}/status', [ReservationController::class, 'updateSt
 Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/profile/photo', [ProfileController::class, 'updatePhoto']);
+Route::get('/services/{id}', [ServiceController::class, 'show']);
 
    
 Route::post('/services', [ServiceController::class, 'store']);
