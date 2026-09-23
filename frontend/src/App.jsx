@@ -8,6 +8,7 @@ import Services from "./pages/Services";
 import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
 import Home from "./pages/Home";
+import CategoryServices from "./pages/CategoryServices";
 function App() {
     return (
         <BrowserRouter>
@@ -36,6 +37,10 @@ function App() {
                     path="/reservations/create/:serviceId"
                     element={<CreateReservation />}
                 />
+                <Route
+    path="/services/category/:categoryId"
+    element={<CategoryServices />}
+/>
 
             </Routes>
         </BrowserRouter>

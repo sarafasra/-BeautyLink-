@@ -77,7 +77,6 @@ function Home() {
                 </div>
             </nav>
 
-            {/* Hero */}
             <section className="bg-[#fff7f9] px-8 py-20">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 
@@ -116,29 +115,33 @@ function Home() {
                 </div>
             </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
     {[
         {
             title: "Coiffure",
             count: "120 professionnels",
             icon: Scissors,
+            categoryId: 1,
         },
         {
             title: "Maquillage",
             count: "98 professionnels",
             icon: Sparkles,
+            categoryId: 2,
         },
         {
             title: "Onglerie",
             count: "76 professionnels",
             icon: Hand,
+            categoryId: 3,
         },
-    ].map((cat, idx) => {
+    ].map((cat) => {
         const Icon = cat.icon;
 
         return (
-            <div
-                key={idx}
+            <Link
+                key={cat.categoryId}
+                to={`/services/category/${cat.categoryId}`}
                 className="bg-white p-6 rounded-2xl text-center shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-center"
             >
                 <div className="w-16 h-16 bg-[#fceef3] rounded-full flex items-center justify-center mb-4">
@@ -156,7 +159,7 @@ function Home() {
                 <p className="text-sm text-gray-400 mt-1">
                     {cat.count}
                 </p>
-            </div>
+            </Link>
         );
     })}
 </div>
