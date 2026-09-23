@@ -25,8 +25,7 @@ function Login() {
             setMessage("Connexion réussie !");
 
             if (response.data.user.role === "client") {
-                navigate("/client/dashboard");
-            } else {
+navigate("/");            } else {
                 navigate("/dashboard");
             }
 
