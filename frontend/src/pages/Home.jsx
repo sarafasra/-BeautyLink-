@@ -83,6 +83,11 @@ function Home() {
                                 Mes réservations
                             </Link>
                         )}
+                        {isClient && (
+    <Link to="/client/favorites">
+        Mes favoris
+    </Link>
+)}
 
                         {isLoggedIn && (
                             <Link to="/profile">
