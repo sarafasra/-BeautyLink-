@@ -172,12 +172,11 @@ function CategoryServices() {
                                         </span>
                                     </div>
 
-                                    <Link
-                                        to={`/services/${service.id}`}
-                                        className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-5"
-                                    >
-                                        Voir le profil
-                                    </Link>
+                                   <Link
+to={`/professional/${service.user.id}`}    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-5"
+>
+    Voir le profil
+</Link>
 
                                 </div>
 

@@ -212,12 +212,12 @@ function Home() {
                                     À partir de 80 DH
                                 </p>
 
-                                <Link
-                                    to="/services"
-                                    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
-                                >
-                                    Voir le profil
-                                </Link>
+                            <Link
+    to="/services/category/1"
+    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
+>
+    Voir le profil
+</Link>
                             </div>
                         </div>
 
@@ -260,12 +260,12 @@ function Home() {
                                     À partir de 120 DH
                                 </p>
 
-                                <Link
-                                    to="/services"
-                                    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
-                                >
-                                    Voir le profil
-                                </Link>
+                               <Link
+    to="/services/category/3"
+    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
+>
+    Voir le profil
+</Link>
                             </div>
                         </div>
 
@@ -308,12 +308,12 @@ function Home() {
                                     À partir de 70 DH
                                 </p>
 
-                                <Link
-                                    to="/services"
-                                    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
-                                >
-                                    Voir le profil
-                                </Link>
+                             <Link
+    to="/services/category/3"
+    className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
+>
+    Voir le profil
+</Link>
                             </div>
                         </div>
 

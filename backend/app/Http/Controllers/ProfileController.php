@@ -43,11 +43,18 @@ class ProfileController extends Controller
         'bio' => $request->bio,
 
     ]);
+    
 
     return response()->json([
         'message' => 'Profile modifié avec succès',
         'user' => $user
     ]);
+}
+public function professionalProfile($id)
+{
+    $user = \App\Models\User::with('services')->findOrFail($id);
+
+    return response()->json($user);
 }
 public function updatePhoto(Request $request)
 {
