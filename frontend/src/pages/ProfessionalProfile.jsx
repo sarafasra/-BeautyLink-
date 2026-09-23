@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Star, Clock, Heart } from "lucide-react";
+import { MapPin, Star, Clock,  } from "lucide-react";
 import api from "../services/api";
 
 function ProfessionalProfile() {
@@ -128,12 +128,7 @@ useEffect(() => {
 
                             </div>
 
-                            <button className="w-11 h-11 rounded-full bg-pink-50 flex items-center justify-center">
-                                <Heart
-                                    size={21}
-                                    className="text-[#d87093]"
-                                />
-                            </button>
+                         
 
                         </div>
                     </div>

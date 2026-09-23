@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Star, Heart, Clock } from "lucide-react";
+import { Star, Clock } from "lucide-react";
 import api from "../services/api";
 
 function CategoryServices() {
@@ -119,12 +119,7 @@ function CategoryServices() {
                                         </div>
                                     )}
 
-                                    <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow">
-                                        <Heart
-                                            size={21}
-                                            className="text-[#d87093]"
-                                        />
-                                    </button>
+                                 
 
                                 </div>
 

@@ -5,7 +5,7 @@ import {
     Sparkles,
     Hand,
     Star,
-    Heart,
+    
 } from "lucide-react";
 import api from "../services/api";
 
@@ -56,7 +56,6 @@ function Home() {
     return (
         <div className="min-h-screen bg-white">
 
-            {/* Navbar */}
             <nav className="bg-white shadow-sm px-8 py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
 
@@ -158,7 +157,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Catégories */}
             <section className="px-8 py-12">
                 <div className="max-w-7xl mx-auto">
 
@@ -216,7 +214,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Professionnels */}
             <section className="bg-[#fff7f9] px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -249,12 +246,7 @@ function Home() {
                                             className="w-full h-64 object-cover"
                                         />
 
-                                        <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                                            <Heart
-                                                size={21}
-                                                className="text-[#d87093]"
-                                            />
-                                        </button>
+                                     
 
                                     </div>
 
@@ -305,7 +297,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Comment ça marche */}
             <section className="px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -365,7 +356,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Footer */}
             <footer className="bg-[#292929] text-white px-8 py-8">
 
                 <div className="max-w-7xl mx-auto text-center">
