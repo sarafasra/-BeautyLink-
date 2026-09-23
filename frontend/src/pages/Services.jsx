@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Pencil, Trash2 , Clock } from "lucide-react";
+import { Pencil, Trash2, Clock, Heart } from "lucide-react";
 import api from "../services/api";
 
 function Services() {
@@ -11,9 +11,11 @@ const isClient = user?.role === "client";
 
   const [services, setServices] = useState([]);
   const [editingService, setEditingService] = useState(null);
+  const [favorites, setFavorites] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [message, setMessage] = useState("");
   const[selectedCategory, setSelectedCategory] = useState("Toutes");
+  
 
   const [newService, setNewService] = useState({
     category_id: 1,
@@ -23,9 +25,13 @@ const isClient = user?.role === "client";
     duration: "",
     image: "",
   });
-  useEffect(() => {
-    getServices();
-  }, []);
+ useEffect(() => {
+  getServices();
+
+  if (isClient) {
+    getFavorites();
+  }
+}, []);
 const addService = async (e) => {
   e.preventDefault();
 
@@ -57,6 +63,40 @@ setServices(response.data);
       console.log(error);
     }
   };
+  const getFavorites = async () => {
+  try {
+    const response = await api.get("/favorites");
+
+    setFavorites(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+const toggleFavorite = async (serviceId) => {
+  try {
+    const isFavorite = favorites.some(
+      (favorite) => favorite.service_id === serviceId
+    );
+
+    if (isFavorite) {
+      await api.delete(`/favorites/${serviceId}`);
+
+      setFavorites(
+        favorites.filter(
+          (favorite) => favorite.service_id !== serviceId
+        )
+      );
+    } else {
+      const response = await api.post("/favorites", {
+        service_id: serviceId,
+      });
+
+      setFavorites([...favorites, response.data.favorite]);
+    }
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
   const updateService = async (e) => {
     e.preventDefault();
@@ -328,7 +368,6 @@ const filteredServices = selectedCategory === "Toutes"
 
   return (
     <div className="min-h-screen bg-pink-50/40 p-8">
-      {/* Header section */}
        {showAddForm && (
   <form
     onSubmit={addService}
@@ -434,7 +473,7 @@ const filteredServices = selectedCategory === "Toutes"
     onClick={() => navigate("/services/ajouter")}
     className="bg-[#9A3B68] text-white px-5 py-3 rounded-xl"
   >
-    + Ajouter une prestation
+    Ajouter une prestation
   </button>
 )}
       </div>
@@ -500,39 +539,36 @@ Maquillage  </button>
               key={service.id}
               className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between"
             >
-              <div>
-                <div className="relative h-44 bg-gray-100">
-                  <img
-src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-700 text-xs px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
-                      <Clock size={14} />
+              <div className="relative h-44 bg-gray-100">
+  <img
+    src={service.image}
+    alt={service.title}
+    className="w-full h-full object-cover"
+  />
 
-                     <span>{service.duration} min</span>
-                  </div>
-                </div>
+  {isClient && (
+    <button
+      onClick={() => toggleFavorite(service.id)}
+      className="absolute top-3 left-3 bg-white rounded-full p-2 shadow-sm"
+    >
+      <Heart
+        size={20}
+        className={
+          favorites.some(
+            (favorite) => favorite.service_id === service.id
+          )
+            ? "fill-[#9A3B68] text-[#9A3B68]"
+            : "text-gray-500"
+        }
+      />
+    </button>
+  )}
 
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h2 className="text-lg font-bold text-gray-900 leading-tight">
-                      {service.title}
-                    </h2>
-                    <div className="text-right">
-                      <span className="text-lg font-bold text-[#9A3B68] block leading-none">
-                        {service.price}
-                      </span>
-                      <span className="text-xs font-bold text-[#9A3B68]">DH</span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-gray-500 line-clamp-2 mt-2">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
-
+  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-700 text-xs px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
+    <Clock size={14} />
+    <span>{service.duration} min</span>
+  </div>
+</div>
 
             {!isClient && (
   <div className="p-4 pt-0 flex items-center gap-2">
