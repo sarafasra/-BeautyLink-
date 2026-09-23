@@ -17,24 +17,36 @@ function Profile() {
 
   const [activeTab, setActiveTab] = useState("Prestations");
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
-  useEffect(() => {
-    api
-      .get("/profile")
-      .then((response) => {
-        setUser(response.data);
+ useEffect(() => {
+  const getProfile = async () => {
+    try {
+      const response = await api.get("/profile");
 
-        setName(response.data.name);
-        setEmail(response.data.email);
-        setPhone(response.data.phone || "");
-        setCity(response.data.city || "");
-        setProfession(response.data.profession || "");
-        setBio(response.data.bio || "");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+      setUser(response.data);
+
+      setName(response.data.name);
+      setEmail(response.data.email);
+      setPhone(response.data.phone || "");
+      setCity(response.data.city || "");
+      setProfession(response.data.profession || "");
+      setBio(response.data.bio || "");
+
+      const reviewsResponse = await api.get(
+        `/professionals/${response.data.id}/reviews`
+      );
+
+      setReviews(reviewsResponse.data);
+
+      console.log("Mes avis :", reviewsResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getProfile();
+}, []);
 
   if (!user) {
     return (
@@ -239,16 +251,12 @@ const handleUpdate = async (e) => {
 
                       <span className="text-amber-500 font-bold flex items-center gap-0.5">
                         <Star size={15} fill="currentColor" />
-                        4.9
+                        
                       </span>
 
-                      <span className="text-gray-400">
-                        (120 avis)
-                      </span>
+                    Avis ({reviews.length})
 
-                      <span className="text-gray-300">
-                        •
-                      </span>
+                     
 
                       <span className="flex items-center gap-1 text-gray-500">
                         {user.city || "Ville non renseignée"}
@@ -298,16 +306,16 @@ const handleUpdate = async (e) => {
             Prestations
           </button>
 
-          <button
-            onClick={() => setActiveTab("Avis")}
-            className={`pb-3 ${
-              activeTab === "Avis"
-                ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
-                : "hover:text-gray-700"
-            }`}
-          >
-            Avis (120)
-          </button>
+         <button 
+  onClick={() => setActiveTab("Avis")} 
+  className={`pb-3 ${
+    activeTab === "Avis" 
+      ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold" 
+      : "hover:text-gray-700"
+  }`}
+>
+  Avis
+</button>
 
         </div>
 
@@ -469,19 +477,71 @@ const handleUpdate = async (e) => {
           </div>
         )}
 
-        {activeTab === "Avis" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      {activeTab === "Avis" && (
+  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
 
-            <h2 className="font-bold text-gray-900 text-base mb-4">
-              Avis
-            </h2>
+    <h2 className="font-bold text-gray-900 text-base mb-4">
+      Avis
+    </h2>
 
-            <p className="text-sm text-gray-500">
-              Aucun avis à afficher pour le moment.
+    {reviews.length > 0 ? (
+      <div className="space-y-5">
+
+        {reviews.map((review) => (
+          <div
+            key={review.id}
+            className="border-b border-gray-100 pb-5"
+          >
+
+            <div className="flex items-center justify-between">
+
+              <div>
+                <p className="font-semibold text-gray-800">
+                  {review.user?.name || "Client"}
+                </p>
+
+                <div className="flex items-center gap-1 mt-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      size={16}
+                      className={
+                        star <= review.rating
+                          ? "text-yellow-500"
+                          : "text-gray-300"
+                      }
+                      fill={
+                        star <= review.rating
+                          ? "currentColor"
+                          : "none"
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <span className="text-xs text-gray-400">
+                {new Date(review.created_at).toLocaleDateString("fr-FR")}
+              </span>
+
+            </div>
+
+            <p className="text-sm text-gray-500 mt-3">
+              {review.comment || "Aucun commentaire."}
             </p>
 
           </div>
-        )}
+        ))}
+
+      </div>
+    ) : (
+      <p className="text-sm text-gray-500">
+        Aucun avis à afficher pour le moment.
+      </p>
+    )}
+
+  </div>
+)}
 
       </div>
     </div>

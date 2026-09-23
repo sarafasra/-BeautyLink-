@@ -8,6 +8,7 @@ function ProfessionalProfile() {
 
     const [professional, setProfessional] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [reviews, setReviews] = useState([]);
 useEffect(() => {
     const getProfessional = async () => {
         try {
@@ -16,6 +17,14 @@ useEffect(() => {
             console.log("Professional:", response.data);
 
             setProfessional(response.data);
+
+            const reviewsResponse = await api.get(
+                `/professionals/${id}/reviews`
+            );
+
+            console.log("Reviews:", reviewsResponse.data);
+
+            setReviews(reviewsResponse.data);
         } catch (error) {
             console.log("Erreur:", error);
             console.log("Status:", error.response?.status);
@@ -255,9 +264,44 @@ useEffect(() => {
                         Avis
                     </h2>
 
-                    <p className="text-gray-500 mt-3">
-                        Aucun avis à afficher pour le moment.
-                    </p>
+                 {reviews.length > 0 ? (
+    <div className="mt-5 space-y-5">
+        {reviews.map((review) => (
+            <div
+                key={review.id}
+                className="border-b border-gray-100 pb-4"
+            >
+                <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-gray-800">
+                        {review.user?.name}
+                    </h3>
+
+                    <div className="flex items-center gap-1 text-yellow-500">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                                key={star}
+                                size={16}
+                                fill={
+                                    star <= review.rating
+                                        ? "currentColor"
+                                        : "none"
+                                }
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                <p className="text-gray-500 mt-2">
+                    {review.comment || "Aucun commentaire."}
+                </p>
+            </div>
+        ))}
+    </div>
+) : (
+    <p className="text-gray-500 mt-3">
+        Aucun avis à afficher pour le moment.
+    </p>
+)}
 
                 </div>
 
