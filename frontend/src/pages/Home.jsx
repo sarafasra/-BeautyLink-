@@ -5,16 +5,10 @@ import {
     Sparkles,
     Hand,
     Star,
-    
 } from "lucide-react";
 import api from "../services/api";
 
 function Home() {
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    const isLoggedIn = !!user;
-    const isClient = user?.role === "client";
-
     const [professionals, setProfessionals] = useState([]);
 
     useEffect(() => {
@@ -56,11 +50,12 @@ function Home() {
     return (
         <div className="min-h-screen bg-white">
 
+            {/* Navbar */}
             <nav className="bg-white shadow-sm px-8 py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
 
                     <Link
-                        to={isClient ? "/client/dashboard" : "/dashboard"}
+                        to="/"
                         className="text-2xl font-bold text-[#d87093]"
                     >
                         BeautyLink
@@ -68,62 +63,32 @@ function Home() {
 
                     <div className="flex items-center gap-6">
 
-                        <Link to="/services">
+                        <Link
+                            to="/services"
+                            className="text-gray-700 hover:text-[#d87093]"
+                        >
                             Prestations
                         </Link>
 
-                        {isLoggedIn && (
-                            <Link
-                                to={
-                                    isClient
-                                        ? "/client/reservations"
-                                        : "/reservations"
-                                }
-                            >
-                                Mes réservations
-                            </Link>
-                        )}
-                        {isClient && (
-    <Link to="/client/favorites">
-        Mes favoris
-    </Link>
-)}
+                        <Link
+                            to="/login"
+                            className="text-gray-700 hover:text-[#d87093]"
+                        >
+                            Connexion
+                        </Link>
 
-                        {isLoggedIn && (
-                            <Link to="/profile">
-                                Mon profil
-                            </Link>
-                        )}
-
-                        {!isLoggedIn ? (
-                            <>
-                                <Link to="/login">
-                                    Connexion
-                                </Link>
-
-                                <Link
-                                    to="/register"
-                                    className="bg-[#d87093] text-white px-5 py-2 rounded-full"
-                                >
-                                    Inscription
-                                </Link>
-                            </>
-                        ) : (
-                            <button
-                                onClick={() => {
-                                    localStorage.clear();
-                                    window.location.href = "/login";
-                                }}
-                                className="text-red-500"
-                            >
-                                Déconnexion
-                            </button>
-                        )}
+                        <Link
+                            to="/register"
+                            className="bg-[#d87093] text-white px-5 py-2 rounded-full hover:bg-[#c45f82]"
+                        >
+                            Inscription
+                        </Link>
 
                     </div>
                 </div>
             </nav>
 
+            {/* Hero */}
             <section className="bg-[#fff7f9] px-8 py-20">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 
@@ -143,7 +108,7 @@ function Home() {
 
                         <Link
                             to="/services"
-                            className="inline-block bg-[#d87093] text-white px-7 py-3 rounded-full"
+                            className="inline-block bg-[#d87093] text-white px-7 py-3 rounded-full hover:bg-[#c45f82]"
                         >
                             Découvrir les prestations
                         </Link>
@@ -162,6 +127,7 @@ function Home() {
                 </div>
             </section>
 
+            {/* Categories */}
             <section className="px-8 py-12">
                 <div className="max-w-7xl mx-auto">
 
@@ -215,10 +181,10 @@ function Home() {
                         })}
 
                     </div>
-
                 </div>
             </section>
 
+            {/* Professionals */}
             <section className="bg-[#fff7f9] px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -240,7 +206,6 @@ function Home() {
                                 >
 
                                     <div className="relative">
-
                                         <img
                                             src={
                                                 professional.profile_photo
@@ -250,9 +215,6 @@ function Home() {
                                             alt={professional.name}
                                             className="w-full h-64 object-cover"
                                         />
-
-                                     
-
                                     </div>
 
                                     <div className="p-5">
@@ -287,7 +249,7 @@ function Home() {
 
                                         <Link
                                             to={`/professional/${professional.id}`}
-                                            className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4"
+                                            className="block text-center bg-[#d87093] text-white py-2 rounded-full mt-4 hover:bg-[#c45f82]"
                                         >
                                             Voir le profil
                                         </Link>
@@ -302,6 +264,7 @@ function Home() {
                 </div>
             </section>
 
+            {/* Comment ça marche */}
             <section className="px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -361,6 +324,7 @@ function Home() {
                 </div>
             </section>
 
+            {/* Footer */}
             <footer className="bg-[#292929] text-white px-8 py-8">
 
                 <div className="max-w-7xl mx-auto text-center">
