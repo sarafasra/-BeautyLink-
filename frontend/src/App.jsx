@@ -9,6 +9,7 @@ import CreateReservation from "./pages/CreateReservation";
 import ClientReservations from "./pages/ClientReservations";
 import Home from "./pages/Home";
 import ProfessionalProfile from "./pages/ProfessionalProfile";
+import ClientFavorites from "./pages/ClientFavorites";
 function App() {
     return (
         <BrowserRouter>
@@ -37,6 +38,7 @@ function App() {
                     path="/reservations/create/:serviceId"
                     element={<CreateReservation />}
                 />
+                <Route path="/client/favorites" element={<ClientFavorites />} />
                 <Route
     path="/professional/:id"
     element={<ProfessionalProfile />}

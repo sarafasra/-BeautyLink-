@@ -84,6 +84,11 @@ function Home() {
                                 Mes réservations
                             </Link>
                         )}
+                        {isClient && (
+    <Link to="/client/favorites">
+        Mes favoris
+    </Link>
+)}
 
                         {isLoggedIn && (
                             <Link to="/profile">
@@ -158,7 +163,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Catégories */}
             <section className="px-8 py-12">
                 <div className="max-w-7xl mx-auto">
 
@@ -216,7 +220,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Professionnels */}
             <section className="bg-[#fff7f9] px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
@@ -305,7 +308,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Comment ça marche */}
             <section className="px-8 py-16">
                 <div className="max-w-7xl mx-auto">
 
