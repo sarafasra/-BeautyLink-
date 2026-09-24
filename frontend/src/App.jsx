@@ -20,7 +20,6 @@ function App() {
         <BrowserRouter>
             <Routes>
 
-                {/* Public */}
                 <Route path="/" element={<Home />} />
 
                 <Route path="/login" element={<Login />} />
@@ -36,7 +35,6 @@ function App() {
                     element={<ProfessionalProfile />}
                 />
 
-                {/* Professionnel */}
                 <Route element={<ProfessionalLayout />}>
 
                     <Route
@@ -67,29 +65,39 @@ function App() {
                 </Route>
 
                 {/* Client */}
-                <Route element={<ClientLayout />}>
+<Route element={<ClientLayout />}>
 
-                    <Route
-                        path="/client/dashboard"
-                        element={<Dashboard />}
-                    />
+    <Route
+        path="/client/dashboard"
+        element={<Dashboard />}
+    />
 
-                    <Route
-                        path="/client/reservations"
-                        element={<ClientReservations />}
-                    />
+    <Route
+        path="/client/services"
+        element={<Services />}
+    />
 
-                    <Route
-                        path="/reservations/create/:serviceId"
-                        element={<CreateReservation />}
-                    />
+    <Route
+        path="/client/reservations"
+        element={<ClientReservations />}
+    />
 
-                    <Route
-                        path="/client/favorites"
-                        element={<ClientFavorites />}
-                    />
+    <Route
+        path="/reservations/create/:serviceId"
+        element={<CreateReservation />}
+    />
 
-                </Route>
+    <Route
+        path="/client/favorites"
+        element={<ClientFavorites />}
+    />
+
+    <Route
+        path="/client/profile"
+        element={<Profile />}
+    />
+
+</Route>
 
             </Routes>
         </BrowserRouter>

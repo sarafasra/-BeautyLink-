@@ -11,11 +11,9 @@ function ClientLayout() {
     return (
         <div className="min-h-screen">
 
-            {/* Navbar Client */}
             <nav className="bg-white shadow-sm px-8 py-4">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
 
-                    {/* Logo */}
                     <Link
                         to="/client/dashboard"
                         className="text-2xl font-bold text-[#d87093]"
@@ -23,7 +21,6 @@ function ClientLayout() {
                         BeautyLink
                     </Link>
 
-                    {/* Menu */}
                     <div className="flex items-center gap-8">
 
                         <Link
@@ -34,7 +31,7 @@ function ClientLayout() {
                         </Link>
 
                         <Link
-                            to="/services"
+to="/client/services"
                             className="text-gray-700 hover:text-[#d87093]"
                         >
                             Prestations
@@ -55,8 +52,7 @@ function ClientLayout() {
                         </Link>
 
                         <Link
-                            to="/profile"
-                            className="text-gray-700 hover:text-[#d87093]"
+to="/client/profile"                            className="text-gray-700 hover:text-[#d87093]"
                         >
                             Mon profil
                         </Link>
@@ -72,7 +68,6 @@ function ClientLayout() {
                 </div>
             </nav>
 
-            {/* Contenu actuel dyal client */}
             <Outlet />
 
         </div>
