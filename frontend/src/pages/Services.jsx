@@ -571,8 +571,7 @@ Maquillage  </button>
 </div>
 
             {!isClient && (
-  <div className="p-4 pt-0 flex items-center gap-2">
-    <button
+<div className="px-4 pt-2 pb-4 flex items-center gap-2">    <button
       onClick={() => setEditingService(service)}
       className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-2 rounded-lg flex items-center justify-center gap-1"
     >
@@ -589,8 +588,7 @@ Maquillage  </button>
   </div>
 )}
 {isClient && (
-  <div className="px-4 pb-4">
-    <button
+<div className="px-4 pt-2 pb-4 flex items-center gap-2">        <button
       onClick={() => navigate(`/reservations/create/${service.id}`)}
       className="w-full bg-[#9A3B68] hover:bg-[#7f3056] text-white text-sm font-medium py-2 rounded-lg"
     >

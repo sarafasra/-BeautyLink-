@@ -127,23 +127,7 @@ const weekReservations = reservations.filter((reservation) => {
 
             <div className="grid grid-cols-3 gap-5 mb-7">
 
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#df72a8] flex items-center justify-center text-white">
-                            <CalendarDays size={16} />
-                        </div>
-
-                        <div>
-                            <p className="text-[9px] text-gray-500 uppercase">
-                                Aujourd'hui
-                            </p>
-
-                            <p className="text-sm font-bold text-[#252525]">
-    {todayReservations.length} Rendez-vous
-                            </p>
-                        </div>
-                    </div>
-                </div>
+              
 
                 <div className="bg-white rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">

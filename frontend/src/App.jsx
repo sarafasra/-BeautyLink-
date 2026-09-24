@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import ProfessionalProfile from "./pages/ProfessionalProfile";
 import ClientFavorites from "./pages/ClientFavorites";
 import ProfessionalLayout from "./components/ProfessionalLayout";
+import ClientLayout from "./components/ClientLayout";
 
 function App() {
     return (
@@ -66,25 +67,29 @@ function App() {
                 </Route>
 
                 {/* Client */}
-                <Route
-                    path="/client/dashboard"
-                    element={<Dashboard />}
-                />
+                <Route element={<ClientLayout />}>
 
-                <Route
-                    path="/client/reservations"
-                    element={<ClientReservations />}
-                />
+                    <Route
+                        path="/client/dashboard"
+                        element={<Dashboard />}
+                    />
 
-                <Route
-                    path="/reservations/create/:serviceId"
-                    element={<CreateReservation />}
-                />
+                    <Route
+                        path="/client/reservations"
+                        element={<ClientReservations />}
+                    />
 
-                <Route
-                    path="/client/favorites"
-                    element={<ClientFavorites />}
-                />
+                    <Route
+                        path="/reservations/create/:serviceId"
+                        element={<CreateReservation />}
+                    />
+
+                    <Route
+                        path="/client/favorites"
+                        element={<ClientFavorites />}
+                    />
+
+                </Route>
 
             </Routes>
         </BrowserRouter>

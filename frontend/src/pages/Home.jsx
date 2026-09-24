@@ -125,7 +125,6 @@ function Home() {
                 </div>
             </section>
 
-            {/* Categories */}
             <section className="px-8 py-12">
                 <div className="max-w-7xl mx-auto">
 

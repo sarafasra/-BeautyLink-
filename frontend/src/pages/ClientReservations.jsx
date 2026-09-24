@@ -99,7 +99,6 @@ function ClientReservations() {
                             className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"
                         >
 
-                            {/* Informations réservation */}
                             <div className="flex gap-4 mb-4">
 
                                 {reservation.service?.image ? (
@@ -149,7 +148,6 @@ function ClientReservations() {
                                 </span>
                             </div>
 
-                            {/* Date */}
                             <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
                                 <CalendarDays
                                     size={17}
@@ -158,7 +156,6 @@ function ClientReservations() {
                                 <span>{reservation.date}</span>
                             </div>
 
-                            {/* Heure */}
                             <div className="flex items-center gap-2 text-sm text-gray-600">
                                 <Clock
                                     size={17}
@@ -167,7 +164,6 @@ function ClientReservations() {
                                 <span>{reservation.time}</span>
                             </div>
 
-                            {/* Avis */}
                             {reservation.status === "accepted" && (
                                 <div className="border-t border-gray-100 mt-5 pt-5">
 
@@ -175,7 +171,6 @@ function ClientReservations() {
                                         Donner votre avis
                                     </h3>
 
-                                    {/* Étoiles */}
                                     <div className="flex gap-1 mt-3">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <button
@@ -211,7 +206,6 @@ function ClientReservations() {
                                         ))}
                                     </div>
 
-                                    {/* Commentaire */}
                                     <textarea
                                         value={
                                             reviewComment[reservation.id] || ""
@@ -228,7 +222,6 @@ function ClientReservations() {
                                         rows="3"
                                     />
 
-                                    {/* Bouton */}
                                     <button
                                         onClick={() =>
                                             submitReview(reservation.id)

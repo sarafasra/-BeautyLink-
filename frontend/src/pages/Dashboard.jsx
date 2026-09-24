@@ -4,12 +4,73 @@ import {
     Sparkles,
     Hand,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import api from "../services/api";
 
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
     const isClient = user?.role === "client";
 
-   
+    const [reservations, setReservations] = useState([]);
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Charger les données du professionnel
+    useEffect(() => {
+        if (!isClient) {
+            loadDashboard();
+        }
+    }, [isClient]);
+
+    const loadDashboard = async () => {
+        try {
+            const reservationsResponse = await api.get(
+                "/professional/reservations"
+            );
+
+            const servicesResponse = await api.get("/services");
+
+            setReservations(reservationsResponse.data);
+
+            const myServices = servicesResponse.data.filter(
+                (service) => service.user_id === user?.id
+            );
+
+            setServices(myServices);
+
+        } catch (error) {
+            console.error(
+                "Erreur lors du chargement du dashboard :",
+                error
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Date d'aujourd'hui
+    const today = new Date().toISOString().split("T")[0];
+
+    // Réservations d'aujourd'hui
+    const todayReservations = reservations.filter(
+        (reservation) => reservation.date === today
+    );
+
+    // Réservations en attente
+    const pendingReservations = reservations.filter(
+        (reservation) => reservation.status === "pending"
+    );
+
+    // Les 3 prochaines réservations
+    const upcomingReservations = reservations
+        .filter(
+            (reservation) =>
+                reservation.status === "pending" ||
+                reservation.status === "accepted"
+        )
+        .slice(0, 3);
+
+    // CLIENT DASHBOARD
     if (isClient) {
         return (
             <div className="min-h-screen bg-white">
@@ -139,7 +200,7 @@ function Dashboard() {
         );
     }
 
-
+    // PROFESSIONAL DASHBOARD
     return (
         <div className="min-h-screen bg-[#faf9f9]">
 
@@ -155,36 +216,23 @@ function Dashboard() {
                     </p>
                 </div>
 
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-9">
 
-                    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                        <p className="text-4xl font-bold text-[#A33F70]">
-                            12
-                        </p>
-
-                        <p className="text-xs font-semibold text-gray-600 mt-3 uppercase">
-                            Réservations
-                        </p>
-
-                        <p className="text-xs font-semibold text-gray-600">
-                            aujourd'hui
-                        </p>
-                    </div>
+                 
 
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                         <p className="text-4xl font-bold text-[#A33F70]">
-                            8
+                            {pendingReservations.length}
                         </p>
 
                         <p className="text-xs font-semibold text-gray-600 mt-3 uppercase">
-                            Nouveaux
+                            Nouvelles
                         </p>
                     </div>
 
                     <div className="bg-[#f8eef3] rounded-2xl p-6 shadow-sm border border-[#f0dce5]">
                         <p className="text-4xl font-bold text-[#A33F70]">
-                            24
+                            {services.length}
                         </p>
 
                         <p className="text-xs font-semibold text-gray-600 mt-3 uppercase">
@@ -197,7 +245,6 @@ function Dashboard() {
                     </div>
 
                 </div>
-
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
 
@@ -218,93 +265,71 @@ function Dashboard() {
 
                         </div>
 
-
-                        <div className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm">
-
-                            <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
-                            </div>
-
-                            <div className="flex-1">
-
-                                <h3 className="text-sm font-semibold">
-                                    Sara L.
-                                </h3>
-
-                                <p className="text-xs text-gray-500">
-                                    Coupe + Brushing
+                        {loading ? (
+                            <div className="bg-white rounded-2xl p-6 shadow-sm">
+                                <p className="text-sm text-gray-500">
+                                    Chargement...
                                 </p>
-
-                                <p className="text-[11px] text-gray-400 mt-1">
-                                    15 Mai 2024 • 10:00
-                                </p>
-
                             </div>
-
-                            <span className="text-[10px] font-semibold bg-green-100 text-green-600 px-3 py-1 rounded-full">
-                                Confirmée
-                            </span>
-
-                        </div>
-
-
-                        <div className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm">
-
-                            <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
-                            </div>
-
-                            <div className="flex-1">
-
-                                <h3 className="text-sm font-semibold">
-                                    Yassine B.
-                                </h3>
-
-                                <p className="text-xs text-gray-500">
-                                    Coloration
+                        ) : upcomingReservations.length === 0 ? (
+                            <div className="bg-white rounded-2xl p-6 shadow-sm">
+                                <p className="text-sm text-gray-500">
+                                    Aucune prochaine réservation.
                                 </p>
-
-                                <p className="text-[11px] text-gray-400 mt-1">
-                                    15 Mai 2024 • 14:00
-                                </p>
-
                             </div>
+                        ) : (
+                            upcomingReservations.map((reservation) => (
 
-                            <span className="text-[10px] font-semibold bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full">
-                                En attente
-                            </span>
+                                <div
+                                    key={reservation.id}
+                                    className="bg-white rounded-2xl p-4 mb-4 flex items-center gap-4 shadow-sm"
+                                >
 
-                        </div>
+                                    <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
+                                        <span className="text-gray-500 font-semibold">
+                                            {reservation.user?.name
+                                                ?.charAt(0)
+                                                ?.toUpperCase()}
+                                        </span>
+                                    </div>
 
-                        {/* Réservation 3 */}
+                                    <div className="flex-1">
 
-                        <div className="bg-white rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+                                        <h3 className="text-sm font-semibold">
+                                            {reservation.user?.name ||
+                                                "Client"}
+                                        </h3>
 
-                            <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center">
-                            </div>
+                                        <p className="text-xs text-gray-500">
+                                            {reservation.service?.title ||
+                                                "Prestation"}
+                                        </p>
 
-                            <div className="flex-1">
+                                        <p className="text-[11px] text-gray-400 mt-1">
+                                            {reservation.date} •{" "}
+                                            {reservation.time}
+                                        </p>
 
-                                <h3 className="text-sm font-semibold">
-                                    Maha R.
-                                </h3>
+                                    </div>
 
-                                <p className="text-xs text-gray-500">
-                                    Brushing + Soin
-                                </p>
+                                    <span
+                                        className={`text-[10px] font-semibold px-3 py-1 rounded-full ${
+                                            reservation.status === "accepted"
+                                                ? "bg-green-100 text-green-600"
+                                                : "bg-yellow-100 text-yellow-600"
+                                        }`}
+                                    >
+                                        {reservation.status === "accepted"
+                                            ? "Confirmée"
+                                            : "En attente"}
+                                    </span>
 
-                                <p className="text-[11px] text-gray-400 mt-1">
-                                    16 Mai 2024 • 11:00
-                                </p>
+                                </div>
 
-                            </div>
-
-                            <span className="text-[10px] font-semibold bg-green-100 text-green-600 px-3 py-1 rounded-full">
-                                Confirmée
-                            </span>
-
-                        </div>
+                            ))
+                        )}
 
                     </section>
-
 
                     <section>
 
@@ -343,14 +368,20 @@ function Dashboard() {
 
                         <div className="mt-4 bg-[#fff0f6] border border-[#f4d7e5] rounded-2xl p-4 flex items-center gap-3">
 
-                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                            </div>
+                           
 
                             <div>
 
-                                <p className="text-xs font-bold text-[#A33F70]">
-                                    Nail Art Studio
-                                </p>
+                               <div className="flex items-center gap-2">
+    <Sparkles
+        size={14}
+        className="text-[#A33F70]"
+    />
+
+    <p className="text-xs font-bold text-[#A33F70]">
+        Nail Art Studio
+    </p>
+</div>
 
                                 <p className="text-[10px] text-gray-500">
                                     Nouveau près de chez vous

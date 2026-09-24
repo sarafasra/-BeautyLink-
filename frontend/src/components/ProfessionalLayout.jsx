@@ -8,7 +8,6 @@ function ProfessionalLayout() {
     return (
         <div className="min-h-screen bg-[#faf9f9] flex">
 
-            {/* SIDEBAR */}
             <aside className="w-56 bg-[#292929] text-white flex flex-col min-h-screen">
 
                 <div className="p-5">
