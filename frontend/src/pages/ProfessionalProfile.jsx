@@ -204,10 +204,7 @@ useEffect(() => {
                                 >
 
                                     <img
-                                        src={
-                                            item.image ||
-                                            "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"
-                                        }
+                                        src={`http://127.0.0.1:8002/storage/${item.image}`}
                                         alt={item.title}
                                         className="w-20 h-20 rounded-xl object-cover"
                                     />

@@ -1,12 +1,188 @@
-# React + Vite
+BeautyLink ✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BeautyLink est une plateforme web de mise en relation entre clients et professionnels de beauté.
 
-Currently, two official plugins are available:
+Elle permet aux clients de découvrir des prestations de coiffure, maquillage et onglerie, consulter les profils et les avis des professionnels, puis effectuer une réservation en ligne.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🎯 Objectifs
 
-## Expanding the ESLint configuration
+Faciliter la recherche de prestations de beauté.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Mettre en relation clients et professionnels.
+
+Permettre la gestion des prestations.
+
+Permettre la réservation et le suivi des rendez-vous.
+
+Consulter les profils et les avis des professionnels.
+
+✨ Fonctionnalités principales
+
+Client
+
+Inscription et connexion.
+
+Consultation des prestations.
+
+Recherche par catégorie.
+
+Consultation du profil d'un professionnel.
+
+Consultation des avis.
+
+Réservation d'une prestation.
+
+Consultation et annulation des réservations.
+
+Gestion des favoris.
+
+Gestion du profil.
+
+Professionnel
+
+Inscription et connexion.
+
+Gestion du profil.
+
+Ajout, modification et suppression des prestations.
+
+Gestion des réservations.
+
+Acceptation ou refus des réservations.
+
+Consultation des avis.
+
+🛠️ Technologies utilisées
+
+Frontend
+
+React
+
+JavaScript
+
+Tailwind CSS
+
+React Router
+
+Axios
+
+Lucide React
+
+Backend
+
+PHP
+
+Laravel
+
+Laravel Sanctum
+
+MySQL
+
+Outils
+
+Visual Studio Code
+
+Git / GitHub
+
+Docker
+
+Figma
+
+Jira
+
+🏗️ Architecture
+
+Le projet est organisé en deux parties :
+
+BeautyLinkApp/
+├── backend/       # API Laravel
+└── frontend/      # Application React
+
+Le frontend communique avec l'API Laravel à travers des requêtes HTTP avec Axios.
+
+👥 Rôles
+
+BeautyLink possède deux types d'utilisateurs :
+
+Client : recherche, consulte et réserve des prestations.
+
+Professionnel : propose ses prestations et gère les réservations.
+
+🗂️ Principales entités
+
+User : informations du client ou professionnel.
+
+Service : prestation proposée.
+
+Catégorie : coiffure, maquillage ou onglerie.
+
+Réservation : rendez-vous entre un client et un professionnel.
+
+Avis : évaluation laissée par un client.
+
+🔐 Authentification
+
+L'authentification est réalisée avec Laravel Sanctum.
+
+Après la connexion, l'utilisateur est redirigé selon son rôle :
+
+Client → /client/dashboard
+Professionnel → /dashboard
+
+🚀 Installation
+
+1. Cloner le projet
+
+git clone <URL_DU_REPOSITORY>
+cd BeautyLinkApp
+
+2. Backend
+
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve --port=8002
+
+Configurer la base de données MySQL dans le fichier .env.
+
+3. Frontend
+
+Dans un autre terminal :
+
+cd frontend
+npm install
+npm run dev
+
+📌 Catégories
+
+BeautyLink propose trois catégories :
+
+Coiffure
+
+Maquillage
+
+Onglerie
+
+📐 Diagrammes UML
+
+Les diagrammes de conception du projet sont disponibles ici :
+
+Diagramme de classes UML :![alt text](image.png)
+
+Diagramme de cas d'utilisation UML : LIEN_UML_CAS_UTILISATION
+
+Diagramme de séquence UML : LIEN_UML_DIAGRAMME_DE_SEQUENCE
+
+
+📁 Git
+
+Le projet utilise Git pour le suivi des versions et GitHub pour le dépôt distant.
+
+Les fonctionnalités sont développées sur des branches séparées puis intégrées dans la branche principale.
+
+👩‍💻 Projet
+
+BeautyLink
+Plateforme de mise en relation entre clients et professionnels de beauté.

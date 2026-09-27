@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use Illuminate\Http\Request;
-use App\Notifications\ReservationNotification;
 class ReservationController extends Controller
 {
     public function index(Request $request)
@@ -35,10 +34,6 @@ public function store(Request $request)
     $reservation->load('service.user');
 
     $professional = $reservation->service->user;
-
-    $professional->notify(new ReservationNotification(
-        'Vous avez reçu une nouvelle réservation.'
-    ));
 
     return response()->json([
         'message' => 'Réservation créée avec succès',

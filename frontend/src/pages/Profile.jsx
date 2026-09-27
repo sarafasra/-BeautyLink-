@@ -6,6 +6,9 @@ import ClientProfile from "./ClientProfile";
 function Profile() {
   const [user, setUser] = useState(null);
 
+  console.log("userrrrrrrrrrrrrrrrrrrrr");
+  
+
   const [editMode, setEditMode] = useState(false);
 
   const [name, setName] = useState("");
@@ -19,34 +22,34 @@ function Profile() {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [reviews, setReviews] = useState([]);
 
- useEffect(() => {
-  const getProfile = async () => {
-    try {
-      const response = await api.get("/profile");
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const response = await api.get("/profile");
 
-      setUser(response.data);
+        setUser(response.data);
 
-      setName(response.data.name);
-      setEmail(response.data.email);
-      setPhone(response.data.phone || "");
-      setCity(response.data.city || "");
-      setProfession(response.data.profession || "");
-      setBio(response.data.bio || "");
+        setName(response.data.name);
+        setEmail(response.data.email);
+        setPhone(response.data.phone || "");
+        setCity(response.data.city || "");
+        setProfession(response.data.profession || "");
+        setBio(response.data.bio || "");
 
-      const reviewsResponse = await api.get(
-        `/professionals/${response.data.id}/reviews`
-      );
+        const reviewsResponse = await api.get(
+          `/professionals/${response.data.id}/reviews`
+        );
 
-      setReviews(reviewsResponse.data);
+        setReviews(reviewsResponse.data);
 
-      console.log("Mes avis :", reviewsResponse.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        console.log("Mes avis :", reviewsResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  getProfile();
-}, []);
+    getProfile();
+  }, []);
 
   if (!user) {
     return (
@@ -60,37 +63,37 @@ function Profile() {
     return <ClientProfile user={user} />;
   }
 
-const handleUpdate = async (e) => {
-  e.preventDefault();
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-  try {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("city", city);
-    formData.append("profession", profession);
-    formData.append("bio", bio);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("city", city);
+      formData.append("profession", profession);
+      formData.append("bio", bio);
 
-    if (profilePhoto) {
-      formData.append("profile_photo", profilePhoto);
+      if (profilePhoto) {
+        formData.append("profile_photo", profilePhoto);
+      }
+
+      formData.append("_method", "PUT");
+
+      await api.post("/profile", formData);
+
+      const updatedUser = await api.get("/profile");
+      setUser(updatedUser.data);
+
+      setProfilePhoto(null);
+      setEditMode(false);
+
+    } catch (error) {
+      console.log(error.response?.data || error);
     }
-
-    formData.append("_method", "PUT");
-
-    await api.post("/profile", formData);
-
-    const updatedUser = await api.get("/profile");
-    setUser(updatedUser.data);
-
-    setProfilePhoto(null);
-    setEditMode(false);
-
-  } catch (error) {
-    console.log(error.response?.data || error);
-  }
-};
+  };
 
   return (
     <div className="bg-[#faf8f9] min-h-screen p-6 font-sans text-gray-800">
@@ -115,7 +118,7 @@ const handleUpdate = async (e) => {
               className="w-full h-full object-cover"
             />
 
-        
+
           </div>
 
           <div className="px-8 pb-6 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
@@ -237,12 +240,12 @@ const handleUpdate = async (e) => {
 
                       <span className="text-amber-500 font-bold flex items-center gap-0.5">
                         <Star size={15} fill="currentColor" />
-                        
+
                       </span>
 
-                    Avis ({reviews.length})
+                      Avis ({reviews.length})
 
-                     
+
 
                       <span className="flex items-center gap-1 text-gray-500">
                         {user.city || "Ville non renseignée"}
@@ -272,36 +275,33 @@ const handleUpdate = async (e) => {
 
           <button
             onClick={() => setActiveTab("À propos")}
-            className={`pb-3 ${
-              activeTab === "À propos"
+            className={`pb-3 ${activeTab === "À propos"
                 ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
                 : "hover:text-gray-700"
-            }`}
+              }`}
           >
             À propos
           </button>
 
           <button
             onClick={() => setActiveTab("Prestations")}
-            className={`pb-3 ${
-              activeTab === "Prestations"
+            className={`pb-3 ${activeTab === "Prestations"
                 ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
                 : "hover:text-gray-700"
-            }`}
+              }`}
           >
             Prestations
           </button>
 
-         <button 
-  onClick={() => setActiveTab("Avis")} 
-  className={`pb-3 ${
-    activeTab === "Avis" 
-      ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold" 
-      : "hover:text-gray-700"
-  }`}
->
-  Avis
-</button>
+          <button
+            onClick={() => setActiveTab("Avis")}
+            className={`pb-3 ${activeTab === "Avis"
+                ? "border-b-2 border-[#9E3B68] text-[#9E3B68] font-semibold"
+                : "hover:text-gray-700"
+              }`}
+          >
+            Avis
+          </button>
 
         </div>
 
@@ -323,13 +323,8 @@ const handleUpdate = async (e) => {
                   >
 
                     <div className="flex items-center gap-3">
-
                       <img
-                        src={
-                          service.image
-                            ? service.image
-                            : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
-                        }
+                        src={`http://127.0.0.1:8002/storage/${service.image}`}
                         alt={service.title}
                         className="w-14 h-14 rounded-xl object-cover"
                       />
@@ -463,71 +458,71 @@ const handleUpdate = async (e) => {
           </div>
         )}
 
-      {activeTab === "Avis" && (
-  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        {activeTab === "Avis" && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
 
-    <h2 className="font-bold text-gray-900 text-base mb-4">
-      Avis
-    </h2>
+            <h2 className="font-bold text-gray-900 text-base mb-4">
+              Avis
+            </h2>
 
-    {reviews.length > 0 ? (
-      <div className="space-y-5">
+            {reviews.length > 0 ? (
+              <div className="space-y-5">
 
-        {reviews.map((review) => (
-          <div
-            key={review.id}
-            className="border-b border-gray-100 pb-5"
-          >
+                {reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="border-b border-gray-100 pb-5"
+                  >
 
-            <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
 
-              <div>
-                <p className="font-semibold text-gray-800">
-                  {review.user?.name || "Client"}
-                </p>
+                      <div>
+                        <p className="font-semibold text-gray-800">
+                          {review.user?.name || "Client"}
+                        </p>
 
-                <div className="flex items-center gap-1 mt-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={16}
-                      className={
-                        star <= review.rating
-                          ? "text-yellow-500"
-                          : "text-gray-300"
-                      }
-                      fill={
-                        star <= review.rating
-                          ? "currentColor"
-                          : "none"
-                      }
-                    />
-                  ))}
-                </div>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              size={16}
+                              className={
+                                star <= review.rating
+                                  ? "text-yellow-500"
+                                  : "text-gray-300"
+                              }
+                              fill={
+                                star <= review.rating
+                                  ? "currentColor"
+                                  : "none"
+                              }
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      <span className="text-xs text-gray-400">
+                        {new Date(review.created_at).toLocaleDateString("fr-FR")}
+                      </span>
+
+                    </div>
+
+                    <p className="text-sm text-gray-500 mt-3">
+                      {review.comment || "Aucun commentaire."}
+                    </p>
+
+                  </div>
+                ))}
+
               </div>
-
-              <span className="text-xs text-gray-400">
-                {new Date(review.created_at).toLocaleDateString("fr-FR")}
-              </span>
-
-            </div>
-
-            <p className="text-sm text-gray-500 mt-3">
-              {review.comment || "Aucun commentaire."}
-            </p>
+            ) : (
+              <p className="text-sm text-gray-500">
+                Aucun avis à afficher pour le moment.
+              </p>
+            )}
 
           </div>
-        ))}
-
-      </div>
-    ) : (
-      <p className="text-sm text-gray-500">
-        Aucun avis à afficher pour le moment.
-      </p>
-    )}
-
-  </div>
-)}
+        )}
 
       </div>
     </div>

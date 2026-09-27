@@ -1,4 +1,4 @@
-import {Search,CalendarDays,Clock,CheckCircle,Pencil,X,} from "lucide-react";
+import { Search, CalendarDays, Clock, CheckCircle, Pencil, X, } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
@@ -7,94 +7,94 @@ function Reservations() {
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
 
-  const user = JSON.parse(localStorage.getItem("user"));
-const isClient = user?.role === "client";
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isClient = user?.role === "client";
 
-useEffect(() => {
-    const endpoint = isClient
-        ? "/reservations"
-        : "/professional/reservations";
+    useEffect(() => {
+        const endpoint = isClient
+            ? "/reservations"
+            : "/professional/reservations";
 
-    api.get(endpoint)
-        .then((response) => {
-            setReservation(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}, []);
-
-         const today = new Date().toISOString().split("T")[0];
-         const todayReservations = reservations.filter(
-            (reservation) => reservation.date === today
-         );
-
-         const pendingReservations = reservations.filter(
-            (reservation) => reservation.status === "pending"
-         );
-const filteredReservations = reservations.filter((reservation) => {
-    const name = reservation.user?.name || "";
-
-    return (
-        name.toLowerCase().includes(search.toLowerCase()) &&
-        (statusFilter === "all" || reservation.status === statusFilter)
-    );
-});
- const confirmReservation = (id) => {
-    api.put(`/reservations/${id}/status`, {
-        status: "accepted",
-    })
-    .then(() => {
-        const updatedReservations = reservations.map((reservation) => {
-            if (reservation.id === id) {
-                return {
-                    ...reservation,
-                    status: "accepted",
-                };
-            }
-
-            return reservation;
-        });
-
-        setReservation(updatedReservations);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-};
-const refuseReservation = (id) => {
-    api.put(`/reservations/${id}/status`, {
-        status: "refused",
-    })
-        .then(() => {
-            const updatedReservations = reservations.map((reservation) => {
-                if (reservation.id === id) {
-                    return {
-                        ...reservation,
-                        status: "refused",
-                    };
-                }
-
-                return reservation;
+        api.get(endpoint)
+            .then((response) => {
+                setReservation(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
             });
+    }, []);
 
-            setReservation(updatedReservations);
+    const today = new Date().toISOString().split("T")[0];
+    const todayReservations = reservations.filter(
+        (reservation) => reservation.date === today
+    );
+
+    const pendingReservations = reservations.filter(
+        (reservation) => reservation.status === "pending"
+    );
+    const filteredReservations = reservations.filter((reservation) => {
+        const name = reservation.user?.name || "";
+
+        return (
+            name.toLowerCase().includes(search.toLowerCase()) &&
+            (statusFilter === "all" || reservation.status === statusFilter)
+        );
+    });
+    const confirmReservation = (id) => {
+        api.put(`/reservations/${id}/status`, {
+            status: "accepted",
         })
-        .catch((error) => {
-            console.log(error);
-        });
-};
+            .then(() => {
+                const updatedReservations = reservations.map((reservation) => {
+                    if (reservation.id === id) {
+                        return {
+                            ...reservation,
+                            status: "accepted",
+                        };
+                    }
+
+                    return reservation;
+                });
+
+                setReservation(updatedReservations);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+    const refuseReservation = (id) => {
+        api.put(`/reservations/${id}/status`, {
+            status: "refused",
+        })
+            .then(() => {
+                const updatedReservations = reservations.map((reservation) => {
+                    if (reservation.id === id) {
+                        return {
+                            ...reservation,
+                            status: "refused",
+                        };
+                    }
+
+                    return reservation;
+                });
+
+                setReservation(updatedReservations);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
 
-const weekReservations = reservations.filter((reservation) => {
-    const date = new Date(reservation.date);
-    const today = new Date();
+    const weekReservations = reservations.filter((reservation) => {
+        const date = new Date(reservation.date);
+        const today = new Date();
 
-    const diff = today - date;
-    const days = diff / (1000 * 60 * 60 * 24 );
+        const diff = today - date;
+        const days = diff / (1000 * 60 * 60 * 24);
 
-    return days >= 0 && days <= 7;
-});
+        return days >= 0 && days <= 7;
+    });
     return (
         <div className="min-h-screen bg-[#faf9f9] p-8">
 
@@ -115,37 +115,32 @@ const weekReservations = reservations.filter((reservation) => {
                         className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                     />
 
-                 <input
-    type="text"
-    placeholder="Rechercher un client..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="w-48 h-8 pl-9 pr-3 text-xs border border-gray-200 rounded-md outline-none focus:border-[#A33F70]"
-/>
+                    <input
+                        type="text"
+                        placeholder="Rechercher un client..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="w-48 h-8 pl-9 pr-3 text-xs border border-gray-200 rounded-md outline-none focus:border-[#A33F70]"
+                    />
                 </div>
             </div>
 
             <div className="grid grid-cols-3 gap-5 mb-7">
-
-              
-
                 <div className="bg-white rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#f6d3e2] flex items-center justify-center text-[#A33F70]">
                             <Clock size={16} />
                         </div>
-
                         <div>
                             <p className="text-[9px] text-gray-500 uppercase">
                                 En attente
                             </p>
 
                             <p className="text-sm font-bold text-[#252525]">
-{pendingReservations.length} Demandes                            </p>
+                                {pendingReservations.length} Demandes                            </p>
                         </div>
                     </div>
                 </div>
-
                 <div className="bg-white rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#b46be8] flex items-center justify-center text-white">
@@ -158,7 +153,7 @@ const weekReservations = reservations.filter((reservation) => {
                             </p>
 
                             <p className="text-sm font-bold text-[#252525]">
-{weekReservations.length} Réservations                            </p>
+                                {weekReservations.length} Réservations                            </p>
                         </div>
                     </div>
                 </div>
@@ -171,100 +166,97 @@ const weekReservations = reservations.filter((reservation) => {
                         Prochains Rendez-vous
                     </h2>
 
-                  <div className="flex gap-2">
+                    <div className="flex gap-2">
 
-    <button
-        onClick={() => setStatusFilter("all")}
-        className={`px-4 py-1 rounded-full text-[10px] ${
-            statusFilter === "all"
-                ? "bg-[#d76ca1] text-white"
-                : "bg-gray-50 text-gray-600"
-        }`}
-    >
-        Tous
-    </button>
+                        <button
+                            onClick={() => setStatusFilter("all")}
+                            className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "all"
+                                    ? "bg-[#d76ca1] text-white"
+                                    : "bg-gray-50 text-gray-600"
+                                }`}
+                        >
+                            Tous
+                        </button>
 
-    <button
-        onClick={() => setStatusFilter("accepted")}
-        className={`px-4 py-1 rounded-full text-[10px] ${
-            statusFilter === "accepted"
-                ? "bg-[#d76ca1] text-white"
-                : "bg-gray-50 text-gray-600"
-        }`}
-    >
-        Confirmés
-    </button>
+                        <button
+                            onClick={() => setStatusFilter("accepted")}
+                            className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "accepted"
+                                    ? "bg-[#d76ca1] text-white"
+                                    : "bg-gray-50 text-gray-600"
+                                }`}
+                        >
+                            Confirmés
+                        </button>
 
-    <button
-        onClick={() => setStatusFilter("pending")}
-        className={`px-4 py-1 rounded-full text-[10px] ${
-            statusFilter === "pending"
-                ? "bg-[#d76ca1] text-white"
-                : "bg-gray-50 text-gray-600"
-        }`}
-    >
-        En attente
-    </button>
+                        <button
+                            onClick={() => setStatusFilter("pending")}
+                            className={`px-4 py-1 rounded-full text-[10px] ${statusFilter === "pending"
+                                    ? "bg-[#d76ca1] text-white"
+                                    : "bg-gray-50 text-gray-600"
+                                }`}
+                        >
+                            En attente
+                        </button>
 
-</div>
+                    </div>
                 </div>
 
-{filteredReservations.map((reservation) => (    <div
-        key={reservation.id}
-        className="px-5 py-4 border-b border-gray-100 flex items-center justify-between"
-    >
-        <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#eadfd7] flex items-center justify-center text-xs font-semibold">
-                {reservation.user?.name?.charAt(0)}
-            </div>
+                {filteredReservations.map((reservation) => (<div
+                    key={reservation.id}
+                    className="px-5 py-4 border-b border-gray-100 flex items-center justify-between"
+                >
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-[#eadfd7] flex items-center justify-center text-xs font-semibold">
+                            {reservation.user?.name?.charAt(0)}
+                        </div>
 
-            <div>
-                <p className="text-xs font-bold">
-                    {reservation.user?.name}
-                </p>
+                        <div>
+                            <p className="text-xs font-bold">
+                                {reservation.user?.name}
+                            </p>
 
-                <p className="text-[9px] text-gray-500">
-                     {reservation.service?.title}
-                </p>
-            </div>
-        </div>
+                            <p className="text-[9px] text-gray-500">
+                                {reservation.service?.title}
+                            </p>
+                        </div>
+                    </div>
 
-        <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
 
-            <div className="text-right">
-                <p className="text-[10px] font-semibold">
-                    {reservation.date}
-                </p>
+                        <div className="text-right">
+                            <p className="text-[10px] font-semibold">
+                                {reservation.date}
+                            </p>
 
-                <p className="text-[9px] text-[#A33F70]">
-                    {reservation.time}
-                </p>
-            </div>
+                            <p className="text-[9px] text-[#A33F70]">
+                                {reservation.time}
+                            </p>
+                        </div>
 
-            <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-[8px] font-semibold">
-                {reservation.status}
-            </span>
-{reservation.status === "pending" && (
-    <>
-        <button
-            onClick={() => confirmReservation(reservation.id)}
-            className="px-3 py-1 rounded-md bg-[#d76ca1] text-white text-[9px]"
-        >
-            Accepter
-        </button>
+                        <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-[8px] font-semibold">
+                            {reservation.status}
+                        </span>
+                        {reservation.status === "pending" && (
+                            <>
+                                <button
+                                    onClick={() => confirmReservation(reservation.id)}
+                                    className="px-3 py-1 rounded-md bg-[#d76ca1] text-white text-[9px]"
+                                >
+                                    Accepter
+                                </button>
 
-        <button
-            onClick={() => refuseReservation(reservation.id)}
-            className="px-3 py-1 rounded-md border border-red-200 text-red-500 text-[9px] hover:bg-red-50"
-        >
-            Refuser
-        </button>
-    </>
-)}
+                                <button
+                                    onClick={() => refuseReservation(reservation.id)}
+                                    className="px-3 py-1 rounded-md border border-red-200 text-red-500 text-[9px] hover:bg-red-50"
+                                >
+                                    Refuser
+                                </button>
+                            </>
+                        )}
 
-        </div>
-    </div>
-))}
+                    </div>
+                </div>
+                ))}
 
             </div>
         </div>

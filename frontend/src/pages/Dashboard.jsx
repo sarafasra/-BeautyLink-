@@ -15,7 +15,6 @@ function Dashboard() {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Charger les données du professionnel
     useEffect(() => {
         if (!isClient) {
             loadDashboard();
@@ -48,20 +47,16 @@ function Dashboard() {
         }
     };
 
-    // Date d'aujourd'hui
     const today = new Date().toISOString().split("T")[0];
 
-    // Réservations d'aujourd'hui
     const todayReservations = reservations.filter(
         (reservation) => reservation.date === today
     );
 
-    // Réservations en attente
     const pendingReservations = reservations.filter(
         (reservation) => reservation.status === "pending"
     );
 
-    // Les 3 prochaines réservations
     const upcomingReservations = reservations
         .filter(
             (reservation) =>
@@ -70,7 +65,6 @@ function Dashboard() {
         )
         .slice(0, 3);
 
-    // CLIENT DASHBOARD
     if (isClient) {
         return (
             <div className="min-h-screen bg-white">
@@ -200,7 +194,6 @@ function Dashboard() {
         );
     }
 
-    // PROFESSIONAL DASHBOARD
     return (
         <div className="min-h-screen bg-[#faf9f9]">
 

@@ -103,7 +103,7 @@ function ClientReservations() {
 
                                 {reservation.service?.image ? (
                                     <img
-                                        src={reservation.service.image}
+                                        src={`http://127.0.0.1:8002/storage/${reservation.service.image}`}
                                         alt={reservation.service?.title}
                                         className="w-20 h-20 rounded-xl object-cover"
                                     />

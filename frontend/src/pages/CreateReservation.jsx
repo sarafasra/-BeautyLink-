@@ -60,9 +60,11 @@ function CreateReservation() {
             setMessage("Réservation créée avec succès !");
 
             setTimeout(() => {
-navigate("/client/reservations");            }, 1000);
+                navigate("/client/reservations");
+            }, 1000);
         } catch (error) {
             console.error(error);
+            console.error(error.response);
             setMessage("Erreur lors de la réservation.");
         }
     };
@@ -100,13 +102,13 @@ navigate("/client/reservations");            }, 1000);
 
                         {service.image ? (
                             <img
-                                src={service.image}
+                                src={`http://127.0.0.1:8002/storage/${service.image}`}
                                 alt={service.title}
                                 className="w-16 h-16 rounded-lg object-cover"
                             />
                         ) : (
                             <div className="w-16 h-16 rounded-lg bg-pink-100 flex items-center justify-center text-[#9A3B68]">
-                                
+
                             </div>
                         )}
 
@@ -158,11 +160,10 @@ navigate("/client/reservations");            }, 1000);
                                         key={item}
                                         type="button"
                                         onClick={() => setTime(item)}
-                                        className={`py-2 rounded-full text-sm border transition ${
-                                            time === item
+                                        className={`py-2 rounded-full text-sm border transition ${time === item
                                                 ? "bg-[#9A3B68] text-white border-[#9A3B68]"
                                                 : "bg-white text-gray-700 border-pink-200 hover:bg-pink-50"
-                                        }`}
+                                            }`}
                                     >
                                         {item}
                                     </button>

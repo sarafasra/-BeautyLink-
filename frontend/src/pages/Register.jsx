@@ -37,18 +37,17 @@ function Register() {
                 role: "client",
             });
         } catch (error) {
-            setMessage(
-                error.response?.data?.message ||
-                "Une erreur est survenue"
-            );
+            console.log("REGISTER ERROR");
+            console.log(error.response?.data);
+            console.log(error.response?.data?.errors);
         }
     };
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row min-h-[580px]">
-                
-                <div 
+
+                <div
                     className="relative md:w-1/2 bg-cover bg-center min-h-[250px] md:min-h-full flex flex-col justify-end p-8 text-white"
                     style={{ backgroundImage: `url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1000&auto=format&fit=crop')` }}
                 >
@@ -64,7 +63,7 @@ function Register() {
                 </div>
 
                 <div className="md:w-1/2 p-8 sm:p-10 flex flex-col justify-center bg-[#faf9f9]">
-                    
+
                     <div className="flex items-center justify-center gap-2 mb-6">
                         <span className="text-2xl font-bold text-[#8E3A62] tracking-tight">BeautyLink</span>
                     </div>
@@ -79,7 +78,7 @@ function Register() {
                     </div>
 
                     <form onSubmit={handleRegister} className="space-y-3">
-                        
+
                         <div>
                             <label className="block text-xs font-semibold text-gray-700 mb-1">Nom complet</label>
                             <input

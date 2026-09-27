@@ -80,7 +80,7 @@ function ClientFavorites() {
 
                                         {service?.image ? (
                                             <img
-                                                src={service.image}
+                                                 src={`http://127.0.0.1:8002/storage/${service.image}`}
                                                 alt={service.title}
                                                 className="w-full h-52 object-cover"
                                             />
