@@ -17,14 +17,14 @@ const isClient = user?.role === "client";
   const[selectedCategory, setSelectedCategory] = useState("Toutes");
   
 
-  const [newService, setNewService] = useState({
-    category_id: 1,
-    title: "",
-    description: "",
-    price: "",
-    duration: "",
-    image: "",
-  });
+ const [newService, setNewService] = useState({
+  category_id: 1,
+  title: "",
+  description: "",
+  price: "",
+  duration: "",
+  image: null,
+});
  useEffect(() => {
   getServices();
 
@@ -36,7 +36,19 @@ const addService = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await api.post("/services", newService);
+    const formData = new FormData();
+
+    formData.append("category_id", newService.category_id);
+    formData.append("title", newService.title);
+    formData.append("description", newService.description);
+    formData.append("price", newService.price);
+    formData.append("duration", newService.duration);
+
+    if (newService.image) {
+      formData.append("image", newService.image);
+    }
+
+    const response = await api.post("/services", formData);
 
     setServices([...services, response.data.service]);
 
@@ -46,23 +58,25 @@ const addService = async (e) => {
       description: "",
       price: "",
       duration: "",
-      image: "",
+      image: null,
     });
 
     setMessage("Prestation ajoutée avec succès");
-
   } catch (error) {
     console.log(error.response?.data);
   }
 };
-  const getServices = async () => {
-    try {
-      const response = await api.get("/services");
-setServices(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const getServices = async () => {
+  try {
+    const response = await api.get("/services");
+
+console.log("IMAGE 1:", response.data[0].image);
+console.log("IMAGE 2:", response.data[1].image);
+    setServices(response.data);
+  } catch (error) {
+    console.log("ERROR SERVICES:", error.response?.data || error);
+  }
+};
   const getFavorites = async () => {
   try {
     const response = await api.get("/favorites");
@@ -98,26 +112,43 @@ const toggleFavorite = async (serviceId) => {
   }
 };
 
-  const updateService = async (e) => {
-    e.preventDefault();
+ const updateService = async (e) => {
+  e.preventDefault();
 
-    try {
-        const response = await api.put(
-            `/services/${editingService.id}`, 
-            editingService
-        );
+  try {
+    const formData = new FormData();
 
-        setServices(
-            services.map((service) =>service.id === editingService.id
-        ? response.data.service
-    :service
-)
-        );
-        setEditingService(null);
-    } catch (error) {
-    console.log(error.response?.data);
+    formData.append("category_id", editingService.category_id);
+    formData.append("title", editingService.title);
+    formData.append("description", editingService.description);
+    formData.append("price", editingService.price);
+    formData.append("duration", editingService.duration);
+
+   if (editingService.image instanceof File) {
+  formData.append("image", editingService.image);
 }
-  };
+
+formData.append("_method", "PUT");
+
+const response = await api.post(
+  `/services/${editingService.id}`,
+  formData
+);
+
+    setServices(
+      services.map((service) =>
+        service.id === editingService.id
+          ? response.data.service
+          : service
+      )
+    );
+
+    setEditingService(null);
+    setMessage("Prestation modifiée avec succès");
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
   const deleteService = async (id) => {
     try {
@@ -173,14 +204,13 @@ const toggleFavorite = async (serviceId) => {
           }
           className="w-full border rounded-lg p-3 mb-4"
         />
-        <input
-  type="url"
-  placeholder="URL de l'image"
-  value={newService.image}
+     <input
+  type="file"
+  accept="image/*"
   onChange={(e) =>
     setNewService({
       ...newService,
-      image: e.target.value,
+      image: e.target.files[0],
     })
   }
   className="w-full border rounded-lg p-3 mb-4"
@@ -287,17 +317,16 @@ const toggleFavorite = async (serviceId) => {
           className="w-full border rounded-lg p-3 mb-4"
           placeholder="Description"
         />
-        <input
-  type="url"
-  value={editingService.image || ""}
+       <input
+  type="file"
+  accept="image/*"
   onChange={(e) =>
     setEditingService({
       ...editingService,
-      image: e.target.value,
+      image: e.target.files[0],
     })
   }
   className="w-full border rounded-lg p-3 mb-4"
-  placeholder="URL de l'image"
 />
         <select
   value={editingService.category_id}
@@ -495,16 +524,16 @@ const filteredServices = selectedCategory === "Toutes"
     Toutes
   </button>
 
-  <button
-    onClick={() => setSelectedCategory("Coiffeure")}
-    className={`px-4 py-1.5 rounded-full text-xs font-medium ${
-      selectedCategory === "Coiffeure"
-        ? "bg-[#E8A5C2] text-white"
-        : "bg-white text-gray-700 border border-gray-200"
-    }`}
-  >
-    Coiffeure
-  </button>
+ <button
+  onClick={() => setSelectedCategory("Coiffure")}
+  className={`px-4 py-1.5 rounded-full text-xs font-medium ${
+    selectedCategory === "Coiffure"
+      ? "bg-[#E8A5C2] text-white"
+      : "bg-white text-gray-700 border border-gray-200"
+  }`}
+>
+  Coiffure
+</button>
 
   <button
     onClick={() => setSelectedCategory("Maquillage")}
@@ -540,12 +569,15 @@ Maquillage  </button>
               className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between"
             >
               <div className="relative h-44 bg-gray-100">
-  <img
-    src={service.image}
-    alt={service.title}
-    className="w-full h-full object-cover"
-  />
-
+<img
+  src={
+    service.image?.startsWith("http")
+      ? service.image
+      : `http://127.0.0.1:8002/storage/${service.image}`
+  }
+  alt={service.title}
+  className="w-full h-full object-cover"
+/>
   {isClient && (
     <button
       onClick={() => toggleFavorite(service.id)}
@@ -568,6 +600,19 @@ Maquillage  </button>
     <Clock size={14} />
     <span>{service.duration} min</span>
   </div>
+</div>
+<div className="px-4 pt-3 pb-2">
+  <h3 className="font-semibold text-gray-800">
+    {service.title}
+  </h3>
+
+  <p className="text-sm text-gray-500 mt-1">
+    {service.description}
+  </p>
+
+  <p className="text-[#9A3B68] font-semibold mt-2">
+    {service.price} DH
+  </p>
 </div>
 
             {!isClient && (

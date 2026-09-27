@@ -105,13 +105,17 @@ function CategoryServices() {
 
                                 <div className="relative">
 
-                                    {service.image ? (
-                                        <img
-                                            src={service.image}
-                                            alt={service.title}
-                                            className="w-full h-56 object-cover"
-                                        />
-                                    ) : (
+                                  {service.image ? (
+    <img
+        src={
+            service.image?.startsWith("http")
+                ? service.image
+                : `http://127.0.0.1:8002/storage/${service.image}`
+        }
+        alt={service.title}
+        className="w-full h-56 object-cover"
+    />
+): (
                                         <div className="w-full h-56 bg-[#fceef3] flex items-center justify-center">
                                             <span className="text-[#d87093]">
                                                 BeautyLink

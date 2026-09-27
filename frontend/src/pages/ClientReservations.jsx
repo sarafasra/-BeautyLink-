@@ -102,11 +102,17 @@ function ClientReservations() {
                             <div className="flex gap-4 mb-4">
 
                                 {reservation.service?.image ? (
-                                    <img
-                                        src={reservation.service.image}
-                                        alt={reservation.service?.title}
-                                        className="w-20 h-20 rounded-xl object-cover"
-                                    />
+                                  <img
+  src={
+    reservation.service?.image?.startsWith("http")
+      ? reservation.service.image
+      : reservation.service?.image
+      ? `http://127.0.0.1:8002/storage/${reservation.service.image}`
+      : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"
+  }
+  alt={reservation.service?.title}
+  className="w-20 h-20 rounded-xl object-cover"
+/>
                                 ) : (
                                     <div className="w-20 h-20 rounded-xl bg-pink-100 flex items-center justify-center text-[#9A3B68]">
                                         Beauty

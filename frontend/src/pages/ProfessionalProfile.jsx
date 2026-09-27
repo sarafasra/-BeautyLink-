@@ -67,15 +67,13 @@ useEffect(() => {
                 </Link>
 
                 <div className="bg-white rounded-3xl shadow-sm mt-6 overflow-hidden">
-
-                    <div className="h-48 bg-pink-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
-                            alt="Cover"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-
+<div className="h-48 bg-pink-100">
+    <img
+        src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
+        alt="Cover"
+        className="w-full h-full object-cover"
+    />
+</div>
                     <div className="px-8 pb-8">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
 
@@ -203,14 +201,17 @@ useEffect(() => {
                                     className="border border-gray-100 rounded-xl p-4 flex gap-4"
                                 >
 
-                                    <img
-                                        src={
-                                            item.image ||
-                                            "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"
-                                        }
-                                        alt={item.title}
-                                        className="w-20 h-20 rounded-xl object-cover"
-                                    />
+                                  <img
+    src={
+        item.image?.startsWith("http")
+            ? item.image
+            : item.image
+            ? `http://127.0.0.1:8002/storage/${item.image}`
+            : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"
+    }
+    alt={item.title}
+    className="w-20 h-20 rounded-xl object-cover"
+/>
 
                                     <div>
 

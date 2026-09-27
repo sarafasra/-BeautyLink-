@@ -25,7 +25,8 @@ function Profile() {
       const response = await api.get("/profile");
 
       setUser(response.data);
-
+console.log("PROFILE:", response.data);
+console.log("SERVICES PROFILE:", response.data.services);
       setName(response.data.name);
       setEmail(response.data.email);
       setPhone(response.data.phone || "");
@@ -109,11 +110,7 @@ const handleUpdate = async (e) => {
         <div className="bg-white rounded-3xl shadow-sm overflow-hidden mb-6">
 
           <div className="h-64 relative bg-pink-100">
-            <img
-              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
-              alt="Cover"
-              className="w-full h-full object-cover"
-            />
+       
 
         
           </div>
@@ -324,15 +321,17 @@ const handleUpdate = async (e) => {
 
                     <div className="flex items-center gap-3">
 
-                      <img
-                        src={
-                          service.image
-                            ? service.image
-                            : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
-                        }
-                        alt={service.title}
-                        className="w-14 h-14 rounded-xl object-cover"
-                      />
+                    <img
+  src={
+    service.image?.startsWith("http")
+      ? service.image
+      : service.image
+      ? `http://127.0.0.1:8002/storage/${service.image}`
+      : "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=150&q=80"
+  }
+  alt={service.title}
+  className="w-14 h-14 rounded-xl object-cover"
+/>
 
                       <div>
 

@@ -99,11 +99,15 @@ navigate("/client/reservations");            }, 1000);
                     <div className="flex gap-3 bg-[#faf8f8] border border-gray-100 rounded-xl p-3 mb-6">
 
                         {service.image ? (
-                            <img
-                                src={service.image}
-                                alt={service.title}
-                                className="w-16 h-16 rounded-lg object-cover"
-                            />
+                          <img
+  src={
+    service.image?.startsWith("http")
+      ? service.image
+      : `http://127.0.0.1:8002/storage/${service.image}`
+  }
+  alt={service.title}
+  className="w-40 h-48 object-cover"
+/>
                         ) : (
                             <div className="w-16 h-16 rounded-lg bg-pink-100 flex items-center justify-center text-[#9A3B68]">
                                 
