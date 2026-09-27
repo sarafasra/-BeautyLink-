@@ -169,7 +169,7 @@ Onglerie
 
 Les diagrammes de conception du projet sont disponibles ici :
 
-Diagramme de classes UML :![alt text](<class diagramme File Rouge-1.jpg>)
+Diagramme de classes UML :![alt text](<classe diagramme file rouge.png>)
 
 Diagramme de cas d'utilisation UML : ![alt text](<use case diagramme file rouge.png>)
 
